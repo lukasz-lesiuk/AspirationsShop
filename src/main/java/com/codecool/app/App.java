@@ -1,6 +1,9 @@
 package com.codecool.app;
 
 import com.codecool.IDGenerator;
+import com.codecool.customer.Customer;
+import com.codecool.dao.CustomerDAO;
+import com.codecool.dao.DAO;
 
 /**
  * Hello world!
@@ -8,9 +11,8 @@ import com.codecool.IDGenerator;
  */
 public class App {
     public static void main( String[] args ) {
-        //temp code - please delete if you wish - L.Lesiuk
-        IDGenerator idGenerator = new IDGenerator();
-        System.out.println(idGenerator.generateID());
-
+        //temp code
+        DAO customerDao = new CustomerDAO();
+        Object selectedCustomer = customerDao.getObj("TEMPORARY IRRELEVANT");
     }
 }

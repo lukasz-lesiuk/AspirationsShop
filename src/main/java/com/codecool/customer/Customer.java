@@ -1,7 +1,7 @@
 package com.codecool.customer;
 
 public class Customer {
-    private int customerId;
+    private String customerId;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -12,8 +12,8 @@ public class Customer {
     private String apartmentNo;
     private boolean isLoggedIn;
 
-    public Customer(int customerId, String firstName, String lastName, String phoneNumber,
-                    String emailAddress, String city, String street, String apartmentNo) {
+    public Customer(String customerId, String firstName, String lastName, String phoneNumber,
+                    String emailAddress, String city, String street) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,11 +21,10 @@ public class Customer {
         this.emailAddress = emailAddress;
         this.city = city;
         this.street = street;
-        this.apartmentNo = apartmentNo;
         this.isLoggedIn = false;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 

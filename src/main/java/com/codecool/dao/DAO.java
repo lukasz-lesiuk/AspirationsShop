@@ -4,10 +4,10 @@ import com.codecool.customer.Customer;
 
 import java.util.List;
 
-public interface DAO<Obj> {
-    public Obj getObj(String id);
-    public List<Obj> getAllObj();
-    public void update(Obj objToUpdate);
-    public void add(Obj newObj);
+public interface DAO<T> {
+    public T getObj(String id);
+    public List<T> getAllObj();
+    public void update(T objToUpdate);
+    public void add(T newObj);
     public void delete(String id);
 }
