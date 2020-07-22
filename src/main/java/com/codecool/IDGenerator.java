@@ -7,7 +7,7 @@ public class IDGenerator {
     private final String lettersLower = "abcdefghijklmnopqrstuvwxyz";
     private final String specialCharacters = "^!$%&/()=?{[]}+~#-_.:,<>";
     private final String digits = "0123456789";
-    private String allCharacters = lettersLower + lettersUpper + specialCharacters + digits;
+    private final String allCharacters = lettersLower + lettersUpper + specialCharacters + digits;
     private final int IDLength = 8;
 
     public String generateID() {
