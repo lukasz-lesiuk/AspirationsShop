@@ -1,20 +1,22 @@
 package com.codecool;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Transaction {
     private int quantity, price;
     private String transactionID, productID, customerID;
-    private LocalDate transactionDate;
+    private LocalDateTime transactionDate;
 
-    public Transaction(String transactionID, String productID, String customerID, int quantity, int price) {
+    public Transaction(String transactionID, String productName, String customerID, int quantity, int price) {
         this.transactionID = transactionID;
-        this.productID = productID;
+        this.productID = productName;
         this.customerID = customerID;
         this.quantity = quantity;
         this.price = price;
-        this.transactionDate = LocalDate.now();
+        this.transactionDate = LocalDateTime.now();
     }
+
+    // constructor will take objects: Basket, Customer
 
     public int getQuantity() {
         return quantity;
@@ -36,7 +38,7 @@ public class Transaction {
         return customerID;
     }
 
-    public LocalDate getTransactionDate() {
+    public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 }
