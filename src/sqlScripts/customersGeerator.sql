@@ -12,7 +12,7 @@ CREATE TABLE customers (
 
 INSERT INTO customers VALUES
   ('x%[>j!X#', 'Brandy', 'Winters', '+48695609770 ', 'bw@mail.com', 'Cracow', 'Rakowicka 21'),
-  ('JgsMz0d1', 'Ksawery', 'Moran', '+48694869284 ', 'km@mail.com', 'Cracow', 'ulica 12-121'),
+  ('1', 'Ksawery', 'Moran', '+48694869284 ', 'km@mail.com', 'Cracow', 'ulica 12-121'),
   ('ve55[R<W', 'Kory', 'Vazquez', '+48690437501 ', 'kvazq122e@diffrentmail.com', 'Warsaw', 'inna ulica 7'),
   ('M+MIQP<f', 'Asa', 'Henderson', ' +48690800209 ', 'asa.h@mail.com', 'Sopot', 'yetAnotherStreet 5'),
   (')+e)CWq!', 'Maximus', 'Avery', '+48696855235 ', 'lama121@lama.com', 'Warsaw', 'afaeFEFAFE 13'),

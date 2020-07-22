@@ -3,14 +3,14 @@ package com.codecool.dao;
 import com.codecool.customer.Customer;
 import junit.framework.TestCase;
 
-public class CustomerDAOTest extends TestCase {
+public class CustomerDAOPSQLTest extends TestCase {
 
-    public void testGetObj() {
-        DAO<Customer> customerDAO= new CustomerDAO();
+    public void testGetCustomer() {
+        CustomerDAO customerDAO= new CustomerDAOPSQL();
 
     }
 
-    public void testGetAllObj() {
+    public void testGetAllCustomer() {
     }
 
     public void testUpdate() {
