@@ -42,12 +42,12 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
     @Override
     public List<Customer> getAllCustomers() {
-        int customersQty = getRecordsQty("customers");
+        int customersQty = getRecordsQty2("customers");
         List<Customer> peopleList = new ArrayList<Customer>();
 
         for (int i = 0; i < customersQty; i++) {
             String customerString = retrieveQueryResponseAsString("SELECT * FROM customers LIMIT ? OFFSET ?;",
-                                                                    String.valueOf(i), String.valueOf(i-1));
+                                                                    String.valueOf(i), String.valueOf(i - 1));
             List<String> attributesList = new ArrayList<>(Arrays.asList(customerString.split(", ")));
 
             String customerId = attributesList.get(ID_POSITION);
@@ -94,10 +94,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
             for (String insertValue : insertValues)
              pst.setString(index, insertValue);
 
-             try (ResultSet rs = pst.executeQuery()) {
-                 System.out.println("---");
-                 System.out.println("---");
-                 System.out.println("---");
+            try (ResultSet rs = pst.executeQuery()) {
                  queryResponse = convertResultSetToString(rs);
              }
         } catch (SQLException ex) {
@@ -111,6 +108,27 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private int getRecordsQty(String tableName) {
         String retrievedString = retrieveQueryResponseAsString("SELECT COUNT(*) FROM ? ", tableName);
         return Integer.parseInt(retrievedString);
+    }
+
+    private int getRecordsQty2(String tableName) {
+        int queryResponse = 0;
+        String query = "SELECT COUNT(*) FROM customers ";
+
+
+        try (Connection con = DriverManager.getConnection(url, user, password);
+             PreparedStatement pst = con.prepareStatement(query)) {
+//            pst.setString(1, tableName);
+
+
+            try (ResultSet rs = pst.executeQuery()) {
+                queryResponse =  ((Number) rs.getObject(1)).intValue();
+                System.out.println("---");
+            }
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return  queryResponse;
     }
 
     private String convertResultSetToString(ResultSet resultSet) throws SQLException {
