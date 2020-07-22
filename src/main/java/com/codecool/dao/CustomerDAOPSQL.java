@@ -59,16 +59,48 @@ public class CustomerDAOPSQL implements CustomerDAO {
     @Override
     public void update(Customer customerToUpdate) {
 
-    }
-
-    @Override
-    public void add(Customer newCustomer) {
 
     }
 
     @Override
-    public void delete(String id) {
+    public void addCustomer(Customer newCustomer) {
 
+        String query = "INSERT INTO customers(id, first_name, last_name, phone_number, email, city, street) \n" +
+                "VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection con = DriverManager.getConnection(url, user, password);
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setString(ID_POSITION + 1, newCustomer.getCustomerId());
+            pst.setString(FIRST_NAME_POSITION + 1, newCustomer.getFirstName());
+            pst.setString(LAST_NAME_POSITION + 1, newCustomer.getLastName());
+            pst.setString(PHONE_NO_POSITION + 1, newCustomer.getPhoneNumber());
+            pst.setString(EMAIL_POSITION + 1, newCustomer.getEmailAddress());
+            pst.setString(CITY_POSITION + 1, newCustomer.getCity());
+            pst.setString(STREET_POSITION + 1, newCustomer.getStreet());
+
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+    }
+
+    @Override
+    public void deleteCustomer(String id) {
+
+        String query = "DELETE FROM customers WHERE id = ?;";
+
+        try (Connection con = DriverManager.getConnection(url, user, password);
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setString(1, id);
+
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
     }
 
     private String retrieveQueryResponseAsString(String query, String... insertValues) {
@@ -91,7 +123,6 @@ public class CustomerDAOPSQL implements CustomerDAO {
         }
         return  queryResponse;
     }
-
 
     //Overload
     private String retrieveQueryResponseAsString(String query, Integer... insertValues) {
