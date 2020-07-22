@@ -13,6 +13,7 @@ public class App {
     public static void main( String[] args ) {
         //temp code
         DAO customerDao = new CustomerDAO();
-        Object selectedCustomer = customerDao.getObj("TEMPORARY IRRELEVANT");
+        Object selectedCustomer = customerDao.getObj("JgsMz0d1");
+        System.out.println("ama");
     }
 }
