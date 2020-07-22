@@ -26,9 +26,10 @@ public class CustomerDAOPSQL implements CustomerDAO {
             String street = attributesList.get(6);
             return (new Customer(id, firstName, lastName, phone, email, city, street));
         } catch (java.lang.IndexOutOfBoundsException e) {
-            System.out.println("Id did not match any element from DB");
-            System.exit(1);
-            return null;
+            throw new IllegalArgumentException("Id did not match any element from DB");
+//            System.out.println("Id did not match any element from DB");
+//            System.exit(1);
+//            return null;
         }
     }
 
