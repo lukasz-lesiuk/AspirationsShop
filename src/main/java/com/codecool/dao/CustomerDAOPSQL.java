@@ -42,19 +42,18 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
     @Override
     public List<Customer> getAllCustomers() {
-        int customersQty = getRecordsQty2("customers");
-        List<Customer> peopleList = new ArrayList<Customer>();
+        int customersQty = getRecordsQty("customers");
+        List<Customer> customersList = new ArrayList<Customer>();
 
-        for (int i = 0; i < customersQty; i++) {
+        for (int i = 1; i < customersQty + 1; i++) {
             String customerString = retrieveQueryResponseAsString("SELECT * FROM customers LIMIT ? OFFSET ?;",
-                                                                    String.valueOf(i), String.valueOf(i - 1));
+                                                                    i, (i - 1));
             List<String> attributesList = new ArrayList<>(Arrays.asList(customerString.split(", ")));
 
             String customerId = attributesList.get(ID_POSITION);
-            peopleList.add(getCustomer(customerId));
+            customersList.add(getCustomer(customerId));
         }
-        return peopleList;
-//        return null;
+        return customersList;
     }
 
     @Override
@@ -72,18 +71,6 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
     }
 
-
-//    private String retrieveQueryResponseAsString(String query, String... insertValues) {
-//        ResultSet rs = retrieveQueryResponse(String query, String... insertValues);
-//        String queryResponse = "";
-//        try {
-//            queryResponse = convertResultSetToString(rs);
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//        return queryResponse;
-//    }
-
     private String retrieveQueryResponseAsString(String query, String... insertValues) {
 
          String queryResponse = "";
@@ -91,11 +78,12 @@ public class CustomerDAOPSQL implements CustomerDAO {
         try (Connection con = DriverManager.getConnection(url, user, password);
             PreparedStatement pst = con.prepareStatement(query)) {
             int index = 1;
-            for (String insertValue : insertValues)
-             pst.setString(index, insertValue);
-
+            for (String insertValue : insertValues) {
+                pst.setString(index,  insertValue);
+                index++;
+            }
             try (ResultSet rs = pst.executeQuery()) {
-                 queryResponse = convertResultSetToString(rs);
+                queryResponse = convertResultSetToString(rs);
              }
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
@@ -105,24 +93,37 @@ public class CustomerDAOPSQL implements CustomerDAO {
     }
 
 
-    private int getRecordsQty(String tableName) {
-        String retrievedString = retrieveQueryResponseAsString("SELECT COUNT(*) FROM ? ", tableName);
-        return Integer.parseInt(retrievedString);
-    }
+    //Overload
+    private String retrieveQueryResponseAsString(String query, Integer... insertValues) {
 
-    private int getRecordsQty2(String tableName) {
-        int queryResponse = 0;
-        String query = "SELECT COUNT(*) FROM customers ";
-
+        String queryResponse = "";
 
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement(query)) {
-//            pst.setString(1, tableName);
-
-
+            int index = 1;
+            for (Integer insertValue : insertValues) {
+                pst.setInt(index,  insertValue);
+                index++;
+            }
             try (ResultSet rs = pst.executeQuery()) {
-                queryResponse =  ((Number) rs.getObject(1)).intValue();
-                System.out.println("---");
+                queryResponse = convertResultSetToString(rs);
+            }
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return  queryResponse;
+    }
+
+    private int getRecordsQty(String tableName) {
+        int queryResponse = 0;
+        String query = "SELECT COUNT(*) FROM customers ";
+
+        try (Connection con = DriverManager.getConnection(url, user, password);
+            PreparedStatement pst = con.prepareStatement(query)) { ;
+            try (ResultSet rs = pst.executeQuery()) {
+                rs.next();
+                queryResponse = rs.getInt("count");
             }
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
