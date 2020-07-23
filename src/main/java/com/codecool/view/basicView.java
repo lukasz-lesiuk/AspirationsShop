@@ -20,20 +20,31 @@ public class basicView {
     public static final String ANSI_WHITE = "\u001B[37m";
 
     public void printCustomer(Customer customer) {
+        StringBuilder customerString = new StringBuilder();
         Field[] fields = customer.getClass().getDeclaredFields();
-        for(Field f : fields){
-
-
-        ResultSetMetaData rsmd = resultSet.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-        while (resultSet.next()) {
-            for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) System.out.print(",  ");
-                String columnValue = resultSet.getString(i);
-                System.out.print(columnValue);
-            }
-            System.out.println("");
-        }
+//        for(Field field : fields){
+//            customerString.append(field.getName());
+//            customerString.append(" = ");
+//
+//            customerString.append(field.get(customer));
+//            }
+//            customerString.append("\n");
+//            outputString = outputString + customerString.toString();
+//        }
+        customerString.append(customer.getCustomerId());
+        customerString.append(" | ");
+        customerString.append(customer.getFirstName());
+        customerString.append(" | ");
+        customerString.append(customer.getLastName());
+        customerString.append(" | ");
+        customerString.append(customer.getPhoneNumber());
+        customerString.append(" | ");
+        customerString.append(customer.getEmailAddress());
+        customerString.append(" | ");
+        customerString.append(customer.getCity());
+        customerString.append(" | ");
+        customerString.append(customer.getStreet());
+        System.out.println(customerString.toString());
     }
 
     public void printOptions(List<String> optionsList, String message) {
