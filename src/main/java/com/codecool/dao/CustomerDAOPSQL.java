@@ -26,10 +26,11 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int EMAIL_POSITION = 4;
     private final int CITY_POSITION = 5;
     private final int STREET_POSITION = 6;
+    private final int HASH_POSITION = 7;
 
-    public CustomerDAOPSQL() {
+    public CustomerDAOPSQL(String properties_file) {
 //        /home/lukasz-lesiuk/IdeaProjects/AspirationsShop/src/main/resources/
-        Properties props = readPropertiesFile("src/main/resources/database.properties");
+        Properties props = readPropertiesFile("src/main/resources/" + properties_file);
         this.url = props.getProperty("db.url");
         this.user = props.getProperty("db.user");
         this.password = props.getProperty("db.passwd");
@@ -48,7 +49,8 @@ public class CustomerDAOPSQL implements CustomerDAO {
             String email = attributesList.get(EMAIL_POSITION);
             String city = attributesList.get(CITY_POSITION);
             String street = attributesList.get(STREET_POSITION);
-            return (new Customer(id, firstName, lastName, phone, email, city, street));
+            String hash = attributesList.get(HASH_POSITION);
+            return (new Customer(id, firstName, lastName, phone, email, city, street, hash));
         } catch (java.lang.IndexOutOfBoundsException e) {
             throw new IllegalArgumentException("Id did not match any element from DB");
         }
@@ -73,7 +75,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
     @Override
     public void updateCustomer(Customer customerToUpdate) {
         String query = "UPDATE customers SET  first_name = ?, last_name = ?," +
-                " phone_number = ? , email = ? , city = ?, street = ? WHERE id = ?";
+                " phone_number = ? , email = ? , city = ?, street = ?, hash_password = ? WHERE id = ?";
 
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement(query)) {
@@ -83,7 +85,8 @@ public class CustomerDAOPSQL implements CustomerDAO {
             pst.setString(4, customerToUpdate.getEmailAddress());
             pst.setString(5, customerToUpdate.getCity());
             pst.setString(6, customerToUpdate.getStreet());
-            pst.setString(7, customerToUpdate.getCustomerId());
+            pst.setString(7, customerToUpdate.getPasswordHash());
+            pst.setString(8, customerToUpdate.getCustomerId());
 
             pst.executeUpdate();
 
@@ -97,8 +100,8 @@ public class CustomerDAOPSQL implements CustomerDAO {
     @Override
     public void addCustomer(Customer newCustomer) {
 
-        String query = "INSERT INTO customers(id, first_name, last_name, phone_number, email, city, street) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO customers(id, first_name, last_name, phone_number, email, city, street, hash) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement(query)) {
@@ -109,6 +112,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
             pst.setString(EMAIL_POSITION + 1, newCustomer.getEmailAddress());
             pst.setString(CITY_POSITION + 1, newCustomer.getCity());
             pst.setString(STREET_POSITION + 1, newCustomer.getStreet());
+            pst.setString(HASH_POSITION + 1, newCustomer.getStreet());
 
             pst.executeUpdate();
 
@@ -216,7 +220,6 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
         Properties props = new Properties();
         Path myPath = Paths.get("database2.properties");
-///home/lukasz-lesiuk/IdeaProjects/AspirationsShop/src/main/resources/
 
         try {
             BufferedReader bf = Files.newBufferedReader(myPath,
@@ -237,7 +240,6 @@ public class CustomerDAOPSQL implements CustomerDAO {
             prop = new Properties();
             prop.load(fis);
         } catch(FileNotFoundException fnfe) {
-//            throw new IllegalArgumentException("Id did not match any element from DB");
             fnfe.printStackTrace();
         } catch(IOException ioe) {
             ioe.printStackTrace();

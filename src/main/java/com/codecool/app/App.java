@@ -10,12 +10,12 @@ import java.util.List;
 public class App {
     public static void main( String[] args ) {
         // temp code for testing, feel fre to delete - Lukasz Lesiuk-------------------------------
-        CustomerDAO customerDao = new CustomerDAOPSQL();
+        CustomerDAO customerDao = new CustomerDAOPSQL("database.properties");
         IDGenerator generator = new IDGenerator();
         Customer selectedCustomer = customerDao.getCustomer("JgsMz0d1");
         System.out.println(selectedCustomer.getLastName());
-        //        List<Customer> customerList = customerDao.getAllCustomers();
-//        String id = generator.generateID();
+        List<Customer> customerList = customerDao.getAllCustomers();
+
 //        Customer newCustomer = new Customer(id, "Adam", "Smith", "+121121121212",
 //                                            "adam@smith", "Nowhere", "404");
 //        customerDao.addCustomer(newCustomer);

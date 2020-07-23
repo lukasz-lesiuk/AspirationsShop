@@ -15,9 +15,9 @@ import java.util.List;
 public class CustomerDAOPSQLTest extends TestCase {
 
     public void testGetExistingCustomer() {
-        CustomerDAO customerDAO= new CustomerDAOPSQL();
+        CustomerDAO customerDAO= new CustomerDAOPSQL("database_test.properties");
         Customer selectedCustomer = customerDAO.getCustomer("x%[>j!X#");
-        Customer refCustomer = new Customer("x%[>j!X#", "Adam", "Nowak", "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21");
+        Customer refCustomer = new Customer("x%[>j!X#", "Adam", "Nowak", "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21", "12745634");
         assertEquals(selectedCustomer.getCustomerId(), refCustomer.getCustomerId());
         assertEquals(selectedCustomer.getFirstName(), refCustomer.getFirstName());
         assertEquals(selectedCustomer.getLastName(), refCustomer.getLastName());
@@ -30,7 +30,7 @@ public class CustomerDAOPSQLTest extends TestCase {
     public void testGetNonexistentCustomer() {
         Throwable exception = assertThrows(
                 IllegalArgumentException.class, () -> {
-                    CustomerDAO customerDAO = new CustomerDAOPSQL();
+                    CustomerDAO customerDAO = new CustomerDAOPSQL("database_test.properties");
                     Customer selectedCustomer = customerDAO.getCustomer("invalidId");
                 }
         );
@@ -38,17 +38,17 @@ public class CustomerDAOPSQLTest extends TestCase {
     }
 
     public void testGetAllCustomerExistingDB() {
-        CustomerDAO customerDAO= new CustomerDAOPSQL();
+        CustomerDAO customerDAO= new CustomerDAOPSQL("database_test.properties");
         List<Customer> actualCustomers = customerDAO.getAllCustomers();
         List<Customer> expectedCustomers = new ArrayList<Customer>();
         expectedCustomers.add(new Customer("x%[>j!X#", "Adam", "Nowak", "+48695609770",
-                                        "alpaka@mlamamail.com", "Cracow", "Rakowicka 21"));
+                                        "alpaka@mlamamail.com", "Cracow", "Rakowicka 21", "12745634"));
         expectedCustomers.add(new Customer("JgsMz0d1", "Szymon", "Kowalsk", "+48694869284",
-                                        "mail2@mail.com", "Cracow", "ulica 12-121"));
+                                        "mail2@mail.com", "Cracow", "ulica 12-121", "32155726"));
         expectedCustomers.add(new Customer("ve55[R<W", "John", "Lama", "+48690437501",
-                                        "mail3@diffrentmail.com", "Dehli", "inna ulica 7"));
+                                        "mail3@diffrentmail.com", "Dehli", "inna ulica 7", "243663543"));
         expectedCustomers.add(new Customer("M+MIQP<f", "Mike", "Huntingthon", "+48690800209",
-                                        "mail4@mail.com", "Nagoja", "yetAnotherStreet 5"));
+                                        "mail4@mail.com", "Nagoja", "yetAnotherStreet 5", "2354624"));
         Field[] fieldsActual0 = actualCustomers.get(0).getClass().getDeclaredFields();
         Field[] fieldsExpected0 = expectedCustomers.get(0).getClass().getDeclaredFields();
 
@@ -69,14 +69,14 @@ public class CustomerDAOPSQLTest extends TestCase {
     }
 
     public void testUpdateLastName() {
-        CustomerDAO customerDAO= new CustomerDAOPSQL();
+        CustomerDAO customerDAO= new CustomerDAOPSQL("database_test.properties");
         String updatedLastName = "NewLastName";
         customerDAO.updateCustomer(new Customer("x%[>j!X#", "Adam", updatedLastName,
-                "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21"));
+                "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21", "12745634"));
         Customer selectedCustomer = customerDAO.getCustomer("x%[>j!X#");
         assertEquals(updatedLastName, selectedCustomer.getLastName());
         customerDAO.updateCustomer(new Customer("x%[>j!X#", "Adam", "Nowak",
-                "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21"));
+                "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21", "12745634"));
     }
 
     public void testAdd() {

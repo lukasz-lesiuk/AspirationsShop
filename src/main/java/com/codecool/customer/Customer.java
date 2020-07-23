@@ -8,12 +8,10 @@ public class Customer {
     private String emailAddress;
     private String city;
     private String street;
-//    apartment no as a string to accommodate for 19/2 etc;
-    private String apartmentNo;
-    private boolean isLoggedIn;
+    private String passwordHash;
 
     public Customer(String customerId, String firstName, String lastName, String phoneNumber,
-                    String emailAddress, String city, String street) {
+                    String emailAddress, String city, String street, String passwordHash) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,7 +19,7 @@ public class Customer {
         this.emailAddress = emailAddress;
         this.city = city;
         this.street = street;
-        this.isLoggedIn = false;
+        this.passwordHash = passwordHash;
     }
 
     public String getCustomerId() {
@@ -52,15 +50,8 @@ public class Customer {
         return street;
     }
 
-    public String getApartmentNo() {
-        return apartmentNo;
-    }
 
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        isLoggedIn = loggedIn;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 }
