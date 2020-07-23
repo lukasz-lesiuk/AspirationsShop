@@ -31,7 +31,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int STREET_POSITION = 6;
 
     public CustomerDAOPSQL() {
-        Properties props = readPropertiesFile("database.properties");
+//        Properties props = readPropertiesFile("database.properties");
 //        this.url = props.getProperty("db.url");
 //        this.user = props.getProperty("db.user");
 //        this.password = props.getProperty("db.user");
