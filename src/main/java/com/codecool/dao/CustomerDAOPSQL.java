@@ -57,15 +57,33 @@ public class CustomerDAOPSQL implements CustomerDAO {
     }
 
     @Override
-    public void update(Customer customerToUpdate) {
+    public void updateCustomer(Customer customerToUpdate) {
+        String query = "UPDATE customers SET  first_name = ?, last_name = ?," +
+                " phone_number = ? , email = ? , city = ?, street = ? WHERE id = ?";
 
+        try (Connection con = DriverManager.getConnection(url, user, password);
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setString(1, customerToUpdate.getFirstName());
+            pst.setString(2, customerToUpdate.getLastName());
+            pst.setString(3, customerToUpdate.getPhoneNumber());
+            pst.setString(4, customerToUpdate.getEmailAddress());
+            pst.setString(5, customerToUpdate.getCity());
+            pst.setString(6, customerToUpdate.getStreet());
+            pst.setString(7, customerToUpdate.getCustomerId());
+
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
 
     }
 
     @Override
     public void addCustomer(Customer newCustomer) {
 
-        String query = "INSERT INTO customers(id, first_name, last_name, phone_number, email, city, street) \n" +
+        String query = "INSERT INTO customers(id, first_name, last_name, phone_number, email, city, street) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = DriverManager.getConnection(url, user, password);
