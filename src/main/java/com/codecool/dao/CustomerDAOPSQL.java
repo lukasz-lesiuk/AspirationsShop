@@ -2,17 +2,26 @@ package com.codecool.dao;
 
 import com.codecool.customer.Customer;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CustomerDAOPSQL implements CustomerDAO {
-    private String url = "jdbc:postgresql://localhost:5432/aspirations_shop";
-    private String user = "postgres";
-    private String password = "sMuGa1@1";
+    private String url;
+    private String user;
+    private String password;
     private final int ID_POSITION = 0;
     private final int FIRST_NAME_POSITION = 1;
     private final int LAST_NAME_POSITION = 2;
@@ -20,6 +29,16 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int EMAIL_POSITION = 4;
     private final int CITY_POSITION = 5;
     private final int STREET_POSITION = 6;
+
+    public CustomerDAOPSQL() {
+        Properties props = readPropertiesFile("database.properties");
+//        this.url = props.getProperty("db.url");
+//        this.user = props.getProperty("db.user");
+//        this.password = props.getProperty("db.user");
+        this.url = "jdbc:postgresql://localhost:5432/aspirations_shop";
+        this.user = "postgres";
+        this.password = "sMuGa1@1";
+    }
 
     @Override
     public Customer getCustomer(String id) {
@@ -196,5 +215,43 @@ public class CustomerDAOPSQL implements CustomerDAO {
             }
         }
         return queryResponse;
+    }
+
+    private Properties readProperties() {
+
+        Properties props = new Properties();
+        Path myPath = Paths.get("database2.properties");
+///home/lukasz-lesiuk/IdeaProjects/AspirationsShop/src/main/resources/
+
+        try {
+            BufferedReader bf = Files.newBufferedReader(myPath,
+                    StandardCharsets.UTF_8);
+            props.load(bf);
+        } catch (IOException ex) {
+            Logger.getLogger(CustomerDAOPSQL.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return props;
+    }
+
+    private Properties readPropertiesFile(String fileName) {
+        FileInputStream fis = null;
+        Properties prop = null;
+        try {
+            fis = new FileInputStream(fileName);
+            prop = new Properties();
+            prop.load(fis);
+        } catch(FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return prop;
     }
 }
