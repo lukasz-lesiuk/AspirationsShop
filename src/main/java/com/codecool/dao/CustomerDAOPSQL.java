@@ -112,7 +112,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
             pst.setString(EMAIL_POSITION + 1, newCustomer.getEmailAddress());
             pst.setString(CITY_POSITION + 1, newCustomer.getCity());
             pst.setString(STREET_POSITION + 1, newCustomer.getStreet());
-            pst.setString(HASH_POSITION + 1, newCustomer.getStreet());
+            pst.setString(HASH_POSITION + 1, newCustomer.getPasswordHash());
 
             pst.executeUpdate();
 

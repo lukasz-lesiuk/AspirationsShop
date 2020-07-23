@@ -25,6 +25,7 @@ public class CustomerDAOPSQLTest extends TestCase {
         assertEquals(selectedCustomer.getEmailAddress(), refCustomer.getEmailAddress());
         assertEquals(selectedCustomer.getCity(), refCustomer.getCity());
         assertEquals(selectedCustomer.getStreet(), refCustomer.getStreet());
+        assertEquals(selectedCustomer.getPasswordHash(), refCustomer.getPasswordHash());
     }
 
     public void testGetNonexistentCustomer() {
