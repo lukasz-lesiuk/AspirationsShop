@@ -9,7 +9,7 @@ import java.util.List;
 
 public class App {
     public static void main( String[] args ) {
-        //temp code for testing, feel fre to delete - Lukasz Lesiuk
+        // temp code for testing, feel fre to delete - Lukasz Lesiuk-------------------------------
         CustomerDAO customerDao = new CustomerDAOPSQL();
         IDGenerator generator = new IDGenerator();
         Customer selectedCustomer = customerDao.getCustomer("JgsMz0d1");
@@ -23,6 +23,6 @@ public class App {
 //        customerDao.updateCustomer(new Customer("/i1s)]+h", "Adam", "Smith", "+121121121212",
 //                "adam@smith", "Nowhere", "505"));
         System.out.println("END");
-
+        //-----------------------------------------------------------------------------------------
     }
 }
