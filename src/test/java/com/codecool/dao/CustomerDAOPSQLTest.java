@@ -1,9 +1,16 @@
 package com.codecool.dao;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.codecool.customer.Customer;
 import junit.framework.TestCase;
+import org.junit.Assert;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDAOPSQLTest extends TestCase {
 
@@ -30,10 +37,46 @@ public class CustomerDAOPSQLTest extends TestCase {
         assertEquals("Id did not match any element from DB", exception.getMessage());
     }
 
-    public void testGetAllCustomer() {
+    public void testGetAllCustomerExistingDB() {
+        CustomerDAO customerDAO= new CustomerDAOPSQL();
+        List<Customer> actualCustomers = customerDAO.getAllCustomers();
+        List<Customer> expectedCustomers = new ArrayList<Customer>();
+        expectedCustomers.add(new Customer("x%[>j!X#", "Adam", "Nowak", "+48695609770",
+                                        "alpaka@mlamamail.com", "Cracow", "Rakowicka 21"));
+        expectedCustomers.add(new Customer("JgsMz0d1", "Szymon", "Kowalsk", "+48694869284",
+                                        "mail2@mail.com", "Cracow", "ulica 12-121"));
+        expectedCustomers.add(new Customer("ve55[R<W", "John", "Lama", "+48690437501",
+                                        "mail3@diffrentmail.com", "Dehli", "inna ulica 7"));
+        expectedCustomers.add(new Customer("M+MIQP<f", "Mike", "Huntingthon", "+48690800209",
+                                        "mail4@mail.com", "Nagoja", "yetAnotherStreet 5"));
+        Field[] fieldsActual0 = actualCustomers.get(0).getClass().getDeclaredFields();
+        Field[] fieldsExpected0 = expectedCustomers.get(0).getClass().getDeclaredFields();
+
+        Field[] fieldsActual1 = actualCustomers.get(0).getClass().getDeclaredFields();
+        Field[] fieldsExpected1 = expectedCustomers.get(0).getClass().getDeclaredFields();
+
+        Field[] fieldsActual2 = actualCustomers.get(0).getClass().getDeclaredFields();
+        Field[] fieldsExpected2 = expectedCustomers.get(0).getClass().getDeclaredFields();
+
+        Field[] fieldsActual3 = actualCustomers.get(0).getClass().getDeclaredFields();
+        Field[] fieldsExpected3 = expectedCustomers.get(0).getClass().getDeclaredFields();
+
+        assertThat(fieldsActual0, is(fieldsExpected0));
+        assertThat(fieldsActual1, is(fieldsExpected1));
+        assertThat(fieldsActual2, is(fieldsExpected2));
+        assertThat(fieldsActual3, is(fieldsExpected3));
+
     }
 
-    public void testUpdate() {
+    public void testUpdateLastName() {
+        CustomerDAO customerDAO= new CustomerDAOPSQL();
+        String updatedLastName = "NewLastName";
+        customerDAO.updateCustomer(new Customer("x%[>j!X#", "Adam", updatedLastName,
+                "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21"));
+        Customer selectedCustomer = customerDAO.getCustomer("x%[>j!X#");
+        assertEquals(updatedLastName, selectedCustomer.getLastName());
+        customerDAO.updateCustomer(new Customer("x%[>j!X#", "Adam", "Nowak",
+                "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21"));
     }
 
     public void testAdd() {

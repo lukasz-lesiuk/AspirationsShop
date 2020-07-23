@@ -28,23 +28,10 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int STREET_POSITION = 6;
 
     public CustomerDAOPSQL() {
-//        //Creating a File object for directory
-//        File directoryPath = new File("resources");
-//        //List of all files and directories
-//        String contents[] = directoryPath.list();
-//        System.out.println("List of files and directories in the specified directory:");
-//        for(int i=0; i<contents.length; i++) {
-//            System.out.println(contents[i]);
-//        }
-
         Properties props = readPropertiesFile("/home/lukasz-lesiuk/IdeaProjects/AspirationsShop/src/main/resources/database.properties");
         this.url = props.getProperty("db.url");
         this.user = props.getProperty("db.user");
         this.password = props.getProperty("db.passwd");
-;
-//        this.url = "jdbc:postgresql://localhost:5432/aspirations_shop";
-//        this.user = "postgres";
-//        this.password = "sMuGa1@1";
     }
 
     @Override
@@ -249,6 +236,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
             prop = new Properties();
             prop.load(fis);
         } catch(FileNotFoundException fnfe) {
+//            throw new IllegalArgumentException("Id did not match any element from DB");
             fnfe.printStackTrace();
         } catch(IOException ioe) {
             ioe.printStackTrace();
