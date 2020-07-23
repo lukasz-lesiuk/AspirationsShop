@@ -9,8 +9,8 @@ public class CustomerDAOPSQLTest extends TestCase {
 
     public void testGetExistingCustomer() {
         CustomerDAO customerDAO= new CustomerDAOPSQL();
-        Customer selectedCustomer = customerDAO.getCustomer("JgsMz0d1");
-        Customer refCustomer = new Customer("JgsMz0d1", "Ksawery", "Moran", "+48694869284 ", "km@mail.com", "Cracow", "ulica 12-121");
+        Customer selectedCustomer = customerDAO.getCustomer("x%[>j!X#");
+        Customer refCustomer = new Customer("x%[>j!X#", "Adam", "Nowak", "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21");
         assertEquals(selectedCustomer.getCustomerId(), refCustomer.getCustomerId());
         assertEquals(selectedCustomer.getFirstName(), refCustomer.getFirstName());
         assertEquals(selectedCustomer.getLastName(), refCustomer.getLastName());

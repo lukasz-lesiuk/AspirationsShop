@@ -2,10 +2,7 @@ package com.codecool.dao;
 
 import com.codecool.customer.Customer;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,13 +28,23 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int STREET_POSITION = 6;
 
     public CustomerDAOPSQL() {
-//        Properties props = readPropertiesFile("database.properties");
-//        this.url = props.getProperty("db.url");
-//        this.user = props.getProperty("db.user");
-//        this.password = props.getProperty("db.user");
-        this.url = "jdbc:postgresql://localhost:5432/aspirations_shop";
-        this.user = "postgres";
-        this.password = "sMuGa1@1";
+//        //Creating a File object for directory
+//        File directoryPath = new File("resources");
+//        //List of all files and directories
+//        String contents[] = directoryPath.list();
+//        System.out.println("List of files and directories in the specified directory:");
+//        for(int i=0; i<contents.length; i++) {
+//            System.out.println(contents[i]);
+//        }
+
+        Properties props = readPropertiesFile("/home/lukasz-lesiuk/IdeaProjects/AspirationsShop/src/main/resources/database.properties");
+        this.url = props.getProperty("db.url");
+        this.user = props.getProperty("db.user");
+        this.password = props.getProperty("db.passwd");
+;
+//        this.url = "jdbc:postgresql://localhost:5432/aspirations_shop";
+//        this.user = "postgres";
+//        this.password = "sMuGa1@1";
     }
 
     @Override

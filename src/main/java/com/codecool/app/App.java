@@ -13,7 +13,8 @@ public class App {
         CustomerDAO customerDao = new CustomerDAOPSQL();
         IDGenerator generator = new IDGenerator();
         Customer selectedCustomer = customerDao.getCustomer("JgsMz0d1");
-//        List<Customer> customerList = customerDao.getAllCustomers();
+        System.out.println(selectedCustomer.getLastName());
+        //        List<Customer> customerList = customerDao.getAllCustomers();
 //        String id = generator.generateID();
 //        Customer newCustomer = new Customer(id, "Adam", "Smith", "+121121121212",
 //                                            "adam@smith", "Nowhere", "404");
