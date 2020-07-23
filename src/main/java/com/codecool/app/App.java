@@ -4,6 +4,7 @@ import com.codecool.IDGenerator;
 import com.codecool.customer.Customer;
 import com.codecool.dao.CustomerDAO;
 import com.codecool.dao.CustomerDAOPSQL;
+import com.codecool.view.basicView;
 
 import java.util.List;
 
@@ -13,9 +14,11 @@ public class App {
         CustomerDAO customerDao = new CustomerDAOPSQL("database.properties");
         IDGenerator generator = new IDGenerator();
         Customer selectedCustomer = customerDao.getCustomer("JgsMz0d1");
-        System.out.println(selectedCustomer.getLastName());
         List<Customer> customerList = customerDao.getAllCustomers();
-
+        basicView view = new basicView();
+        view.printCustomer(selectedCustomer);
+        //        List<Customer> customerList = customerDao.getAllCustomers();
+//        String id = generator.generateID();
 //        Customer newCustomer = new Customer(id, "Adam", "Smith", "+121121121212",
 //                                            "adam@smith", "Nowhere", "404");
 //        customerDao.addCustomer(newCustomer);
