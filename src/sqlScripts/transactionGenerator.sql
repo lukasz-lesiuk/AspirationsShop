@@ -20,7 +20,7 @@ CREATE TABLE transaction_product (
     ID SERIAL,
     transactionID character varying(255) NOT NULL,
     productID character varying(255) NOT NULL,
-    cost integer NOT NULL,
+    prize integer NOT NULL,
     quantity integer NOT NULL,
 
     PRIMARY KEY (ID),
