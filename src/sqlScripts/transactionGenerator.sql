@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS transaction_details;
+DROP TABLE IF EXISTS transaction_details CASCADE;
 DROP TABLE IF EXISTS transaction_product;
 
 
@@ -13,7 +13,8 @@ CREATE TABLE transaction_details (
 
 INSERT INTO transaction_details VALUES
 ('11111111', '22222222', '2020-07-15'),
-('33333333', '44444444', '2020-07-16');
+('33333333', '44444444', '2020-07-16'),
+('88888888', '88888888', '2018-05-19');
 
 
 CREATE TABLE transaction_product (
@@ -24,7 +25,7 @@ CREATE TABLE transaction_product (
     quantity integer NOT NULL,
 
     PRIMARY KEY (ID),
-    FOREIGN KEY (transactionID) REFERENCES transaction_details(transactionID)
+    FOREIGN KEY (transactionID) REFERENCES transaction_details(transactionID) ON DELETE CASCADE
 );
 
 INSERT INTO transaction_product VALUES
@@ -32,4 +33,6 @@ INSERT INTO transaction_product VALUES
 (2, '11111111', 'bbbbbbbb', 20, 3),
 (3, '33333333', 'aaaaaaaa', 15, 2),
 (4, '33333333', 'bbbbbbbb', 20, 2),
-(5, '33333333', 'cccccccc', 10, 2);
+(5, '33333333', 'cccccccc', 10, 2),
+(6, '88888888', 'ffffffff', 11, 3),
+(7, '88888888', 'ffffffff', 14, 5);
