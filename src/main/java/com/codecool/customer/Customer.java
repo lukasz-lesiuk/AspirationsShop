@@ -1,19 +1,17 @@
 package com.codecool.customer;
 
 public class Customer {
-    private int customerId;
+    private String customerId;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String emailAddress;
     private String city;
     private String street;
-//    apartment no as a string to accommodate for 19/2 etc;
-    private String apartmentNo;
-    private boolean isLoggedIn;
+    private String passwordHash;
 
-    public Customer(int customerId, String firstName, String lastName, String phoneNumber,
-                    String emailAddress, String city, String street, String apartmentNo) {
+    public Customer(String customerId, String firstName, String lastName, String phoneNumber,
+                    String emailAddress, String city, String street, String passwordHash) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,11 +19,10 @@ public class Customer {
         this.emailAddress = emailAddress;
         this.city = city;
         this.street = street;
-        this.apartmentNo = apartmentNo;
-        this.isLoggedIn = false;
+        this.passwordHash = passwordHash;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
@@ -53,15 +50,8 @@ public class Customer {
         return street;
     }
 
-    public String getApartmentNo() {
-        return apartmentNo;
-    }
 
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        isLoggedIn = loggedIn;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 }

@@ -1,8 +1,11 @@
 # Default ignored files
 /shelf/
 /.idea/workspace.xml
+/.idea
 
-
+# Database proporties are different for everyone
+/src/main/resources/database.properties
+/src/main/resources/database_test.properties
 
 # Created by https://www.toptal.com/developers/gitignore/api/maven,intellij,java
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,intellij,java
