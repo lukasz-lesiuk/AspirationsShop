@@ -86,7 +86,7 @@ public class SQLTransactionDAO implements TransactionDAO {
 
              while (rs2.next()){
                 String productID = rs1.getString("productID");
-                Integer price = rs1.getInt("prize");
+                Integer price = rs1.getInt("price");
                 Integer quantity = rs1.getInt("quantity");
 
                 List<Integer> value = new ArrayList<>();
