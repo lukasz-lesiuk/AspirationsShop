@@ -49,9 +49,10 @@ public class RegistrationController {
 
     private String getPassword() {
         String password;
+        PasswordChecker checker = new PasswordChecker();
         do {
             password = input("Enter password");
-            while (!isPasswordGood(password)) {
+            while (!checker.isPasswordGood(password)) {
                 view.printMessage("This password didn't meet the policy requirements.");
                 input("Enter password");
             }
@@ -62,36 +63,5 @@ public class RegistrationController {
         } while (!input("Enter password again").equals(password));
 
         return Integer.toString(password.hashCode());
-    }
-
-    private boolean isPasswordGood(String password) {
-        boolean result = true;
-        if (password.length()<8 || !hasDifferentChars(password)){
-            result = false;
-        }
-        return result;
-    }
-
-    private boolean hasDifferentChars(String password) {
-        int hasDigit = 0;
-        int hasUpper = 0;
-        int hasLower = 0;
-        int hasSpecial = 0;
-        char[] chars = password.toCharArray();
-
-        for (char aChar : chars) {
-            if (Character.isDigit(aChar)) {
-                hasDigit = 1;
-            } else if (Character.isLowerCase(aChar)){
-                hasLower = 1;
-            } else if (Character.isUpperCase(aChar)){
-                hasUpper = 1;
-            } else if (!Character.isLetterOrDigit(aChar)){
-                hasSpecial = 1;
-            }
-        }
-
-        int sum = hasDigit + hasLower + hasUpper + hasSpecial;
-        return sum >= 3;
     }
 }
