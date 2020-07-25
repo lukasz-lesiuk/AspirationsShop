@@ -13,7 +13,7 @@ public class RegistrationController {
     CustomerDAO customerDAO;
     IDGenerator idGen;
 
-    RegistrationController() {
+    public RegistrationController() {
         this.customerDAO = new CustomerDAOPSQL("/home/irrehaare/CodeCool/Java/AspirationsShop/src/main/resources/");
         this.view = new RegistrationView();
         this.idGen = new IDGenerator();
@@ -52,10 +52,11 @@ public class RegistrationController {
         do {
             password = input("Enter password");
             while (!isPasswordGood(password)) {
-                input("This password didn't meet the policy requirements.\nEnter password");
+                view.printMessage("This password didn't meet the policy requirements.");
+                input("Enter password");
             }
             if (!input("Enter password again").equals(password)){
-                view.print("Passwords didn't match. Press Enter and try again.");
+                view.printMessage("Passwords didn't match. Press Enter and try again.");
                 scan.nextLine();
             }
         } while (!input("Enter password again").equals(password));
