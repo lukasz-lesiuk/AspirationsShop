@@ -29,8 +29,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int HASH_POSITION = 7;
 
     public CustomerDAOPSQL(String properties_file) {
-//        /home/lukasz-lesiuk/IdeaProjects/AspirationsShop/src/main/resources/
-        Properties props = readPropertiesFile("src/main/resources/" + properties_file);
+        Properties props = readPropertiesFile("./src/main/resources/" + properties_file);
         this.url = props.getProperty("db.url");
         this.user = props.getProperty("db.user");
         this.password = props.getProperty("db.passwd");
