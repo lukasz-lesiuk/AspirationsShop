@@ -1,5 +1,6 @@
 package com.codecool.app;
 
+import com.codecool.access.LoginController;
 import com.codecool.access.RegistrationController;
 import com.codecool.customer.Customer;
 import com.codecool.dao.CustomerDAO;
@@ -51,7 +52,8 @@ public class RootController {
     }
 
     private void login() {
-        // TODO to be implemented
+        LoginController logCon = new LoginController();
+        logCon.run();
     }
 
     private void register() {
