@@ -63,4 +63,13 @@ public class Transaction {
         return mapOfItems;
     }
 
+    public Integer calculateTotalValue() {
+        Integer totalValue = 0;
+
+        for(Map.Entry<String, List<Integer>> entry : transactionItems.entrySet()) {
+            totalValue += entry.getValue().get(0) * entry.getValue().get(1);
+        }
+
+        return totalValue;
+    }
 }

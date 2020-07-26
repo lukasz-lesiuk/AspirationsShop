@@ -169,7 +169,7 @@ public class SQLTransactionDAO implements TransactionDAO {
     public List<Transaction> getAllTransactions(){
         String query = "SELECT * FROM transaction_details";
 
-        List<Transaction> transactionsListByCustomer = new ArrayList<>();
+        List<Transaction> transactionsList = new ArrayList<>();
 
         try (Connection con = DriverManager.getConnection(url, username, password);
              PreparedStatement pst = con.prepareStatement(query)) {
@@ -179,14 +179,14 @@ public class SQLTransactionDAO implements TransactionDAO {
             while (rs.next()){
                 String transaction_ID = rs.getString("transactionID");
                 Transaction transaction = getTransaction(transaction_ID);
-                transactionsListByCustomer.add(transaction);
+                transactionsList.add(transaction);
             }
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        return transactionsListByCustomer;
+        return transactionsList;
     }
 
 
