@@ -1,5 +1,7 @@
 package com.codecool.transaction;
 
+import com.codecool.shopping.Basket;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
