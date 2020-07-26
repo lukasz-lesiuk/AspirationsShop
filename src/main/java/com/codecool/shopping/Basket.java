@@ -1,9 +1,8 @@
 package com.codecool.shopping;
 
-import com.codecool.transaction.Product;
+import com.codecool.product.Product;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Basket {
     private Map<Product, Integer> MapProduckt;
@@ -52,7 +51,4 @@ public class Basket {
         }
         return totalValue;
     }
-
 }
-
-

@@ -1,6 +1,6 @@
 package com.codecool.shopping;
 
-import com.codecool.transaction.Product;
+import com.codecool.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;

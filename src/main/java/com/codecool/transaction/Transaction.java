@@ -1,5 +1,6 @@
 package com.codecool.transaction;
 
+import com.codecool.product.Product;
 import com.codecool.shopping.Basket;
 
 import java.sql.Date;

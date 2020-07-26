@@ -1,23 +1,23 @@
 package com.codecool.shopping;
 
-import com.codecool.transaction.Product;
+import com.codecool.product.Product;
 import com.codecool.view.basicView;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class BasketView extends basicView {
 
     Scanner scan = new Scanner(System.in);
 
-    public void viewAllProducts(Map<Product, Integer> allProducktsInBasket){
-        if (!allProducktsInBasket.isEmpty()) {
+    public void viewAllProducts(Map<Product, Integer> allProductsInBasket) {
+        List<Product> listOfProducts = createProductSet(allProductsInBasket);
+
+        if (!allProductsInBasket.isEmpty()) {
             int productIndex = 1;
-            for (Map.Entry<Product, Integer> entry : allProducktsInBasket.entrySet()) {
-                String productName = entry.getKey().getProductName();
-                Integer price = entry.getKey().getPrice();
-                Integer quantity = entry.getValue();
+            for (Product product : listOfProducts) {
+                String productName = product.getProductName();
+                Integer price = product.getPrice();
+                Integer quantity = allProductsInBasket.get(product);
                 Integer value = price * quantity;
 
                 System.out.format("|%2s|%15s|%6s|%9s|%7s|\n", productIndex, productName, price, quantity,
@@ -27,10 +27,17 @@ public class BasketView extends basicView {
             }
         }
         else{
-                printMessage("You basket is empty. Use our broser to add products");
+                printMessage("You basket is empty. Use our browser to add products");
             }
     }
 
+    private List<Product> createProductSet(Map<Product, Integer> allProductsInBasket) {
+        Set<Product> productsSet = allProductsInBasket.keySet();
+        List<Product> listOfProducts = new ArrayList<>();
+        listOfProducts.addAll(productsSet);
+
+        return listOfProducts;
+    }
 
     public String input(String message){
         System.out.print(message + ": ");

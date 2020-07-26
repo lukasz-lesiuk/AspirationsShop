@@ -1,11 +1,7 @@
 package com.codecool.shopping;
 
-import com.codecool.app.RootView;
-import com.codecool.transaction.Product;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class BasketController {
 

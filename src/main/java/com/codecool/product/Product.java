@@ -1,11 +1,9 @@
-package com.codecool.transaction;
+package com.codecool.product;
 
 public class Product {
     private String productID;
     private Integer price;
     private Integer quantity;
-
-
     private String productName;
 
     public String getProductID() {
