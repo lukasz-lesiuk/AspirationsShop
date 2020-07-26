@@ -133,37 +133,37 @@ public class SQLTransactionDAO implements TransactionDAO {
         return transactionsListByCustomer;
     }
 
-//    @Override
-//    //!!! casting date!!!
-//    public List<Transaction> getAllTransactionsByDate(java.util.Date fromDate, java.util.Date toDate){
-//
-//        String query = "SELECT * FROM transaction_details WHERE transaction_date > '?' AND " +
-//                "WHERE transaction_date < '?';";
-//
-//        Integer from_Date = 0;
-//        Integer to_Date = 0;
-//
-//        List<Transaction> transactionsListByCustomer = new ArrayList<>();
-//
-//        try (Connection con = DriverManager.getConnection(url, username, password);
-//             PreparedStatement pst = con.prepareStatement(query)) {
-//
-//            pst.setDate(from_Date + 1, fromDate);
-//            pst.setDate(from_Date + 1, toDate);
-//            ResultSet rs = pst.executeQuery();
-//
-//            while (rs.next()){
-//                String transaction_ID = rs.getString("transactionID");
-//                Transaction transaction = getTransaction(transaction_ID);
-//                transactionsListByCustomer.add(transaction);
-//            }
-//
-//        } catch (SQLException ex) {
-//            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
-//            lgr.log(Level.SEVERE, ex.getMessage(), ex);
-//        }
-//        return transactionsListByCustomer;
-//    }
+    @Override
+    //!!! casting date!!!
+    public List<Transaction> getAllTransactionsByDate(Date fromDate, Date toDate){
+
+        String query = "SELECT * FROM transaction_details WHERE transaction_date > '?' AND " +
+                "WHERE transaction_date < '?';";
+
+        Integer from_Date = 0;
+        Integer to_Date = 0;
+
+        List<Transaction> transactionsListByCustomer = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(url, username, password);
+             PreparedStatement pst = con.prepareStatement(query)) {
+
+            pst.setDate(from_Date + 1, fromDate);
+            pst.setDate(from_Date + 1, toDate);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()){
+                String transaction_ID = rs.getString("transactionID");
+                Transaction transaction = getTransaction(transaction_ID);
+                transactionsListByCustomer.add(transaction);
+            }
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return transactionsListByCustomer;
+    }
 
     @Override
     public List<Transaction> getAllTransactions(){
