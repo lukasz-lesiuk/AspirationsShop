@@ -1,6 +1,5 @@
 package com.codecool.transactionDAO;
 
-import com.codecool.transaction.Product;
 import com.codecool.transaction.Transaction;
 
 import java.sql.*;
@@ -106,7 +105,7 @@ public class SQLTransactionDAO implements TransactionDAO {
         return transaction;
     }
 
-        @Override
+    @Override
     public List<Transaction> getAllTransactionsByCustomer(String customerID) {
         String query = "SELECT * FROM transaction_details WHERE customerID = '?';";
 
@@ -134,14 +133,13 @@ public class SQLTransactionDAO implements TransactionDAO {
     }
 
     @Override
-    //!!! casting date!!!
     public List<Transaction> getAllTransactionsByDate(Date fromDate, Date toDate){
 
         String query = "SELECT * FROM transaction_details WHERE transaction_date > '?' AND " +
                 "WHERE transaction_date < '?';";
 
         Integer from_Date = 0;
-        Integer to_Date = 0;
+        Integer to_Date = 1;
 
         List<Transaction> transactionsListByCustomer = new ArrayList<>();
 
@@ -149,7 +147,7 @@ public class SQLTransactionDAO implements TransactionDAO {
              PreparedStatement pst = con.prepareStatement(query)) {
 
             pst.setDate(from_Date + 1, fromDate);
-            pst.setDate(from_Date + 1, toDate);
+            pst.setDate(to_Date + 1, toDate);
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()){
@@ -188,7 +186,6 @@ public class SQLTransactionDAO implements TransactionDAO {
         }
         return transactionsList;
     }
-
 
     @Override
     public int deleteTransaction(String transactionID) {

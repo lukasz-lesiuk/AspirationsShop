@@ -11,7 +11,6 @@ public interface TransactionDAO {
     public List<Transaction> getAllTransactionsByCustomer(String customerID);
     public List<Transaction> getAllTransactionsByDate(Date fromDate, Date toDate);
     public List<Transaction> getAllTransactions();
-
     public int deleteTransaction(String transactionID);
 
     // UPDATE
