@@ -1,41 +1,38 @@
 package com.codecool;
 
+import com.codecool.transaction.Product;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Basket {
-    // to change Object for product class
-    private Map<Object, Integer> MapProduckt;
+    // to change Product for product class
+    private Map<Product, Integer> MapProduckt;
 
     Basket(){
         this.MapProduckt = new HashMap<>();
     }
 
-    public Map<Object, Integer> getMapProduckt() {
+    public Map<Product, Integer> getTransactionProducts() {
         return MapProduckt;
     }
 
-    public void addProduct(Object product) {
+    public void addProduct(Product product) {
         if (MapProduckt.containsKey(product)) {
             MapProduckt.put(product, MapProduckt.get(product) + 1);
         } else {
             MapProduckt.put(product, 1);
         }
     }
-    public void addProduct(Object product, Integer quantity) {
+    public void addProduct(Product product, Integer quantity) {
         if (MapProduckt.containsKey(product)) {
             MapProduckt.put(product, MapProduckt.get(product) + quantity);
         } else {
             MapProduckt.put(product, quantity);
         }
     }
-//    public void deleteProduct(Object product, Integer quantity) {
-//        if (MapProduckt.containsKey(product)) {
-//            MapProduckt.remove(product);
-//        }
-//    }
 
-    public void deleteProduct(Object product) {
+    public void deleteProduct(Product product) {
         if (MapProduckt.containsKey(product)) {
             MapProduckt.remove(product);
         }
@@ -48,7 +45,7 @@ public class Basket {
 
     public int getTotalBasketValue(){
         int totalValue = 0;
-        for (Object product :  MapProduckt.keySet()){
+        for (Product product :  MapProduckt.keySet()){
             totalValue+= MapProduckt.get(product);
         }
         return totalValue;
