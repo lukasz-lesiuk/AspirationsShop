@@ -1,5 +1,6 @@
 package com.codecool.app;
 
+import com.codecool.access.LoginController;
 import com.codecool.access.RegistrationController;
 
 import java.util.ArrayList;
@@ -44,7 +45,8 @@ public class RootController {
     }
 
     private void login() {
-        // TODO to be implemented
+        LoginController logCon = new LoginController();
+        logCon.run();
     }
 
     private void register() {

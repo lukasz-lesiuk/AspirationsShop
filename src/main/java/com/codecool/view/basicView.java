@@ -2,11 +2,11 @@ package com.codecool.view;
 
 import com.codecool.customer.Customer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 public class basicView {
     public static final String ANSI_RESET = "\u001B[0m";
@@ -68,5 +68,21 @@ public class basicView {
 
     public void clear(){
         System.out.print("\033[H\033[2J");
+    }
+
+    public void printAnsiFile(String filename){
+        try {
+            String filepath = "src/main/resources/" + filename;
+            File myObj = new File(filepath);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(data);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }
