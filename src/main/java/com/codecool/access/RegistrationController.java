@@ -33,8 +33,8 @@ public class RegistrationController {
         String phoneNumber = input("Enter your phone number");
         String emailAddress = input("Enter your email address");
         System.out.println("Address:");
-        String city = input("City: ");
-        String street = input("Street and apartment number:");
+        String city = input("City");
+        String street = input("Street and apartment number");
         System.out.println();
         String password = getPassword();
         return new Customer(id, firstName, lastName, phoneNumber, emailAddress, city, street, password);
@@ -49,6 +49,7 @@ public class RegistrationController {
 
     private String getPassword() {
         String password;
+        String passwordConfirm;
         PasswordChecker checker = new PasswordChecker();
         do {
             password = input("Enter password");
@@ -56,11 +57,12 @@ public class RegistrationController {
                 view.printMessage("This password didn't meet the policy requirements.");
                 input("Enter password");
             }
-            if (!input("Enter password again").equals(password)){
+            passwordConfirm = input("Enter password again");
+            if (!passwordConfirm.equals(password)){
                 view.printMessage("Passwords didn't match. Press Enter and try again.");
                 scan.nextLine();
             }
-        } while (!input("Enter password again").equals(password));
+        } while (!passwordConfirm.equals(password));
 
         return Integer.toString(password.hashCode());
     }
