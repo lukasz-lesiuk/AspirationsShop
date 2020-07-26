@@ -1,12 +1,9 @@
-package com.codecool.access<<<<<<< HEAD
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-;
+package com.codecool.access;
 
 import com.codecool.view.BasicView;
 
 public class LoginView extends BasicView {
+
     public void displayLoginScreen() {
         clear();
         System.out.println();

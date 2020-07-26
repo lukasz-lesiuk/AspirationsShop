@@ -6,8 +6,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.util.List;
+<<<<<<< HEAD:src/main/java/com/codecool/view/BasicView.java
 <<<<<<< HEAD
 import java.io.IOException;
+=======
+import java.util.Scanner;
+>>>>>>> Implement basic login menu:src/main/java/com/codecool/view/basicView.java
 
 =======
 import java.util.Scanner;

@@ -2,10 +2,6 @@ package com.codecool.access;
 
 import com.codecool.view.BasicView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class RegistrationView extends BasicView {
     @Override
     public void clear(){
