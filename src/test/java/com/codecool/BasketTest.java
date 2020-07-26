@@ -1,8 +1,8 @@
 package com.codecool;
 
+import com.codecool.shopping.Basket;
 import com.codecool.transaction.Product;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package com.codecool;
+package com.codecool.shopping;
 
 import com.codecool.transaction.Product;
 
@@ -37,7 +37,6 @@ public class Basket {
             MapProduckt.remove(product);
         }
     }
-
 
     public void clearBasket(){
         MapProduckt.clear();
