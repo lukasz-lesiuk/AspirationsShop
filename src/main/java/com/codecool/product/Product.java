@@ -6,6 +6,10 @@ public class Product {
     private Integer quantity;
     private String productName;
 
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     public String getProductID() {
         return productID;
     }
@@ -17,4 +21,8 @@ public class Product {
     public Integer getQuantity() { return quantity; }
 
     public String getProductName() {return productName; }
+
+    public void updateWarehouse(Integer numberOfSoldItems) {
+        this.quantity = quantity - numberOfSoldItems;
+    }
 }
