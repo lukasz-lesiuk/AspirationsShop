@@ -9,7 +9,7 @@ public class BasketView extends basicView {
 
     Scanner scan = new Scanner(System.in);
 
-    public void viewAllProducts(Map<Product, Integer> allProductsInBasket) {
+    public void displayAllProducts(Map<Product, Integer> allProductsInBasket) {
         List<Product> listOfProducts = createProductSet(allProductsInBasket);
 
         if (!allProductsInBasket.isEmpty()) {

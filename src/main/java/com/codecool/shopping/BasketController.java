@@ -21,7 +21,7 @@ public class BasketController {
         String choice;
 
         do {
-            view.viewAllProducts(basket.getTransactionProducts());
+            view.displayAllProducts(basket.getTransactionProducts());
 
             view.printOptions(options, "CHOSE OPTION: ");
             choice = view.input("");
@@ -29,7 +29,7 @@ public class BasketController {
             switch (choice){
                 case ("1"):
                     view.clear();
-                    view.viewAllProducts(basket.getTransactionProducts());
+                    view.displayAllProducts(basket.getTransactionProducts());
                     Integer chosenProductToUpdate = Integer.valueOf(view.input("Choose product to update. "));
                     if (chosenProductToUpdate > 0 && chosenProductToUpdate < basket.getTransactionProducts().size()) {
                         Product product = basket.getProduct(chosenProductToUpdate);
@@ -45,7 +45,7 @@ public class BasketController {
                     break;
                 case ("2"):
                     view.clear();
-                    view.viewAllProducts(basket.getTransactionProducts());
+                    view.displayAllProducts(basket.getTransactionProducts());
                     Integer chosenProductToDelete = Integer.valueOf(view.input("Choose product to delete from basket."));
 
                     if (chosenProductToDelete > 0 && chosenProductToDelete < basket.getTransactionProducts().size()) {
