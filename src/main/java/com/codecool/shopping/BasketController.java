@@ -28,7 +28,6 @@ public class BasketController {
                 case ("1"):
                     view.clear();
                     view.viewAllProducts(basket.getTransactionProducts());
-
                     break;
                 case ("2"):
                     view.clear();
@@ -48,9 +47,9 @@ public class BasketController {
 
                     break;
                 default:
-                    view.printMessage("Option not on the list.");
+                    view.printMessage("There is no such option. Select again.");
             }
-        } while (!choice.equals("0"));
+        } while (!choice.equals("5"));
     }
 
     private void prepareMenu() {
@@ -59,9 +58,7 @@ public class BasketController {
         options.add(" Delete product");
         options.add(" Clear your basket");
         options.add(" Finalise you basket");
+        options.add(" Back");
     }
 
-
-
 }
-

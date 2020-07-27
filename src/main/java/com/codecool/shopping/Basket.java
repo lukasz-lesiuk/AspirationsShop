@@ -5,19 +5,31 @@ import com.codecool.product.Product;
 import java.util.*;
 
 public class Basket {
-    private Map<Product, Integer> MapProduckt;
+    private Map<Product, Integer> productsMap;
 
     public Basket(){
-        this.MapProduckt = new HashMap<>();
+        this.productsMap = new HashMap<>();
     }
 
     public Map<Product, Integer> getTransactionProducts() {
-        return MapProduckt;
+        return productsMap;
     }
 
     public void setProduct(Product product, Integer quantity) {
         if (checkInventory(product, quantity)){
-            MapProduckt.put(product, quantity);
+            productsMap.put(product, quantity);
+        }
+    }
+
+    public void addProduct(Product product, Integer quantity) {
+        if (checkInventory(product, quantity)) {
+            productsMap.put(product, quantity);
+        }
+    }
+
+    public void addProduct(Product product) {
+        if (checkInventory(product, 1)) {
+            productsMap.put(product, 1);
         }
     }
 
@@ -26,28 +38,28 @@ public class Basket {
     }
 
     public void deleteProduct(Product product) {
-        if (MapProduckt.containsKey(product)) {
-            MapProduckt.remove(product);
+        if (productsMap.containsKey(product)) {
+            productsMap.remove(product);
         }
     }
 
     public Product getProduct(String productName){
-        Product choosenProduct = null;
-        for (Product product :  MapProduckt.keySet()){
+        Product chosenProduct = null;
+        for (Product product :  productsMap.keySet()){
             if(product.getProductID().equals(productName)){
                 return product;}
         }
-        return choosenProduct;
+        return chosenProduct;
     }
 
     public void clearBasket(){
-        MapProduckt.clear();
+        productsMap.clear();
     }
 
     public int getTotalBasketValue(){
         int totalValue = 0;
-        for (Product product :  MapProduckt.keySet()){
-            totalValue+= MapProduckt.get(product) * product.getPrice();
+        for (Product product :  productsMap.keySet()){
+            totalValue+= productsMap.get(product) * product.getPrice();
         }
         return totalValue;
     }

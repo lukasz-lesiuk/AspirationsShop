@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Browse {
-
     List<Product> productListByCategory = new ArrayList<>();
-
-
     String category = "";
 
     public List<Product> getProductListByCategory() {
