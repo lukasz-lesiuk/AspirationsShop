@@ -1,5 +1,7 @@
 package com.codecool.shopping;
 
+import com.codecool.product.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,16 +30,27 @@ public class BasketController {
                 case ("1"):
                     view.clear();
                     view.viewAllProducts(basket.getTransactionProducts());
+                    Integer chosenProductToUpdate = Integer.valueOf(view.input("Choose product to update. "));
+                    if (chosenProductToUpdate > 0 && chosenProductToUpdate < basket.getTransactionProducts().size()) {
+                        Product product = basket.getProduct(chosenProductToUpdate);
+                        Integer quantity = Integer.valueOf(view.input("Type new quantity. "));
+                        if (quantity > 0) {
+                            basket.addProduct(product, quantity);
+                        } else {view.printMessage("Quantity must be possitive number. ");}
+                        if (!basket.checkInventory(product, quantity)){
+                            view.printMessage("No required quantity in stock. ");
+                        }
+                    } else {view.printMessage("Wrong input! Try again. ");};
+
                     break;
                 case ("2"):
                     view.clear();
                     view.viewAllProducts(basket.getTransactionProducts());
-                    view.printMessage("Choose product to delete from basket");
-                    choice = view.input("");
-                    if (basket.getTransactionProducts().containsKey(choice))
-                        {
-                            basket.deleteProduct(basket.getProduct(choice));
-                        }
+                    Integer chosenProductToDelete = Integer.valueOf(view.input("Choose product to delete from basket."));
+
+                    if (chosenProductToDelete > 0 && chosenProductToDelete < basket.getTransactionProducts().size()) {
+                        basket.deleteProduct(basket.getProduct(chosenProductToDelete));
+                    }
                     break;
                 case ("3"):
                     view.clear();

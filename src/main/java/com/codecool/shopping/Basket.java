@@ -8,7 +8,7 @@ public class Basket {
     private Map<Product, Integer> productsMap;
 
     public Basket(){
-        this.productsMap = new HashMap<>();
+        this.productsMap = new LinkedHashMap<>();
     }
 
     public Map<Product, Integer> getTransactionProducts() {
@@ -43,11 +43,14 @@ public class Basket {
         }
     }
 
-    public Product getProduct(String productName){
+    public Product getProduct(Integer choice){
+        // handle out of boundle exception
         Product chosenProduct = null;
+        int counter = 1;
         for (Product product :  productsMap.keySet()){
-            if(product.getProductID().equals(productName)){
+            if(counter == choice){
                 return product;}
+            counter++;
         }
         return chosenProduct;
     }
