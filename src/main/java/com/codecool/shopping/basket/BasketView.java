@@ -9,38 +9,91 @@ public class BasketView extends basicView {
 
     Scanner scan = new Scanner(System.in);
 
-    public void displayAllProducts(Map<Product, Integer> allProductsInBasket) {
-        List<Product> listOfProducts = createProductSet(allProductsInBasket);
+    public void displayBasket(Basket basket) {
+        if (!basket.getTransactionProducts().isEmpty()) {
+            int listIndex = 1;
 
-        if (!allProductsInBasket.isEmpty()) {
-            int productIndex = 1;
-            for (Product product : listOfProducts) {
-                String productName = product.getProductName();
-                Integer price = product.getPrice();
-                Integer quantity = allProductsInBasket.get(product);
-                Integer value = price * quantity;
+            System.out.println(createHorizontal());
+            System.out.format("|%2s|%25s|%6s|%9s|%7s|\n", " ", "Product name", "Price", "Quantity",
+                    "P x Q");
+            System.out.println(createHorizontal());
 
-                System.out.format("|%2s|%15s|%6s|%9s|%7s|\n", productIndex, productName, price, quantity,
-                        value);
+            for (Map.Entry<Product, Integer> entry : basket.getTransactionProducts().entrySet()) {
+                String productName = entry.getKey().getProductName();
+                Integer price = entry.getKey().getPrice();
+                Integer quantity = entry.getValue();
+                Integer total = price * quantity;
 
-                productIndex++;
+                System.out.format("|%2s|%25s|%6s|%9s|%7s|\n", listIndex, productName, price, quantity,
+                        total);
+                System.out.println(createHorizontal());
+
+                listIndex++;
             }
-        }
-        else{
+            System.out.println(createSingleTextLine("BASKET TOTAL VALUE",
+                                                     Integer.toString(basket.getTotalBasketValue())));
+            System.out.println(createExtremeHorizontal());
+        } else {
                 printMessage("You basket is empty. Use our browser to add products");
-            }
+        }
     }
 
-    private List<Product> createProductSet(Map<Product, Integer> allProductsInBasket) {
-        Set<Product> productsSet = allProductsInBasket.keySet();
-        List<Product> listOfProducts = new ArrayList<>();
-        listOfProducts.addAll(productsSet);
+    private String createHorizontal() {
+        StringBuilder newHorizontal = new StringBuilder();
+        int[] width = {2, 25, 6, 9, 7};
 
-        return listOfProducts;
+        newHorizontal.append("+");
+
+        for (int colWidth : width) {
+            for (int i = 0; i < colWidth; i++) {
+                newHorizontal.append("-");
+            }
+            newHorizontal.append("+");
+        }
+
+        return newHorizontal.toString();
+    }
+
+    private String createSingleTextLine(String description, String value) {
+        StringBuilder line = new StringBuilder();
+
+        line.append("|");
+        line.append(description + ": ");
+        line.append(value);
+        Integer filler = 53 - (description.length() + value.length() + 2);
+        for(int i = 0; i < filler; i++) {
+            line.append(" ");
+        }
+        line.append("|");
+
+        return line.toString();
+    }
+
+    private String createExtremeHorizontal() {
+        StringBuilder topHorizontal = new StringBuilder();
+
+        topHorizontal.append("+");
+        for(int i = 0; i < 53; i++) {
+            topHorizontal.append("-");
+        }
+        topHorizontal.append("+");
+
+        return topHorizontal.toString();
+    }
+
+    public int getNumericInput(String message) {
+        int option = 0;
+
+        System.out.print(message + ": ");
+        try {
+            option = scan.nextInt();
+        } catch (InputMismatchException e) {
+            scan.next();
+        }
+        return option;
     }
 
     public String input(String message){
-        System.out.print(message + ": ");
         String input = scan.nextLine();
         clear();
         return input;

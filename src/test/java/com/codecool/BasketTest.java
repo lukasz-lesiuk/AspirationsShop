@@ -12,12 +12,12 @@ public class BasketTest {
     static Product product1;
     static Product product2;
 
-    @Before
-    public void stepUp(){
-        basket = new Basket();
-        product1 = new Product();
-        product2 = new Product();
-    }
+//    @Before
+//    public void stepUp(){
+//        basket = new Basket();
+//        product1 = new Product();
+//        product2 = new Product();
+//    }
 
     @Test
     public void testBasket(){
@@ -33,7 +33,7 @@ public class BasketTest {
     @Test
     public void testDeleteProduct(){
         basket.addProduct(product1);
-        basket.deleteProduct(product1);
+        basket.removeProductFromBasket(product1);
         int expected = basket.getTransactionProducts().size();
         int actual = 0;
         assertEquals(expected, actual);

@@ -22,7 +22,7 @@ public class SQLTransactionDAO implements TransactionDAO {
     private final int QUANTITY = 3;
 
     public SQLTransactionDAO(String username, String password) {
-        this.url = "jdbc:postgresql://localhost/aspiration_shop";
+        this.url = "jdbc:postgresql://localhost/aspirations_shop";
         this.username = username;
         this.password = password;
     }

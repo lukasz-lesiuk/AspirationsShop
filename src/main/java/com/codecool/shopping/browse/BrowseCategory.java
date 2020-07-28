@@ -1,5 +1,3 @@
-
-
 package com.codecool.shopping.browse;
 
 public enum BrowseCategory {

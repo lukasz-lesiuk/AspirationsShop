@@ -37,19 +37,19 @@ public class Basket {
         return product.getQuantity() > quantity ? true : false;
     }
 
-    public void deleteProduct(Product product) {
+    public void removeProductFromBasket(Product product) {
         if (productsMap.containsKey(product)) {
             productsMap.remove(product);
         }
     }
 
-    public Product getProduct(Integer choice){
-        // handle out of boundle exception
+    public Product getProduct(Integer choice) {
         Product chosenProduct = null;
-        int counter = 1;
-        for (Product product :  productsMap.keySet()){
-            if(counter == choice){
-                return product;}
+        int counter = 0;
+        for (Product product : productsMap.keySet()) {
+            if (counter == choice) {
+                chosenProduct = product;
+            }
             counter++;
         }
         return chosenProduct;
@@ -59,9 +59,9 @@ public class Basket {
         productsMap.clear();
     }
 
-    public int getTotalBasketValue(){
-        int totalValue = 0;
-        for (Product product :  productsMap.keySet()){
+    public Integer getTotalBasketValue(){
+        Integer totalValue = 0;
+        for (Product product : productsMap.keySet()){
             totalValue+= productsMap.get(product) * product.getPrice();
         }
         return totalValue;

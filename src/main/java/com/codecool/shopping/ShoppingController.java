@@ -1,6 +1,7 @@
 package com.codecool.shopping;
 
 import com.codecool.customer.Customer;
+import com.codecool.product.Product;
 import com.codecool.shopping.basket.Basket;
 import com.codecool.shopping.basket.BasketController;
 import com.codecool.shopping.browse.Browse;
@@ -23,6 +24,10 @@ public class ShoppingController {
         this.activeCustomer = activeCustomer;
         this.basket = new Basket();
         this.browse = new Browse();
+        //----------------------------------------------------------
+        Product product = new Product("as]c45Ae", "New item", 400, 10);
+        basket.addProduct(product, 3);
+        // ---------------------------------------------------------
     }
 
     public void run() {
@@ -46,7 +51,9 @@ public class ShoppingController {
                 case ("5"):
                     // logout
                 default:
-                    view.printMessage("There is no such option. Select again.");
+                    if(!choice.equals("5")) {
+                        view.printMessage("There is no such option. Select again.");
+                    }
             }
         } while (!choice.equals("5"));
     }
@@ -61,7 +68,7 @@ public class ShoppingController {
     }
 
     private void basket() {
-        BasketController basketController = new BasketController(basket);
+        BasketController basketController = new BasketController(basket, activeCustomer);
         basketController.run();
     }
 }

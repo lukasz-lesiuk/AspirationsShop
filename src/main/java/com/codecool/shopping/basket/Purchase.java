@@ -16,14 +16,14 @@ public class Purchase {
     Customer activeCustomer;
     String transactionID;
     Transaction newTransaction;
-    List<Product> updatedProducts;
+    List<Product> productsToUpdateInWarehouse;
 
     public Purchase(Basket basket, Customer activeCustomer) {
         this.basket = basket;
         this.activeCustomer = activeCustomer;
         this.transactionID = generator.generateID();
         this.newTransaction = finalizeTransaction();
-        this.updatedProducts = updateProductsToWarehouse(basket);
+        this.productsToUpdateInWarehouse = updateProductsToWarehouse(basket);
     }
 
     public Transaction finalizeTransaction() {

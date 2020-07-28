@@ -2,11 +2,14 @@ package com.codecool.product;
 
 public class Product {
     private String productID;
+    private String productName;
     private Integer price;
     private Integer quantity;
-    private String productName;
 
-    public void setQuantity(Integer quantity) {
+    public Product(String productID, String productName, Integer price, Integer quantity) {
+        this.productID = productID;
+        this.productName = productName;
+        this.price = price;
         this.quantity = quantity;
     }
 
