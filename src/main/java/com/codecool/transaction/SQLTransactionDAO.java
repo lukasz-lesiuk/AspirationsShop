@@ -1,6 +1,4 @@
-package com.codecool.transactionDAO;
-
-import com.codecool.transaction.Transaction;
+package com.codecool.transaction;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,8 +1,9 @@
-package com.codecool.shopping;
+package com.codecool.shopping.basket;
 
 import com.codecool.IDGenerator;
 import com.codecool.customer.Customer;
 import com.codecool.product.Product;
+import com.codecool.shopping.basket.Basket;
 import com.codecool.transaction.Transaction;
 
 import java.util.ArrayList;

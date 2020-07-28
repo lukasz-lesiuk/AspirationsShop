@@ -1,6 +1,6 @@
 
 
-package com.codecool.shopping;
+package com.codecool.shopping.browse;
 
 public enum BrowseCategory {
     Potions_Base_Game("Potions: Base Game"),

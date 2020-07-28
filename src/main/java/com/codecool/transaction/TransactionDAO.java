@@ -1,4 +1,4 @@
-package com.codecool.transactionDAO;
+package com.codecool.transaction;
 
 import com.codecool.transaction.Transaction;
 

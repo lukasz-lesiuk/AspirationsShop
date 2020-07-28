@@ -1,4 +1,4 @@
-package com.codecool.shopping;
+package com.codecool.shopping.basket;
 
 import com.codecool.product.Product;
 
@@ -11,7 +11,7 @@ public class BasketController {
     List<String> options;
     Basket basket;
 
-    BasketController(Basket basket){
+    public BasketController(Basket basket){
         this.basket = basket;
         this.options = new ArrayList<>();
     }

@@ -1,6 +1,9 @@
 package com.codecool.shopping;
 
 import com.codecool.customer.Customer;
+import com.codecool.shopping.basket.Basket;
+import com.codecool.shopping.basket.BasketController;
+import com.codecool.shopping.browse.Browse;
 
 import java.util.ArrayList;
 import java.util.List;

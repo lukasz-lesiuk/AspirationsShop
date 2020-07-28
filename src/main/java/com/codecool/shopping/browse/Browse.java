@@ -1,4 +1,4 @@
-package com.codecool.shopping;
+package com.codecool.shopping.browse;
 
 import com.codecool.product.Product;
 

@@ -1,5 +1,6 @@
 package com.codecool.shopping;
 
+import com.codecool.shopping.browse.BrowseCategory;
 import com.codecool.view.basicView;
 
 import java.util.List;

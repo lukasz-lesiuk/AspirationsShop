@@ -1,6 +1,6 @@
 package com.codecool;
 
-import com.codecool.shopping.Basket;
+import com.codecool.shopping.basket.Basket;
 import com.codecool.product.Product;
 import org.junit.Before;
 import org.junit.Test;

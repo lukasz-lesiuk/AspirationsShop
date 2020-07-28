@@ -1,7 +1,7 @@
 package com.codecool.transaction;
 
 import com.codecool.product.Product;
-import com.codecool.shopping.Basket;
+import com.codecool.shopping.basket.Basket;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -40,14 +40,12 @@ public class Transaction {
     }
 
     public Transaction(String transactionID, String customerID, HashMap<String, List<Integer>> transactionItems, Date date) {
-        // przeładowany konstruktor w celu uzyskania listy produktów
+        // przeładowany konstruktor, który ustawi datę wg rekordu z bazy danych
         this.transactionID = transactionID;
         this.customerID = customerID;
         this.transactionItems = transactionItems;
         this.transactionDate = date;
     }
-
-    // przeładowany konstruktor, który ustawi datę wg rekordu z bazy danych
 
     private HashMap<String, List<Integer>> createMapOfItems(Basket basket) {
         HashMap<String, List<Integer>> mapOfItems = new HashMap<>();
