@@ -2,7 +2,12 @@ package com.codecool.app;
 
 import com.codecool.access.RegistrationController;
 import com.codecool.customer.Customer;
+<<<<<<< HEAD
 import com.codecool.shopping.ShoppingController;
+=======
+import com.codecool.dao.CustomerDAO;
+import com.codecool.dao.CustomerDAOPSQL;
+>>>>>>> dev
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,16 @@ public class RootController {
                     register();
                     break;
                 case ("3"):
+                    // You can add any function you wish to test here
+//                    Customer newCustomer = new Customer("1234", "Name", "Lastname",
+//                                        "+404043655", "emali@email.com", "city",
+//                                        "street", "passhash");
+//                    CustomerDAO daoInstance = new CustomerDAOPSQL();
+//                    daoInstance.addCustomer(newCustomer);
+//                    daoInstance.getCustomer("1234");
+//                    System.out.println("AddedCustomer");
+                    break;
+                case ("4"):
                     shopping();
                     break;
                 case ("okon"):
