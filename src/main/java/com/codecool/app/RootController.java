@@ -56,6 +56,7 @@ public class RootController {
         this.options = new ArrayList<>();
         options.add("Login");
         options.add("Register");
+        options.add("Option");
         options.add("Shopping menu");
     }
 
