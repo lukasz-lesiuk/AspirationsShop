@@ -14,7 +14,7 @@ public class RegistrationController {
     IDGenerator idGen;
 
     public RegistrationController() {
-        this.customerDAO = new CustomerDAOPSQL();
+        this.customerDAO = new CustomerDAOPSQL("database.properties");
         this.view = new RegistrationView();
         this.idGen = new IDGenerator();
         this.scan = new Scanner(System.in);

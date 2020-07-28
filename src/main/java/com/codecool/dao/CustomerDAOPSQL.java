@@ -28,8 +28,8 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int STREET_POSITION = 6;
     private final int HASH_POSITION = 7;
 
-    public CustomerDAOPSQL() {
-        String properties_file = "database.properties";
+    public CustomerDAOPSQL(String properties_file) {
+//        String properties_file = "database.properties";
         Properties props = readPropertiesFile("./src/main/resources/" + properties_file);
         this.url = props.getProperty("db.url");
         this.user = props.getProperty("db.user");
@@ -63,7 +63,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
         for (int i = 1; i < customersQty + 1; i++) {
             String customerString = retrieveQueryResponseAsString("SELECT * FROM customers LIMIT ? OFFSET ?;",
-                                                                    i, (i - 1));
+                                                                    1, (i - 1));
             List<String> attributesList = new ArrayList<>(Arrays.asList(customerString.split(", ")));
 
             String customerId = attributesList.get(ID_POSITION);

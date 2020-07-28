@@ -8,7 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
 
-public class basicView {
+public class BasicView {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -22,15 +22,6 @@ public class basicView {
     public void printCustomer(Customer customer) {
         StringBuilder customerString = new StringBuilder();
         Field[] fields = customer.getClass().getDeclaredFields();
-//        for(Field field : fields){
-//            customerString.append(field.getName());
-//            customerString.append(" = ");
-//
-//            customerString.append(field.get(customer));
-//            }
-//            customerString.append("\n");
-//            outputString = outputString + customerString.toString();
-//        }
         customerString.append(customer.getCustomerId());
         customerString.append(" | ");
         customerString.append(customer.getFirstName());
