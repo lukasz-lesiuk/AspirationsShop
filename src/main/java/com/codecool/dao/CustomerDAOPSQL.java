@@ -28,7 +28,8 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int STREET_POSITION = 6;
     private final int HASH_POSITION = 7;
 
-    public CustomerDAOPSQL(String properties_file) {
+    public CustomerDAOPSQL() {
+        String properties_file = "database.properties";
         Properties props = readPropertiesFile("./src/main/resources/" + properties_file);
         this.url = props.getProperty("db.url");
         this.user = props.getProperty("db.user");
@@ -99,7 +100,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
     @Override
     public void addCustomer(Customer newCustomer) {
 
-        String query = "INSERT INTO customers(id, first_name, last_name, phone_number, email, city, street, hash) " +
+        String query = "INSERT INTO customers(id, first_name, last_name, phone_number, email, city, street, hash_password) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = DriverManager.getConnection(url, user, password);
