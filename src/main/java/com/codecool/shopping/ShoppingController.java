@@ -5,6 +5,9 @@ import com.codecool.product.Product;
 import com.codecool.shopping.basket.Basket;
 import com.codecool.shopping.basket.BasketController;
 import com.codecool.shopping.browse.Browse;
+import com.codecool.transaction.SQLTransactionDAO;
+import com.codecool.transaction.Transaction;
+import com.codecool.transaction.TransactionView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.Scanner;
 
 public class ShoppingController {
     ShoppingView view = new ShoppingView();
+    TransactionView transView = new TransactionView();
     List<String> shoppingMenuOptions;
     Scanner scan = new Scanner(System.in);
     Customer activeCustomer;
@@ -48,7 +52,13 @@ public class ShoppingController {
                     basket();
                     break;
                 case ("4"):
-                    // shopping history
+                    SQLTransactionDAO SQLTransDAO = new SQLTransactionDAO();
+                    String customerID = activeCustomer.getCustomerId();
+                    List<Transaction> customersTransactions =
+                                    SQLTransDAO.getAllTransactionsByCustomer(customerID);
+                    for(Transaction transaction : customersTransactions) {
+                        transView.printTransaction(transaction);
+                    }
                     break;
                 case ("5"):
                     // logout

@@ -29,7 +29,7 @@ public class BasketController {
             view.printSubmenu(options, "Basket menu ");
             choice = view.input("");
 
-            switch (choice){
+            switch (choice) {
                 case ("1"):
                     view.clear();
                     view.displayBasket(basket);
@@ -53,13 +53,18 @@ public class BasketController {
                     break;
                 case ("3"):
                     view.clear();
-                    basket.clearBasket();
+                    view.displayBasket(basket);
+                    String clearDecision = view.input("Do you want to remove all products from your basket? y/n");
+                    if (clearDecision.toLowerCase().equals("y")) {
+                        basket.clearBasket();
+                        choice = "5";
+                    }
                     break;
                 case ("4"):
                     view.clear();
                     view.displayBasket(basket);
-                    String decision = view.input("Do you want to finalize you order? y/n");
-                    if (decision.toLowerCase().equals("y")) {
+                    String completeOrderDecision = view.input("Do you want to finalize you order? y/n");
+                    if (completeOrderDecision.toLowerCase().equals("y")) {
                         Purchase purchase = new Purchase(basket, activeCustomer);
                         purchase.finalizeTransaction();
                         basket.clearBasket();

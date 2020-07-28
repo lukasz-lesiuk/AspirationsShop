@@ -58,12 +58,12 @@ public class BasketView extends basicView {
         StringBuilder line = new StringBuilder();
 
         line.append("|");
-        line.append(description + ": ");
-        line.append(value);
         Integer filler = 53 - (description.length() + value.length() + 2);
         for(int i = 0; i < filler; i++) {
             line.append(" ");
         }
+        line.append(description + ": ");
+        line.append(value);
         line.append("|");
 
         return line.toString();
