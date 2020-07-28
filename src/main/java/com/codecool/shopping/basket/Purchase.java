@@ -4,6 +4,7 @@ import com.codecool.IDGenerator;
 import com.codecool.customer.Customer;
 import com.codecool.product.Product;
 import com.codecool.shopping.basket.Basket;
+import com.codecool.transaction.SQLTransactionDAO;
 import com.codecool.transaction.Transaction;
 
 import java.util.ArrayList;
@@ -22,14 +23,14 @@ public class Purchase {
         this.basket = basket;
         this.activeCustomer = activeCustomer;
         this.transactionID = generator.generateID();
-        this.newTransaction = finalizeTransaction();
         this.productsToUpdateInWarehouse = updateProductsToWarehouse(basket);
     }
 
-    public Transaction finalizeTransaction() {
-        Transaction newTransaction = new Transaction(transactionID, activeCustomer.getCustomerId(), basket);
-
-        return newTransaction;
+    public void finalizeTransaction() {
+        this.newTransaction = new Transaction(transactionID, activeCustomer.getCustomerId(), basket);
+        SQLTransactionDAO sqlTransactionDAO = new SQLTransactionDAO();
+        sqlTransactionDAO.addTransaction(newTransaction);
+        //return addedTransactions == 0 ? false : true;
     }
 
     public List<Product> updateProductsToWarehouse(Basket basket) {

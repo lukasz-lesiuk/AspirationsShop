@@ -27,12 +27,6 @@ public class Basket {
         }
     }
 
-    public void addProduct(Product product) {
-        if (checkInventory(product, 1)) {
-            productsMap.put(product, 1);
-        }
-    }
-
     public boolean checkInventory(Product product, Integer quantity){
         return product.getQuantity() > quantity ? true : false;
     }

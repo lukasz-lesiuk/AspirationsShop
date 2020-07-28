@@ -1,10 +1,11 @@
 package com.codecool.transaction;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,18 +22,22 @@ public class SQLTransactionDAO implements TransactionDAO {
     private final int PRICE = 2;
     private final int QUANTITY = 3;
 
-    public SQLTransactionDAO(String username, String password) {
-        this.url = "jdbc:postgresql://localhost/aspirations_shop";
-        this.username = username;
-        this.password = password;
+    public SQLTransactionDAO() {
+        String properties_file = "database.properties";
+        Properties props = readPropertiesFile("./src/main/resources/" + properties_file);
+        this.url = props.getProperty("db.url");
+        this.username = props.getProperty("db.user");
+        this.password = props.getProperty("db.passwd");
     }
 
     @Override
     public void addTransaction(Transaction transaction) {
         String query1 = "INSERT INTO transaction_details(transactionID, customerID, transaction_date) " +
                 "VALUES (?, ?, ?)";
-        String query2 = "INSERT INTO transaction_product(transactionID, productID, prize, quantity) " +
+        String query2 = "INSERT INTO transaction_product(transactionID, productID, price, quantity) " +
                 "VALUES(?, ?, ?, ?)";
+
+        int affectrows= 0;
 
         try (Connection con = DriverManager.getConnection(url, username, password);
              PreparedStatement pst1 = con.prepareStatement(query1);
@@ -41,6 +46,7 @@ public class SQLTransactionDAO implements TransactionDAO {
             pst1.setString(TP_TRANSACTIONID + 1, transaction.getTransactionID());
             pst1.setString(CUSTOMERID + 1, transaction.getCustomerID());
             pst1.setDate(TRANSACTION_DATE + 1, transaction.getTransactionDate());
+
             pst1.executeUpdate();
 
             for(Map.Entry<String, List<Integer>> entry : transaction.getTransactionItems().entrySet()) {
@@ -57,6 +63,7 @@ public class SQLTransactionDAO implements TransactionDAO {
             Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
+        //return affectrows;
     }
 
     @Override
@@ -203,6 +210,27 @@ public class SQLTransactionDAO implements TransactionDAO {
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         return  affectrows;
+    }
+
+    private Properties readPropertiesFile(String fileName) {
+        FileInputStream fis = null;
+        Properties prop = null;
+        try {
+            fis = new FileInputStream(fileName);
+            prop = new Properties();
+            prop.load(fis);
+        } catch(FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return prop;
     }
 }
 

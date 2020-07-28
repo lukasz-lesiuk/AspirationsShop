@@ -58,13 +58,15 @@ public class BasketController {
                 case ("4"):
                     view.clear();
                     view.displayBasket(basket);
-                    // do you want to complete order?
-                    Purchase purchase = new Purchase(basket, activeCustomer);
-                    basket.clearBasket();
-                    Transaction newTransaction = purchase.finalizeTransaction();
-                    // productDAO dostanie purchase.productsToUpdateInWarehouse
-                    // print: order completed
-                    choice = "5";
+                    String decision = view.input("Do you want to finalize you order? y/n");
+                    if (decision.toLowerCase().equals("y")) {
+                        Purchase purchase = new Purchase(basket, activeCustomer);
+                        purchase.finalizeTransaction();
+                        basket.clearBasket();
+                        // productDAO dostanie purchase.productsToUpdateInWarehouse
+                        // print: order completed
+                        choice = "5";
+                    }
                     break;
                 default:
                     if (!choice.equals("5")) {

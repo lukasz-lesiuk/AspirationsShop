@@ -94,6 +94,7 @@ public class BasketView extends basicView {
     }
 
     public String input(String message){
+        System.out.println(message);
         String input = scan.nextLine();
         clear();
         return input;
