@@ -2,12 +2,9 @@ package com.codecool.app;
 
 import com.codecool.access.RegistrationController;
 import com.codecool.customer.Customer;
-<<<<<<< HEAD
 import com.codecool.shopping.ShoppingController;
-=======
 import com.codecool.dao.CustomerDAO;
 import com.codecool.dao.CustomerDAOPSQL;
->>>>>>> dev
 
 import java.util.ArrayList;
 import java.util.List;
