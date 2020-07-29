@@ -5,7 +5,7 @@ CREATE TABLE products (
     productName character varying(255) NOT NULL,
     description character varying(255) NOT NULL,
     price int NOT NULL,
-    quanity int NOT NULL,
+    quantity int NOT NULL,
     category character varying(255) NOT NULL
 );
 

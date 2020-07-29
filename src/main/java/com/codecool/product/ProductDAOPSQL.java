@@ -19,12 +19,12 @@ public class ProductDAOPSQL implements ProductDAO {
     private final String username;
     private final String password;
 
-    private final int product_id = 0;
+    private final int product_id =0;
     private final int productName = 1;
-    private final int description = 2;
-    private final int price = 3;
-    private final int quanity = 4;
-    private final int category = 5;
+    private final int description = 3;
+    private final int price = 4;
+    private final int quanity = 5;
+    private final int category = 6;
 
     public ProductDAOPSQL() {
         String properties_file = "database.properties";
@@ -36,21 +36,37 @@ public class ProductDAOPSQL implements ProductDAO {
 
     @Override
     public Product getProduct(String Name) {
-        String inputString = retrieveQueryResponseAsString("SELECT * FROM products WHERE productName = ?", Name);
-        List<String> attributesList = new ArrayList<>(Arrays.asList(inputString.split(", ")));
-        try {
-            //id retrieval unnecessary since id was declared at the start
-            String product_Id = attributesList.get(product_id);
-            String product_Name = attributesList.get(productName);
-            String product_Description = attributesList.get(description);
-            String product_Price = attributesList.get(price);
-            String product_Quanity = attributesList.get(quanity);
-            String product_Category = attributesList.get(category);
+        String query = "SELECT * FROM products WHERE productName = ?";
+        Product product = null;
+        try (Connection con = DriverManager.getConnection(url, username, password);
+             PreparedStatement pst = con.prepareStatement(query)) {
+                 pst.setString(productName, Name);
+                ResultSet rs = pst.executeQuery();
+                System.out.println(rs.toString());
+                String productId = null;
+                String productName = null;
+                String description = null;
+                String price = null;
+                String quantity = null;
+                String category = null;
 
-            return (new Product(product_Id,product_Name,product_Description,product_Price,product_Quanity,product_Category));
-        } catch (java.lang.IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("Id did not match any element from DB");
+                while (rs.next()){
+                    System.out.println("rs.toString()");
+                    productId = rs.getString("product_id");
+                    productName = rs.getString("productName");
+                    description = rs.getString("description");
+                    price = rs.getString("price");
+                    quantity = rs.getString("quantity");
+                    category = rs.getString("category");
+                }
+
+                product = new Product(productId,productName,description,price,quantity,category);
         }
+        catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+            return  product;
 
     }
 

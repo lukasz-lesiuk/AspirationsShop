@@ -11,6 +11,7 @@ public class Product {
 
 
     public Product(String productId, String productName, String description, String price, String quantity, String category) {
+        this.productId = productId;
         this.productName = productName;
         this.description = description;
         this.price = Integer.parseInt(price);
@@ -44,5 +45,9 @@ public class Product {
 
     public String getProductID() {
         return productId;
+    }
+
+    public void updateWarehouse(Integer numberOfSoldItems) {
+        this.quantity = quantity - numberOfSoldItems;
     }
 }
