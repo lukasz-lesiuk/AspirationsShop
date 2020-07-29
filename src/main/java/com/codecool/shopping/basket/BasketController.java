@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasketController {
-    BasketView view = new BasketView();
-    List<String> options;
-    Basket basket;
-    Customer activeCustomer;
+    private BasketView view = new BasketView();
+    private List<String> options;
+    private Basket basket;
+    private Customer activeCustomer;
 
     public BasketController(Basket basket, Customer activeCustomer){
         this.basket = basket;
@@ -31,47 +31,16 @@ public class BasketController {
 
             switch (choice) {
                 case ("1"):
-                    view.clear();
-                    view.displayBasket(basket);
-                    if (!basket.getTransactionProducts().isEmpty()) {
-                        int productChoice = basketProductSelection("Provide number of product you want to modify");
-                        Product chosenProduct = basket.getProduct(productChoice - 1);
-                        int newQuantity = changeQuantity(chosenProduct);
-
-                        basket.getTransactionProducts().put(chosenProduct, newQuantity);
-                    }
+                    changeQuantityOrderedProducts();
                     break;
                 case ("2"):
-                    view.clear();
-                    view.displayBasket(basket);
-                    if (!basket.getTransactionProducts().isEmpty()) {
-                        int productChoice = basketProductSelection("Provide number of product you want to modify");
-                        Product chosenProduct = basket.getProduct(productChoice - 1);
-
-                        basket.removeProductFromBasket(chosenProduct);
-                    }
+                    deleteProductFromBusket();
                     break;
                 case ("3"):
-                    view.clear();
-                    view.displayBasket(basket);
-                    String clearDecision = view.getTextInput("Do you want to remove all products from your basket? y/n");
-                    if (clearDecision.toLowerCase().equals("y")) {
-                        basket.clearBasket();
-                        choice = "5";
-                    }
+                    choice = clearBasket();
                     break;
                 case ("4"):
-                    view.clear();
-                    view.displayBasket(basket);
-                    String completeOrderDecision = view.getTextInput("Do you want to finalize you order? y/n");
-                    if (completeOrderDecision.toLowerCase().equals("y")) {
-                        Purchase purchase = new Purchase(basket, activeCustomer);
-                        purchase.finalizeTransaction();
-                        basket.clearBasket();
-                        // productDAO dostanie purchase.productsToUpdateInWarehouse
-                        // print: order completed
-                        choice = "5";
-                    }
+                    choice = finalizeBasket();
                     break;
                 default:
                     if (!choice.equals("5")) {
@@ -79,6 +48,57 @@ public class BasketController {
                     }
             }
         } while (!choice.equals("5"));
+    }
+
+    private String finalizeBasket() {
+        String choice = "";
+        view.clear();
+        view.displayBasket(basket);
+        String completeOrderDecision = view.getTextInput("Do you want to finalize you order? y/n");
+        if (completeOrderDecision.toLowerCase().equals("y")) {
+            Purchase purchase = new Purchase(basket, activeCustomer);
+            purchase.finalizeTransaction();
+            basket.clearBasket();
+            // productDAO dostanie purchase.productsToUpdateInWarehouse
+            // print: order completed
+            choice = "5";
+        }
+        return choice;
+    }
+
+    private String clearBasket() {
+        String choice = "";
+        view.clear();
+        view.displayBasket(basket);
+        String clearDecision = view.getTextInput("Do you want to remove all products from your basket? y/n");
+        if (clearDecision.toLowerCase().equals("y")) {
+            basket.clearBasket();
+            choice = "5";
+        }
+        return choice;
+    }
+
+    private void deleteProductFromBusket() {
+        view.clear();
+        view.displayBasket(basket);
+        if (!basket.getTransactionProducts().isEmpty()) {
+            int productChoice = basketProductSelection("Provide number of product you want to modify");
+            Product chosenProduct = basket.getProduct(productChoice - 1);
+
+            basket.removeProductFromBasket(chosenProduct);
+        }
+    }
+
+    private void changeQuantityOrderedProducts() {
+        view.clear();
+        view.displayBasket(basket);
+        if (!basket.getTransactionProducts().isEmpty()) {
+            int productChoice = basketProductSelection("Provide number of product you want to modify");
+            Product chosenProduct = basket.getProduct(productChoice - 1);
+            int newQuantity = changeQuantity(chosenProduct);
+
+            basket.getTransactionProducts().put(chosenProduct, newQuantity);
+        }
     }
 
     private void prepareMenu() {

@@ -3,9 +3,9 @@ package com.codecool.shopping.basket;
 import com.codecool.IDGenerator;
 import com.codecool.customer.Customer;
 import com.codecool.product.Product;
-import com.codecool.shopping.basket.Basket;
 import com.codecool.transaction.SQLTransactionDAO;
 import com.codecool.transaction.Transaction;
+import com.codecool.transaction.TransactionDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class Purchase {
 
     public void finalizeTransaction() {
         this.newTransaction = new Transaction(transactionID, activeCustomer.getCustomerId(), basket);
-        SQLTransactionDAO sqlTransactionDAO = new SQLTransactionDAO();
+        TransactionDAO sqlTransactionDAO = new SQLTransactionDAO();
         sqlTransactionDAO.addTransaction(newTransaction);
         //return addedTransactions == 0 ? false : true;
     }
@@ -40,7 +40,6 @@ public class Purchase {
             entry.getKey().updateWarehouse(entry.getValue());
             updatedProducts.add(entry.getKey());
         }
-
         return updatedProducts;
     }
 

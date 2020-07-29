@@ -4,11 +4,11 @@ import com.codecool.product.Product;
 
 import java.util.*;
 
-public class Basket {
-    private Map<Product, Integer> productsMap;
+
+public class Basket extends BasketService {
 
     public Basket(){
-        this.productsMap = new LinkedHashMap<>();
+        super();
     }
 
     public Map<Product, Integer> getTransactionProducts() {
@@ -16,37 +16,19 @@ public class Basket {
     }
 
     public void setProduct(Product product, Integer quantity) {
-        if (checkInventory(product, quantity)){
-            productsMap.put(product, quantity);
-        }
+        setProductService(product, quantity);
     }
 
     public void addProduct(Product product, Integer quantity) {
-        if (checkInventory(product, quantity)) {
-            productsMap.put(product, quantity);
-        }
-    }
-
-    public boolean checkInventory(Product product, Integer quantity){
-        return product.getQuantity() > quantity ? true : false;
+        addProductService(product, quantity);
     }
 
     public void removeProductFromBasket(Product product) {
-        if (productsMap.containsKey(product)) {
-            productsMap.remove(product);
-        }
+        removeProductFromBasketService(product);
     }
 
     public Product getProduct(Integer choice) {
-        Product chosenProduct = null;
-        int counter = 0;
-        for (Product product : productsMap.keySet()) {
-            if (counter == choice) {
-                chosenProduct = product;
-            }
-            counter++;
-        }
-        return chosenProduct;
+        return getProductService(choice);
     }
 
     public void clearBasket(){
@@ -54,10 +36,6 @@ public class Basket {
     }
 
     public Integer getTotalBasketValue(){
-        Integer totalValue = 0;
-        for (Product product : productsMap.keySet()){
-            totalValue+= productsMap.get(product) * product.getPrice();
-        }
-        return totalValue;
+        return getTotalBasketValueService();
     }
 }
