@@ -10,19 +10,19 @@ public class Product {
 
 
 
-    public Product(String productId, String productName, String description, int price, int quantity, String category) {
+    public Product(String productId, String productName, String description, String price, String quantity, String category) {
         this.productName = productName;
         this.description = description;
-        this.price = price;
-        this.quantity = quantity;
+        this.price = Integer.parseInt(price);
+        this.quantity = Integer.parseInt(quantity);
         this.category = category;
     }
 
-    public String getName() {
+    public String getProductName() {
         return productName;
     }
 
-    public int getCost() {
+    public int getPrice() {
         return price;
     }
 
@@ -40,5 +40,9 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getProductID() {
+        return productId;
     }
 }

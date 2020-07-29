@@ -62,6 +62,18 @@ public class basicView {
         }
     }
 
+    public void printSubmenu(List<String> optionsList, String message) {
+        printMessage(message);
+        int changeIndex = 1;
+        try {
+            for (int index = 0; index < optionsList.size(); index++) {
+                printMessage(ANSI_BLUE + "(" + (index+changeIndex) + ") " + optionsList.get(index) + ANSI_BLUE);
+            }
+        }catch (IndexOutOfBoundsException e) {
+//            TODO
+        }
+    }
+
     public void printMessage(String message) {
         System.out.println(ANSI_BLUE + message + ANSI_BLUE);
     }
