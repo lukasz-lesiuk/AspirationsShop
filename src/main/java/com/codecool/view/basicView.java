@@ -6,7 +6,9 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 public class basicView {
     public static final String ANSI_RESET = "\u001B[0m";
@@ -18,6 +20,7 @@ public class basicView {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
+    Scanner scan = new Scanner(System.in);
 
     public void printCustomer(Customer customer) {
         StringBuilder customerString = new StringBuilder();
@@ -80,5 +83,24 @@ public class basicView {
 
     public void clear(){
         System.out.print("\033[H\033[2J");
+    }
+
+    public String getTextInput(String message){
+        System.out.println(message);
+        String input = scan.nextLine();
+        clear();
+        return input;
+    }
+
+    public int getNumericInput(String message) {
+        int option = 0;
+
+        System.out.print(message + ": ");
+        try {
+            option = scan.nextInt();
+        } catch (InputMismatchException e) {
+            scan.next();
+        }
+        return option;
     }
 }

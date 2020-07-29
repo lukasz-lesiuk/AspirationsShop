@@ -15,8 +15,6 @@ public class TransactionView extends basicView {
         System.out.println(createMainTextLine("TransactionID", transaction.getTransactionID()));
         System.out.println(createMainTextLine("Transaction date", transaction.getTransactionDate().toString()));
         System.out.println(createHorizontal());
-
-        System.out.println(createHorizontal());
         System.out.format("|%2s|%10s|%6s|%9s|%7s|\n", " ", "(1)", "(2)", "(3)",
                 "(2x3)");
         System.out.println(createHorizontal());
@@ -42,7 +40,7 @@ public class TransactionView extends basicView {
 
     private String createHorizontal() {
         StringBuilder newHorizontal = new StringBuilder();
-        int[] width = {2, 10, 9, 6, 7};
+        int[] width = {2, 10, 6, 9, 7};
 
         newHorizontal.append("+");
 
@@ -74,7 +72,7 @@ public class TransactionView extends basicView {
         topLine.append("|");
         topLine.append(description + ": ");
         topLine.append(value);
-        Integer filler = 38 - (description.length() + value.length());
+        Integer filler = 38 - (description.length() + value.length() + 2);
         for(int i = 0; i < filler; i++) {
             topLine.append(" ");
         }

@@ -79,7 +79,6 @@ public class SQLTransactionDAO implements TransactionDAO {
              pst2.setString(TP_TRANSACTIONID + 1, transactionID);
              ResultSet rs1 = pst1.executeQuery();
              ResultSet rs2 = pst2.executeQuery();
-            System.out.println(rs1.toString());
 
             String transaction_ID = null;
             String customerID = null;
@@ -142,10 +141,10 @@ public class SQLTransactionDAO implements TransactionDAO {
     }
 
     @Override
-    public List<Transaction> getAllTransactionsByDate(Date fromDate, Date toDate){
+    public List<Transaction> getAllTransactionsByDate(java.sql.Date fromDate, java.sql.Date toDate){
 
-        String query = "SELECT * FROM transaction_details WHERE transaction_date > '?' AND " +
-                "WHERE transaction_date < '?';";
+        String query = "SELECT * FROM transaction_details WHERE transaction_date >= ? AND " +
+                "transaction_date <= ?;";
 
         int from_Date = 0;
         int to_Date = 1;

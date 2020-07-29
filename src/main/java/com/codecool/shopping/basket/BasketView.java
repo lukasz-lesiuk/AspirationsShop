@@ -81,22 +81,4 @@ public class BasketView extends basicView {
         return topHorizontal.toString();
     }
 
-    public int getNumericInput(String message) {
-        int option = 0;
-
-        System.out.print(message + ": ");
-        try {
-            option = scan.nextInt();
-        } catch (InputMismatchException e) {
-            scan.next();
-        }
-        return option;
-    }
-
-    public String input(String message){
-        System.out.println(message);
-        String input = scan.nextLine();
-        clear();
-        return input;
-    }
 }
