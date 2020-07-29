@@ -1,26 +1,29 @@
 package com.codecool.product;
 
 public class Product {
-    private String name;
+    private String productId;
+    private String productName;
     private String description;
-    private int cost;
+    private int price;
     private int quantity;
     private String category;
 
-    public Product(String name, String description, int cost, int quantity, String category) {
-        this.name = name;
+
+
+    public Product(String productId, String productName, String description, int price, int quantity, String category) {
+        this.productName = productName;
         this.description = description;
-        this.cost = cost;
+        this.price = price;
         this.quantity = quantity;
         this.category = category;
     }
 
     public String getName() {
-        return name;
+        return productName;
     }
 
     public int getCost() {
-        return cost;
+        return price;
     }
 
     public String getDescription() {
@@ -33,5 +36,9 @@ public class Product {
 
     public String getCategory() {
         return category;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
