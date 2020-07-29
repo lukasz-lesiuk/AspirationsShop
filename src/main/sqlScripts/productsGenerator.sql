@@ -9,7 +9,7 @@ CREATE TABLE products (
     category character varying(255) NOT NULL,
 );
 
-INSERT INTO customers VALUES
+INSERT INTO products VALUES
   (1, 'Always Welcome', 'Always Welcome Sims will act more at home when at others residence, and the host wont mind at all!',500,10,'Basic'),
   (2, 'Gym Rat', 'Gym Rats build Fun and dont lose Hygiene while exercising!',500,20,'Basic'),
   (3, 'Observant', 'Observant Sims learn the traits of others just by meeting them!', 500,100,'Basic'),
@@ -19,7 +19,7 @@ INSERT INTO customers VALUES
   (7, '	Night Owl', 'Night Owls build extra skill at night.',1000,896, 'Basic'),
   (8, 'Speed Reader', '	Speed Readers read books faster than your average Sim.', 1000, 89,'Basic'),
   (9, '	Free Services', 'All single use service requests are free.',1500,47, 'Basic'),
-  (10, 'Marketable', 'Marketable Sims sell items they have crafted for more Simoleons!', 1500,23, 'Basic')
+  (10, 'Marketable', 'Marketable Sims sell items they have crafted for more Simoleons!', 1500,23, 'Basic'),
   (11, 'Creative Visionary', 'Creative Visionaries have a higher chance of painting and writing masterworks.',2000,110,'Basic'),
   (12, 'Entrepreneurial', '	Enterpreneurial Sims are more likely to get promoted in their careers.',2000,210,'Basic'),
   (13, 'Frugal', '	A Frugal Sims household has reduced bills.', 2000,142,'Basic'),
@@ -29,7 +29,7 @@ INSERT INTO customers VALUES
   (17, 'Beguiling', 'Beguiling Sims can put anyone in a flirty mood with just one look.',2500,6, 'Basic'),
   (18, 'Antiseptic', 'Antiseptic Sims Hygiene Need decays much slower.', 3000, 819,'Basic'),
   (19, 'Carefree', 'Carefree Sims will never get Tense.',3000,473, 'Basic'),
-  (20, 'Connections', 'Sims with Connections start all careers several levels ahead!', 3000,23, 'Basic')
+  (20, 'Connections', 'Sims with Connections start all careers several levels ahead!', 3000,23, 'Basic'),
   (21, 'Fertile', 'Fertile Sims have an easier time when trying for a baby, and a higher chance of twins or triplets.',3000,34,'Basic'),
   (22, 'Great Kisser', 'Great Kissers have amazing success when kissing, and increase charisma with every kiss.	',3000,473, 'Basic'),
   (23, 'Hardly Hungry', 'Sometimes Sims just dont have much of an appetite.',4000,473, 'Basic'),
