@@ -2,11 +2,11 @@ DROP TABLE IF EXISTS products;
 
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
-    name character varying(255) NOT NULL,
+    productName character varying(255) NOT NULL,
     description character varying(255) NOT NULL,
-    cost int NOT NULL,
+    price int NOT NULL,
     quanity int NOT NULL,
-    category character varying(255) NOT NULL,
+    category character varying(255) NOT NULL
 );
 
 INSERT INTO products VALUES
