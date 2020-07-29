@@ -38,6 +38,16 @@ public class TransactionView extends basicView {
         System.out.println(createExtremeHorizontal());
     }
 
+    public void printTransactions(List<Transaction> transactionList) {
+        int index = 1;
+        for (Transaction transaction : transactionList) {
+            printMessage("\nTransaction number " + index + ":");
+            printTransaction(transaction);
+            index++;
+            printMessage("");
+        }
+    }
+
     private String createHorizontal() {
         StringBuilder newHorizontal = new StringBuilder();
         int[] width = {2, 10, 6, 9, 7};

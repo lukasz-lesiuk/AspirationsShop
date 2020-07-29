@@ -64,16 +64,11 @@ public class ShoppingController {
 //                    } else {
 //                        view.printMessage("You have no shopping history! Use our browser and create one! :)");
 //                    }
-                    java.sql.Date from = Date.valueOf("2020-07-29");
-                    java.sql.Date to = Date.valueOf("2020-07-29");
+                    java.sql.Date from = Date.valueOf("2020-12-01");
+                    java.sql.Date to = Date.valueOf("2020-12-01");
                     List<Transaction> transactionList =
                             SQLTransDAO.getAllTransactionsByDate(from, to);
-                    int index = 1;
-                    for(Transaction transaction : transactionList) {
-                        view.printMessage("\nTransaction number " + index + ":");
-                        transView.printTransaction(transaction);
-                        index++;
-                    }
+                    transView.printTransactions(transactionList);
                     break;
                 case ("5"):
                     if (!basket.getTransactionProducts().isEmpty()) {

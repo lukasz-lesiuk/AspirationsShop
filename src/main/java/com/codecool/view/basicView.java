@@ -103,4 +103,10 @@ public class basicView {
         }
         return option;
     }
+
+    public void pressEnter() {
+        Scanner scan = new Scanner(System.in);
+        printMessage("Press ENTER...");
+        String pressing = scan.nextLine();
+    }
 }
