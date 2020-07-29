@@ -1,5 +1,6 @@
 package com.codecool.employeeController;
 
+import com.codecool.access.PasswordGenerator;
 import com.codecool.access.RegistrationController;
 import com.codecool.app.RootView;
 import com.codecool.customer.Customer;
@@ -8,6 +9,7 @@ import com.codecool.dao.CustomerDAOPSQL;
 import com.codecool.view.BasicView;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +19,8 @@ public class EmployeeController {
     Scanner scan = new Scanner(System.in);
     List<String> options;
     CustomerDAO dao = new CustomerDAOPSQL("database.properties");
+    PasswordGenerator passwordGenerator = new PasswordGenerator();
+
 
     public void run() {
         prepareMenu();
@@ -31,27 +35,32 @@ public class EmployeeController {
                     stopper();
                     break;
                 case ("2"):
-//                    dao.
+                    //TODO search for customer
                     break;
                 case ("3"):
-                    addNewCustomer();
+                    resetPassword();
                     stopper();
                     break;
                 case ("4"):
-                    view.printMessage("Updated customer");
+//                    updateCustomer();
+                    stopper();
+                    break;
+                case ("5"):
+                    //remove customer
+//                    removeCustomer();
+                    stopper();
                     break;
                 default:
                     view.printMessage("Option not on the list.");
             }
         } while (!choice.equals("0"));
-//        scan.close();
     }
 
     private void prepareMenu() {
         this.options = new ArrayList<>();
         options.add("Show all customers");
         options.add("Search for customer");
-        options.add("Add customer");
+        options.add("Reset customer password");
         options.add("Update customer");
         options.add("Remove customer");
     }
@@ -62,18 +71,27 @@ public class EmployeeController {
         catch(Exception e){}
     }
 
-    private void addNewCustomer() {
-        RegistrationController regController = new RegistrationController();
-        regController.run();
-        view.printMessage("Added customer");
+    private String resetPassword() {
+        Customer targetCustomer = getValidCustomer();
+
+        String newPassword = passwordGenerator.getPassword();
+
+        targetCustomer.setPasswordHash(newPassword);
+
+        dao.updateCustomer(targetCustomer);
+        view.printMessage("Password updated");
+        return newPassword;
     }
 
-    private String getCustomerField(String fieldName) {
+    private Customer getValidCustomer () {
+        Customer pickedCustomer = null;
 
-        view.printMessage("Please provide " + fieldName);
-        String userInput = scan.nextLine();
-
-        return userInput;
+        while (pickedCustomer == null) {
+            view.printMessage("Provide valid id of customer: ");
+            String userInput = scan.nextLine();
+            pickedCustomer = dao.getCustomer(userInput);
+        }
+        return pickedCustomer;
     }
 
 }

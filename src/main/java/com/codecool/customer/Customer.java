@@ -54,4 +54,8 @@ public class Customer {
     public String getPasswordHash() {
         return passwordHash;
     }
+
+    public void setPasswordHash(String newPasswordHash) {
+        passwordHash = newPasswordHash;
+    }
 }
