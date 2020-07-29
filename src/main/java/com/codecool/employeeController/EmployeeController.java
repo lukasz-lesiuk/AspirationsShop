@@ -1,5 +1,6 @@
 package com.codecool.employeeController;
 
+import com.codecool.access.RegistrationController;
 import com.codecool.app.RootView;
 import com.codecool.customer.Customer;
 import com.codecool.dao.CustomerDAO;
@@ -33,17 +34,11 @@ public class EmployeeController {
 //                    dao.
                     break;
                 case ("3"):
-                    // You can add any function you wish to test here
-//                    Customer newCustomer = new Customer("1234", "Name", "Lastname",
-//                                        "+404043655", "emali@email.com", "city",
-//                                        "street", "passhash");
-//                    CustomerDAO daoInstance = new CustomerDAOPSQL();
-//                    daoInstance.addCustomer(newCustomer);
-//                    daoInstance.getCustomer("1234");
-//                    System.out.println("AddedCustomer");
+                    addNewCustomer();
+                    stopper();
                     break;
-                case ("okon"):
-                    // place to hide a 'secret' functionality
+                case ("4"):
+                    view.printMessage("Updated customer");
                     break;
                 default:
                     view.printMessage("Option not on the list.");
@@ -58,12 +53,27 @@ public class EmployeeController {
         options.add("Search for customer");
         options.add("Add customer");
         options.add("Update customer");
+        options.add("Remove customer");
     }
 
     private void stopper() {
         System.out.println("Press Enter to continue");
         try{System.in.read();}
         catch(Exception e){}
+    }
+
+    private void addNewCustomer() {
+        RegistrationController regController = new RegistrationController();
+        regController.run();
+        view.printMessage("Added customer");
+    }
+
+    private String getCustomerField(String fieldName) {
+
+        view.printMessage("Please provide " + fieldName);
+        String userInput = scan.nextLine();
+
+        return userInput;
     }
 
 }
