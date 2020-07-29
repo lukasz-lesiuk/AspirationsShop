@@ -15,11 +15,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeController {
+//    public enum OptionsEnum {firstName, lastName, phone, email, city, address};
     EmployeeView view = new EmployeeView();
     Scanner scan = new Scanner(System.in);
     List<String> options;
     CustomerDAO dao = new CustomerDAOPSQL("database.properties");
     PasswordGenerator passwordGenerator = new PasswordGenerator();
+    int FIRST_NAME = 1;
+    int LAST_NAME = 2;
+    int PHONE = 3;
+    int EMAIL = 4;
+    int CITY = 5;
+    int ADDRESS = 6;
 
 
     public void run() {
@@ -42,12 +49,12 @@ public class EmployeeController {
                     stopper();
                     break;
                 case ("4"):
-//                    updateCustomer();
+                    updateCustomer();
                     stopper();
                     break;
                 case ("5"):
                     //remove customer
-//                    removeCustomer();
+                    removeCustomer();
                     stopper();
                     break;
                 default:
@@ -73,9 +80,7 @@ public class EmployeeController {
 
     private String resetPassword() {
         Customer targetCustomer = getValidCustomer();
-
         String newPassword = passwordGenerator.getPassword();
-
         targetCustomer.setPasswordHash(newPassword);
 
         dao.updateCustomer(targetCustomer);
@@ -94,4 +99,73 @@ public class EmployeeController {
         return pickedCustomer;
     }
 
+    private void removeCustomer() {
+        Customer targetCustomer = getValidCustomer();
+        dao.deleteCustomer(targetCustomer.getCustomerId());
+        view.printMessage("Removed customer");
+    }
+
+    private void updateCustomer() {
+        Customer targetCustomer = getValidCustomer();
+
+        List<String> optionList = new ArrayList<String>();
+        optionList.add("First name");
+        optionList.add("Last name");
+        optionList.add("Phone number");
+        optionList.add("Email address");
+        optionList.add("City");
+        optionList.add("Street and apartment no");
+
+        String choice;
+        boolean shouldRun = true;
+
+        while (shouldRun) {
+            view.printOptions(optionList, "Select property you want to change");
+            view.printMessage("(0) Cancel");
+//           view.displayMainMenu(options);
+            choice = scan.nextLine();
+            String newValue;
+
+            switch (choice) {
+                case ("1"):
+                    newValue = input("provide new First Name");
+                    System.out.println("NEW VALUE " + newValue);
+                    targetCustomer.setFirstName(newValue);
+                    break;
+                case ("2"):
+                    newValue = input("provide new Last Name");
+                    targetCustomer.setLastName(newValue);
+                    break;
+                case ("3"):
+                    newValue = input("provide new phone number");
+                    targetCustomer.setPhoneNumber(newValue);
+                    break;
+                case ("4"):
+                    newValue = input("provide new email adress");
+                    targetCustomer.setEmailAddress(newValue);
+                    break;
+                case ("5"):
+                    newValue = input("provide new city");
+                    targetCustomer.setCity(newValue);
+                    break;
+                case ("6"):
+                    newValue = input("provide address");
+                    targetCustomer.setStreet(newValue);
+                    break;
+                case ("0"):
+                    shouldRun = false;
+                    break;
+                default:
+                    view.printMessage("Option not on the list.");
+            }
+            dao.updateCustomer(targetCustomer);
+        }
+    }
+
+    private String input(String message){
+        System.out.print(message + ": ");
+        String inputValue = scan.nextLine();
+//        view.clear();
+        return inputValue;
+    }
 }
