@@ -1,8 +1,5 @@
 package com.codecool.access;
 
-import com.codecool.IDGenerator;
-import com.codecool.dao.CustomerDAOPSQL;
-
 import java.util.Scanner;
 
 public class PasswordGenerator {
@@ -38,7 +35,7 @@ public class PasswordGenerator {
     private String input(String message){
         System.out.print(message + ": ");
         String input = scan.nextLine();
-        view.clear();
+//        view.clear();
         return input;
     }
 }

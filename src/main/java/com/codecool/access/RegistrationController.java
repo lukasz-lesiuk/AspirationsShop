@@ -3,7 +3,7 @@ package com.codecool.access;
 import com.codecool.dao.CustomerDAO;
 import com.codecool.dao.CustomerDAOPSQL;
 import com.codecool.customer.Customer;
-import com.codecool.IDGenerator;
+import com.codecool.idGenerator.IDGenerator;
 
 import java.util.Scanner;
 
@@ -43,7 +43,7 @@ public class RegistrationController {
     }
 
     private String input(String message){
-        System.out.print(message + ": ");
+        System.out.println(message + ": ");
         String input = scan.nextLine();
         view.clear();
         return input;

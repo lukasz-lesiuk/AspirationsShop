@@ -163,9 +163,9 @@ public class EmployeeController {
     }
 
     private String input(String message){
-        System.out.print(message + ": ");
+        System.out.println(message + ": ");
         String inputValue = scan.nextLine();
-//        view.clear();
+        view.clear();
         return inputValue;
     }
 }

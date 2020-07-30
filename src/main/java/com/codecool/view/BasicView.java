@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
+import java.io.IOException;
+
 
 public class BasicView {
     public static final String ANSI_RESET = "\u001B[0m";
