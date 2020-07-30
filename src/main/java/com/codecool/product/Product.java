@@ -18,6 +18,13 @@ public class Product {
         this.quantity = Integer.parseInt(quantity);
         this.category = category;
     }
+    public Product(String productName, String description, String price, String quantity, String category) {
+        this.productName = productName;
+        this.description = description;
+        this.price = Integer.parseInt(price);
+        this.quantity = Integer.parseInt(quantity);
+        this.category = category;
+    }
 
     public String getProductName() {
         return productName;

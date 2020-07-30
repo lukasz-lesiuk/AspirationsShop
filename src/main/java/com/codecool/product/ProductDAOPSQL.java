@@ -151,13 +151,14 @@ public class ProductDAOPSQL implements ProductDAO {
     @Override
     public void updateProductQuantity(Product productToUpdate, int newQuantity) {
         productToUpdate.setQuantity(newQuantity);
-        String query = "UPDATE FROM products SET quantity = '?' WHERE product_id = '?'; ";
+        String query = "UPDATE products SET quantity = ? WHERE product_id = ? ";
 
 
         try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1,newQuantity);
-            pst.setString(2,productToUpdate.getProductID());
+            String temp = productToUpdate.getProductID();
+            pst.setInt(2,Integer.parseInt(temp));
 
             pst.executeUpdate();
 
@@ -195,13 +196,13 @@ public class ProductDAOPSQL implements ProductDAO {
 
     @Override
     public void deleteProduct(String product_Id) {
-        String query = "DELETE FROM products WHERE product_id = '?';";
+        String query = "DELETE FROM products WHERE product_id = ?;";
 
 
         try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement pst = con.prepareStatement(query)) {
 
-            pst.setString(1, product_Id);
+            pst.setInt(1, Integer.parseInt(product_Id));
 
             pst.executeUpdate();
 
