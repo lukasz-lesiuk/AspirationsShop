@@ -31,10 +31,10 @@ public class BasketController {
 
             switch (choice) {
                 case ("1"):
-                    changeQuantityOrderedProducts();
+                    changeBasketProductsQuantity();
                     break;
                 case ("2"):
-                    deleteProductFromBusket();
+                    deleteProductFromBasket();
                     break;
                 case ("3"):
                     choice = clearBasket();
@@ -78,7 +78,7 @@ public class BasketController {
         return choice;
     }
 
-    private void deleteProductFromBusket() {
+    private void deleteProductFromBasket() {
         view.clear();
         view.displayBasket(basket);
         if (!basket.getTransactionProducts().isEmpty()) {
@@ -89,7 +89,7 @@ public class BasketController {
         }
     }
 
-    private void changeQuantityOrderedProducts() {
+    private void changeBasketProductsQuantity() {
         view.clear();
         view.displayBasket(basket);
         if (!basket.getTransactionProducts().isEmpty()) {

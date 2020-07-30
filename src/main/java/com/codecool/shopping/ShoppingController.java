@@ -88,6 +88,8 @@ public class ShoppingController {
             if (exitDecision.toLowerCase().equals("y")) {
                 choice = "EXIT";
             }
+        } else {
+            choice = "EXIT";
         }
         return choice;
     }
