@@ -1,7 +1,6 @@
 package com.codecool.product;
 
 
-import com.codecool.customer.Customer;
 import com.codecool.dao.CustomerDAOPSQL;
 import com.codecool.transaction.SQLTransactionDAO;
 import com.codecool.transaction.Transaction;
@@ -15,34 +14,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProductDAOPSQL implements ProductDAO {
-    private final String url;
-    private final String username;
-    private final String password;
+    private final String URL;
+    private final String USERNAME;
+    private final String PASSWORD;
 
-    private final int product_id =0;
-    private final int productName = 1;
-    private final int description = 3;
-    private final int price = 4;
-    private final int quanity = 5;
-    private final int category = 6;
 
     public ProductDAOPSQL() {
         String properties_file = "database.properties";
         Properties props = readPropertiesFile("./src/main/resources/" + properties_file);
-        this.url = props.getProperty("db.url");
-        this.username = props.getProperty("db.user");
-        this.password = props.getProperty("db.passwd");
+        this.URL = props.getProperty("db.url");
+        this.USERNAME = props.getProperty("db.user");
+        this.PASSWORD = props.getProperty("db.passwd");
     }
 
     @Override
     public Product getProduct(String Name) {
-        String query = "SELECT * FROM products WHERE productName = ?";
+        String query = "SELECT * FROM products WHERE lower(productName) = ?";
+        Name = Name.toLowerCase();
         Product product = null;
-        try (Connection con = DriverManager.getConnection(url, username, password);
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement pst = con.prepareStatement(query)) {
-                 pst.setString(productName, Name);
+                 pst.setString(1, Name);
                 ResultSet rs = pst.executeQuery();
-                System.out.println(rs.toString());
                 String productId = null;
                 String productName = null;
                 String description = null;
@@ -51,7 +44,6 @@ public class ProductDAOPSQL implements ProductDAO {
                 String category = null;
 
                 while (rs.next()){
-                    System.out.println("rs.toString()");
                     productId = rs.getString("product_id");
                     productName = rs.getString("productName");
                     description = rs.getString("description");
@@ -71,27 +63,153 @@ public class ProductDAOPSQL implements ProductDAO {
     }
 
     @Override
-    public Product getProductByPhrase(String phrase) {
-        return null;
+    public List<Product> getProductByPhrase(String phrase) {
+        String query = "SELECT * FROM products WHERE lower(productName) LIKE ? OR lower(description) LIKE ? OR lower(category) LIKE ? ";
+        phrase = phrase.toLowerCase();
+        phrase = "%" + phrase + "%";
+
+        List<Product> productsList = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+
+             PreparedStatement pst = con.prepareStatement(query)){
+                 pst.setString(1,phrase);
+                 pst.setString(2,phrase);
+                 pst.setString(3,phrase);
+
+
+                 ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String productName = rs.getString("productName");
+                Product product = getProduct(productName);
+                productsList.add(product);
+            }
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return productsList;
+
+
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        String query = "SELECT * FROM products";
+
+        List<Product> productsList = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pst = con.prepareStatement(query)) {
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()){
+                String productName = rs.getString("productName");
+                Product product = getProduct(productName);
+                productsList.add(product);
+            }
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return productsList;
     }
 
     @Override
-    public void updateProduct(Product productToUpdate) {
+    public List<Product> getProductByCategory(String categoryName) {
+        String query = "SELECT * FROM products WHERE lower(category) = ? ";
+        categoryName = categoryName.toLowerCase();
+
+
+        List<Product> productsList = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+
+             PreparedStatement pst = con.prepareStatement(query)){
+            pst.setString(1,categoryName);
+
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String productName = rs.getString("productName");
+                Product product = getProduct(productName);
+                productsList.add(product);
+            }
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return productsList;
+    }
+
+    @Override
+    public void updateProductQuantity(Product productToUpdate, int newQuantity) {
+        productToUpdate.setQuantity(newQuantity);
+        String query = "UPDATE FROM products SET quantity = '?' WHERE product_id = '?'; ";
+
+
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setInt(1,newQuantity);
+            pst.setString(2,productToUpdate.getProductID());
+
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
 
     }
+
+
 
     @Override
     public void addProduct(Product newProduct) {
+        String query = "INSERT INTO products (productName,description,price,quantity,category)  VALUES(?,?,?,?,?);";
 
+
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pst = con.prepareStatement(query)) {
+
+            pst.setString(1, newProduct.getProductName());
+            pst.setString(2,newProduct.getDescription());
+            pst.setInt(3,newProduct.getPrice());
+            pst.setInt(4,newProduct.getQuantity());
+            pst.setString(5,newProduct.getCategory());
+
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
     }
 
     @Override
     public void deleteProduct(String product_Id) {
+        String query = "DELETE FROM products WHERE product_id = '?';";
+
+
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pst = con.prepareStatement(query)) {
+
+            pst.setString(1, product_Id);
+
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
 
     }
 
@@ -120,7 +238,7 @@ public class ProductDAOPSQL implements ProductDAO {
 
         String queryResponse = "";
 
-        try (Connection con = DriverManager.getConnection(url, username, password);
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement pst = con.prepareStatement(query)) {
             int index = 1;
             for (String insertValue : insertValues) {
