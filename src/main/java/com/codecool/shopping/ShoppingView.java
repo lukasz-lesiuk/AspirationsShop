@@ -1,6 +1,6 @@
 package com.codecool.shopping;
 
-import com.codecool.shopping.browse.BrowseCategory;
+import com.codecool.shopping.browse.EnumCategory;
 import com.codecool.view.basicView;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class ShoppingView extends basicView {
     }
 
     void displayCategoriesEnum() {
-        BrowseCategory[] categories = BrowseCategory.values();
+        EnumCategory[] categories = EnumCategory.values();
 
         Integer i = 1;
         for(Enum enumElement : categories) {

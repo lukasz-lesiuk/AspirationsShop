@@ -2,17 +2,20 @@ package com.codecool.shopping;
 
 import com.codecool.customer.Customer;
 import com.codecool.product.Product;
+import com.codecool.product.ProductDAO;
+import com.codecool.product.ProductDAOPSQL;
+import com.codecool.product.ProductView;
 import com.codecool.shopping.basket.Basket;
 import com.codecool.shopping.basket.BasketController;
 import com.codecool.shopping.browse.Browse;
+import com.codecool.shopping.browse.BrowseController;
+import com.codecool.shopping.browse.EnumCategory;
 import com.codecool.transaction.SQLTransactionDAO;
 import com.codecool.transaction.Transaction;
 import com.codecool.transaction.TransactionDAO;
 import com.codecool.transaction.TransactionView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.sql.Date;
 
 public class ShoppingController {
@@ -23,6 +26,7 @@ public class ShoppingController {
     private Customer activeCustomer;
     private Basket basket;
     private Browse browse;
+    private BrowseController browseController;
 
 
     public ShoppingController(Customer activeCustomer) {
@@ -39,7 +43,7 @@ public class ShoppingController {
             choice = scan.nextLine();
             switch (choice){
                 case ("1"):
-                    // browse
+                    browse();
                     break;
                 case ("2"):
                     // search
@@ -52,6 +56,7 @@ public class ShoppingController {
                     break;
                 case ("5"):
                     choice = exit();
+                    break;
                 default:
                     if(!choice.equals("5")) {
                         view.printMessage("There is no such option. Select again.");
@@ -101,15 +106,30 @@ public class ShoppingController {
         BasketController basketController = new BasketController(basket, activeCustomer);
         basketController.run();
     }
-    
-    private void getTransactionByDate(){
-        //to used by customer controller
-        TransactionDAO SQLTransDAO = new SQLTransactionDAO();
 
-        java.sql.Date from = Date.valueOf("2020-12-01");
-        java.sql.Date to = Date.valueOf("2020-12-01");
-        List<Transaction> transactionList =
-                SQLTransDAO.getAllTransactionsByDate(from, to);
-        transView.printTransactions(transactionList);
+    private void browse() {
+        browseController = new BrowseController(basket);
+        //Basket basketAfertBrowse = new Basket();
+        browseController.run();
+        //updateBasket(basketAfertBrowse);
+    }
+
+//    private void getTransactionByDate(){
+//        //to used by customer controller
+//        TransactionDAO SQLTransDAO = new SQLTransactionDAO();
+//
+//        java.sql.Date from = Date.valueOf("2020-12-01");
+//        java.sql.Date to = Date.valueOf("2020-12-01");
+//        List<Transaction> transactionList =
+//                SQLTransDAO.getAllTransactionsByDate(from, to);
+//        transView.printTransactions(transactionList);
+//    }
+
+    private void updateBasket(Basket basket){
+        for (Map.Entry<Product, Integer> entry : basket.getTransactionProducts().entrySet()) {
+            Product product = entry.getKey();
+            Integer quantity = entry.getValue();
+            this.basket.addProduct(product, quantity);
+        }
     }
 }
