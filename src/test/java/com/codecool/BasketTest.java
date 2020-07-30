@@ -15,8 +15,7 @@ public class BasketTest {
     @Before
     public void stepUp(){
         basket = new Basket();
-        product1 = new Product("1", "apple", 10, 10);
-        product2 = new Product("2", "banana", 15, 7);
+
     }
 
     @Test

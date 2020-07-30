@@ -1,5 +1,10 @@
 package com.codecool.app;
 
+import com.codecool.dao.CustomerDAO;
+import com.codecool.dao.CustomerDAOPSQL;
+import com.codecool.product.Product;
+import com.codecool.product.ProductDAO;
+import com.codecool.product.ProductDAOPSQL;
 import com.codecool.view.basicView;
 
 import java.util.ArrayList;

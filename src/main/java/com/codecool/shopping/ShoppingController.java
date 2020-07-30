@@ -30,12 +30,6 @@ public class ShoppingController {
         this.activeCustomer = activeCustomer;
         this.basket = new Basket();
         this.browse = new Browse();
-        //----------------------------------------------------------
-        Product product = new Product("bs]c45Ae", "New item", 400, 10);
-        basket.addProduct(product, 3);
-        Product product1 = new Product("aa]c77re", "New item1", 200, 5);
-        basket.addProduct(product1, 4);
-        //----------------------------------------------------------
     }
 
     public void run() {

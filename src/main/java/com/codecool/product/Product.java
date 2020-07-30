@@ -1,29 +1,51 @@
 package com.codecool.product;
 
 public class Product {
-    private String productID;
+    private String productId;
     private String productName;
-    private Integer price;
-    private Integer quantity;
+    private String description;
+    private int price;
+    private int quantity;
+    private String category;
 
-    public Product(String productID, String productName, Integer price, Integer quantity) {
-        this.productID = productID;
+
+
+    public Product(String productId, String productName, String description, String price, String quantity, String category) {
+        this.productId = productId;
         this.productName = productName;
-        this.price = price;
+        this.description = description;
+        this.price = Integer.parseInt(price);
+        this.quantity = Integer.parseInt(quantity);
+        this.category = category;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
     public String getProductID() {
-        return productID;
+        return productId;
     }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public Integer getQuantity() { return quantity; }
-
-    public String getProductName() {return productName; }
 
     public void updateWarehouse(Integer numberOfSoldItems) {
         this.quantity = quantity - numberOfSoldItems;
