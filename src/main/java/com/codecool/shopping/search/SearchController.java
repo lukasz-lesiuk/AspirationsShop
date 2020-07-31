@@ -24,6 +24,7 @@ public class SearchController {
 
         while (!phraseToSearch.toLowerCase().equals("exit")) {
             phraseToSearch = getPhrase();
+            System.out.println("phrase to search" + phraseToSearch);
             searchedPruducts = productDAO.getProductByPhrase(phraseToSearch);
 
             if (!searchedPruducts.isEmpty()) {
@@ -75,7 +76,7 @@ public class SearchController {
             view.printProduct(selectedProduct);
             view.printMessage("(1) Add product to basket");
             view.printMessage("(0) Back");
-            choice = view.getNumericInput("");
+            choice = view.getNumericInput("Select an option");
 
             if (choice == 0) {
                 shouldRun = false;
