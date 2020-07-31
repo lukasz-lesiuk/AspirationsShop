@@ -21,20 +21,20 @@ public class SearchController {
 
     public void run() {
         String phraseToSearch = "";
-        do {
+
+        while (!phraseToSearch.toLowerCase().equals("exit")) {
             phraseToSearch = getPhrase();
             searchedPruducts = productDAO.getProductByPhrase(phraseToSearch);
 
-            if(!searchedPruducts.isEmpty()) {
+            if (!searchedPruducts.isEmpty()) {
                 Product selectedProduct = selectProductFromTheList(searchedPruducts);
                 if (!selectedProduct.equals(null)) {
                     menageProduct(selectedProduct);
-                    phraseToSearch = "exit";
                 }
-            } else {
+            } else if (searchedPruducts.isEmpty() && !phraseToSearch.toLowerCase().equals("exit")) {
                 view.printMessage("Product not found.");
             }
-        } while (!phraseToSearch.toLowerCase().equals("exit"));
+        }
     }
 
     public String getPhrase() {
@@ -46,35 +46,48 @@ public class SearchController {
     }
 
     public Product selectProductFromTheList(List<Product> listOfProducts) {
-        int choice;
+        boolean shouldRun = true;
         Product selectedProduct = null;
-        do {
+
+        while (shouldRun) {
             view.clear();
             productView.printProductList(searchedPruducts);
-            choice = menageList(searchedPruducts);
-            if (choice > 0 && choice < searchedPruducts.size()) {
+            int choice = menageList(searchedPruducts);
+
+            if (choice > 0 && choice <= searchedPruducts.size()) {
                 selectedProduct = searchedPruducts.get(choice - 1);
+                shouldRun = false;
+            } else if (choice == 0) {
+                shouldRun = false;
+            } else {
+                view.printMessage("Wrong choice, try again");
             }
-        } while (!(choice >= 0 && choice < searchedPruducts.size()));
+        }
 
         return selectedProduct;
     }
 
     public void menageProduct(Product selectedProduct) {
         int choice;
-        do {
+        boolean shouldRun = true;
+        while (shouldRun) {
             view.clear();
             view.printProduct(selectedProduct);
-            view.printMessage("\n(1) Add product to basket");
+            view.printMessage("(1) Add product to basket");
             view.printMessage("(0) Back");
-
             choice = view.getNumericInput("");
-            if (choice == 1) {
+
+            if (choice == 0) {
+                shouldRun = false;
+            } else if (choice == 1) {
                 view.printMessage("Product quantity in stock: " + selectedProduct.getQuantity());
                 int quantity = view.getNumericInput("Enter quantity of product you want to add");
                 addToBasket(selectedProduct, quantity);
+                shouldRun = false;
+            } else {
+                view.printMessage("There is no such option.");
             }
-        } while (choice != 0);
+        }
     }
 
     private void addToBasket(Product selectedProduct, int quantity) {
