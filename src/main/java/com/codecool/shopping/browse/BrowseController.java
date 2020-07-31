@@ -34,46 +34,74 @@ public class BrowseController {
             switch (choice){
                 case ("1"):
                     productList = getCategory(EnumCategory.Basic.getName());
-                    productView.printProductList(productList);
-                    browseView.printMessage("0. Back");
-
-                    Product product = getChoosenProduct(productList);
-                    productView.printProduct(product);
-
-                    browseView.pressEnter();
-
-                    Integer quantity = browseView.getNumericInput("Choose quantity");
-
-                    basket.addProduct(product, quantity);
+                    getProductByCat(productList);
 
                     break;
                 case ("2"):
                     productList = getCategory(EnumCategory.Outdoor_Retreat.getName());
+                    getProductByCat(productList);
+
                     break;
                 case ("3"):
                     productList = getCategory(EnumCategory.Seasons.getName());
+                    getProductByCat(productList);
+
                     break;
                 case ("4"):
                     productList = getCategory(EnumCategory.Miscellaneous.getName());
+                    getProductByCat(productList);
+
                     break;
                 case ("5"):
                     productList = getCategory(EnumCategory.Island_Living.getName());
+                    getProductByCat(productList);
+
                     break;
                 case ("6"):
                     productList = getCategory(EnumCategory.Realm_of_Magic.getName());
+                    getProductByCat(productList);
+
                     break;
                 case ("7"):
                     productList = getCategory(EnumCategory.Get_Famous.getName());
+                    getProductByCat(productList);
+
                     break;
                 case ("8"):
                     productList = getCategory(EnumCategory.Potions.getName());
+                    getProductByCat(productList);
+
                     break;
                 default:
                     if(!choice.equals("9")) {
                         browseView.printMessage("There is no such option. Select again.");
-                    } // ocb?
+                    }
             }
         } while (!choice.equals("0"));
+    }
+
+    private void getProductByCat(List<Product> productList) {
+        browseView.printMessage("0. Back");
+        productView.printProductList(productList);
+
+        Product product = getChoosenProduct(productList);
+        productView.printProduct(product);
+
+        browseView.pressEnter();
+        Integer quantity = askForQuantity(product);
+        basket.addProduct(product, quantity);
+    }
+
+    private Integer askForQuantity(Product product){
+        boolean isEnoughtProduct = false;
+        Integer quantity;
+        do{
+            quantity = browseView.getNumericInput("Choose quantity");
+            isEnoughtProduct = checkWearhouse(product, quantity);
+
+        }while (!isEnoughtProduct);
+
+        return quantity;
     }
 
     private List<Product> getCategory(String category){
@@ -86,4 +114,14 @@ public class BrowseController {
         chooseController = new ChooseController(productList);
         return chooseController.chooseProduct();
     }
+
+    private boolean checkWearhouse(Product selectedProduct, int quantity) {
+        if (selectedProduct.checkQuantity(quantity)) {
+            return true;
+        } else {
+            browseView.printMessage("There is not enough product in stock.");
+            return false;
+        }
+    }
+
 }

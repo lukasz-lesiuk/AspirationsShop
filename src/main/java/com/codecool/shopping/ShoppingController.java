@@ -27,7 +27,6 @@ public class ShoppingController {
     private Customer activeCustomer;
     private Basket basket;
     private Browse browse;
-    private BrowseController browseController;
 
 
     public ShoppingController(Customer activeCustomer) {
@@ -109,7 +108,7 @@ public class ShoppingController {
     }
 
     private void browse() {
-        browseController = new BrowseController(basket);
+        BrowseController browseController = new BrowseController(basket);
         browseController.run();
     }
 
@@ -118,22 +117,4 @@ public class ShoppingController {
         searchController.run();
     }
 
-//    private void getTransactionByDate(){
-//        //to used by customer controller
-//        TransactionDAO SQLTransDAO = new SQLTransactionDAO();
-//
-//        java.sql.Date from = Date.valueOf("2020-12-01");
-//        java.sql.Date to = Date.valueOf("2020-12-01");
-//        List<Transaction> transactionList =
-//                SQLTransDAO.getAllTransactionsByDate(from, to);
-//        transView.printTransactions(transactionList);
-//    }
-
-    private void updateBasket(Basket basket){
-        for (Map.Entry<Product, Integer> entry : basket.getTransactionProducts().entrySet()) {
-            Product product = entry.getKey();
-            Integer quantity = entry.getValue();
-            this.basket.addProduct(product, quantity);
-        }
-    }
 }
