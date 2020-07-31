@@ -13,7 +13,7 @@ public class EmployeeView extends BasicView {
         printMessage("(0) Logout");
     }
 
-    void printALlCustomers(List<Customer> customerList) {
+    void printCustomersList(List<Customer> customerList) {
         for(Customer customer : customerList) {
             printCustomer(customer);
         }

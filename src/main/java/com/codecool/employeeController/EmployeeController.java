@@ -39,13 +39,14 @@ public class EmployeeController {
             switch (choice){
                 case ("1"):
                     customers = dao.getAllCustomers();
-                    view.printALlCustomers(customers);
+                    view.printCustomersList(customers);
                     stopper();
                     break;
                 case ("2"):
-                    //TODO search for customer
-                    customers = dao.searchForCustomers("Cracow");
-                    view.printALlCustomers(customers);
+                    view.printMessage("What are you searching for:");
+                    String inquiry = scan.nextLine();
+                    customers = dao.searchForCustomers(inquiry);
+                    view.printCustomersList(customers);
                     stopper();
                     break;
                 case ("3"):
