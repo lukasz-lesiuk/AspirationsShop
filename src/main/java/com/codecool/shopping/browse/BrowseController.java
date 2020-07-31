@@ -42,7 +42,7 @@ public class BrowseController {
 
                     browseView.pressEnter();
 
-                    Integer quantity = browseView.getNumericInput("Choose Qantity");
+                    Integer quantity = browseView.getNumericInput("Choose quantity");
 
                     basket.addProduct(product, quantity);
 

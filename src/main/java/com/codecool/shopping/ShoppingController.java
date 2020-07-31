@@ -109,9 +109,7 @@ public class ShoppingController {
 
     private void browse() {
         browseController = new BrowseController(basket);
-        //Basket basketAfertBrowse = new Basket();
         browseController.run();
-        //updateBasket(basketAfertBrowse);
     }
 
 //    private void getTransactionByDate(){

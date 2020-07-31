@@ -124,14 +124,12 @@ public class ProductDAOPSQL implements ProductDAO {
         String query = "SELECT * FROM products WHERE lower(category) = ? ";
         categoryName = categoryName.toLowerCase();
 
-
         List<Product> productsList = new ArrayList<>();
 
         try (Connection con = DriverManager.getConnection(URL,USERNAME,PASSWORD);
 
              PreparedStatement pst = con.prepareStatement(query)){
             pst.setString(1,categoryName);
-
 
             ResultSet rs = pst.executeQuery();
 
@@ -166,11 +164,7 @@ public class ProductDAOPSQL implements ProductDAO {
             Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-
-
     }
-
-
 
     @Override
     public void addProduct(Product newProduct) {
@@ -210,8 +204,6 @@ public class ProductDAOPSQL implements ProductDAO {
             Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-
-
     }
 
     private Properties readPropertiesFile(String fileName) {
