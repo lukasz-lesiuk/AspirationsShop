@@ -25,7 +25,7 @@ public class BrowseController {
         this.basket = basket;
     }
 
-    public Basket run() {
+    public void run() {
         String choice;
         do {
             browseView.displayBrowseOptions();
@@ -74,8 +74,8 @@ public class BrowseController {
                     } // ocb?
             }
         } while (!choice.equals("0"));
-        return basket;
     }
+
     private List<Product> getCategory(String category){
         browseView.clear();
         productList = productDAO.getProductByCategory(category);

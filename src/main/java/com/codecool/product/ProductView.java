@@ -1,8 +1,10 @@
 package com.codecool.product;
 
+import com.codecool.view.basicView;
+
 import java.util.List;
 
-public class ProductView {
+public class ProductView extends basicView {
 
     public void printProduct(Product product){
         System.out.print(product.getProductName() + ". ");

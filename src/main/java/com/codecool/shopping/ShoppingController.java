@@ -10,6 +10,7 @@ import com.codecool.shopping.basket.BasketController;
 import com.codecool.shopping.browse.Browse;
 import com.codecool.shopping.browse.BrowseController;
 import com.codecool.shopping.browse.EnumCategory;
+import com.codecool.shopping.search.SearchController;
 import com.codecool.transaction.SQLTransactionDAO;
 import com.codecool.transaction.Transaction;
 import com.codecool.transaction.TransactionDAO;
@@ -46,7 +47,7 @@ public class ShoppingController {
                     browse();
                     break;
                 case ("2"):
-                    // search
+                    search();
                     break;
                 case ("3"):
                     basket();
@@ -110,6 +111,11 @@ public class ShoppingController {
     private void browse() {
         browseController = new BrowseController(basket);
         browseController.run();
+    }
+
+    private void search() {
+        SearchController searchController = new SearchController(basket);
+        searchController.run();
     }
 
 //    private void getTransactionByDate(){

@@ -57,4 +57,8 @@ public class Product {
     public void updateWarehouse(Integer numberOfSoldItems) {
         this.quantity = quantity - numberOfSoldItems;
     }
+
+    public boolean checkQuantity(int wantedQuantity) {
+        return wantedQuantity > 0 && wantedQuantity <= quantity;
+    }
 }
