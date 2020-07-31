@@ -2,6 +2,9 @@ package com.codecool.shopping.basket;
 
 import com.codecool.customer.Customer;
 import com.codecool.product.Product;
+import com.codecool.product.ProductDAO;
+import com.codecool.product.ProductDAOPSQL;
+import com.codecool.product.ProductView;
 import com.codecool.transaction.Transaction;
 
 import java.util.ArrayList;
@@ -58,12 +61,17 @@ public class BasketController {
         if (completeOrderDecision.toLowerCase().equals("y")) {
             Purchase purchase = new Purchase(basket, activeCustomer);
             purchase.finalizeTransaction();
+            purchase.updateWarehouse();
+
             basket.clearBasket();
+
+
 
             choice = "5";
         }
         return choice;
     }
+
 
     private String clearBasket() {
         String choice = "";

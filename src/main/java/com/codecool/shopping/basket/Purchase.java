@@ -3,6 +3,9 @@ package com.codecool.shopping.basket;
 import com.codecool.IDGenerator;
 import com.codecool.customer.Customer;
 import com.codecool.product.Product;
+import com.codecool.product.ProductDAO;
+import com.codecool.product.ProductDAOPSQL;
+import com.codecool.product.ProductView;
 import com.codecool.transaction.SQLTransactionDAO;
 import com.codecool.transaction.Transaction;
 import com.codecool.transaction.TransactionDAO;
@@ -23,7 +26,7 @@ public class Purchase {
         this.basket = basket;
         this.activeCustomer = activeCustomer;
         this.transactionID = generator.generateID();
-        this.productsToUpdateInWarehouse = updateProductsToWarehouse(basket);
+        this.productsToUpdateInWarehouse = updateProductsToWarehouse();
     }
 
     public void finalizeTransaction() {
@@ -33,7 +36,7 @@ public class Purchase {
         //return addedTransactions == 0 ? false : true;
     }
 
-    public List<Product> updateProductsToWarehouse(Basket basket) {
+    public List<Product> updateProductsToWarehouse() {
         List<Product> updatedProducts = new ArrayList<>();
 
         for(Map.Entry<Product, Integer> entry : basket.getTransactionProducts().entrySet()) {
@@ -41,6 +44,20 @@ public class Purchase {
             updatedProducts.add(entry.getKey());
         }
         return updatedProducts;
+    }
+
+    public void updateWarehouse(){
+        List<Product> productListToUpdate = updateProductsToWarehouse();
+        ProductView productView = new ProductView();
+
+        productView.pressEnter();
+        productView.printProductList(productListToUpdate);
+
+        productView.pressEnter();
+        ProductDAO productDAOPSQL = new ProductDAOPSQL();
+        for (Product product : productListToUpdate) {
+            productDAOPSQL.updateProductQuantity(product, product.getQuantity());
+        }
     }
 
     // jak przekażemy List<Product> do SQLProductDAO?

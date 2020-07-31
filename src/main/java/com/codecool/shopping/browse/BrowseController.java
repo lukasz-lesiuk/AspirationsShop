@@ -87,8 +87,8 @@ public class BrowseController {
         Product product = getChoosenProduct(productList);
         productView.printProduct(product);
 
-        browseView.pressEnter();
         Integer quantity = askForQuantity(product);
+        browseView.pressEnter();
         basket.addProduct(product, quantity);
     }
 
