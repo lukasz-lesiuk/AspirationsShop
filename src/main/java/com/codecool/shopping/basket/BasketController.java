@@ -59,8 +59,7 @@ public class BasketController {
             Purchase purchase = new Purchase(basket, activeCustomer);
             purchase.finalizeTransaction();
             basket.clearBasket();
-            // productDAO dostanie purchase.productsToUpdateInWarehouse
-            // print: order completed
+
             choice = "5";
         }
         return choice;
