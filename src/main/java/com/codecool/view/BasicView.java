@@ -51,12 +51,16 @@ public class BasicView {
                 printMessage(ANSI_BLUE + "(" + (index+changeIndex) + ") " + optionsList.get(index) + ANSI_BLUE);
             }
         }catch (IndexOutOfBoundsException e) {
-//            TODO
+            printError("Nothing to print");
         }
     }
 
     public void printMessage(String message) {
         System.out.println(ANSI_BLUE + message + ANSI_BLUE);
+    }
+
+    public void printError(String message) {
+        System.out.println(ANSI_RED + message + ANSI_RED);
     }
 
     public void clear(){

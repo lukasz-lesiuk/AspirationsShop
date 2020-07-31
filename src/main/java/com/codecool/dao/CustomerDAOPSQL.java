@@ -1,6 +1,7 @@
 package com.codecool.dao;
 
 import com.codecool.customer.Customer;
+import com.codecool.view.BasicView;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,6 +20,15 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private String url;
     private String user;
     private String password;
+
+    private enum ColumnPublic {
+        ID, FIRST_NAME, LAST_NAME, PHONE_NUMBER, EMAIL, CITY, STREET
+    }
+
+    private enum Column {
+        ID, FIRST_NAME, LAST_NAME, PHONE_NO, EMAIL, CITY, STREET, HASH
+    }
+
     private final int ID_POSITION = 0;
     private final int FIRST_NAME_POSITION = 1;
     private final int LAST_NAME_POSITION = 2;
@@ -27,8 +37,10 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private final int CITY_POSITION = 5;
     private final int STREET_POSITION = 6;
     private final int HASH_POSITION = 7;
+    BasicView view;
 
     public CustomerDAOPSQL(String properties_file) {
+        this.view = new BasicView();
 //        String properties_file = "database.properties";
         Properties props = readPropertiesFile("./src/main/resources/" + properties_file);
         this.url = props.getProperty("db.url");
@@ -40,7 +52,8 @@ public class CustomerDAOPSQL implements CustomerDAO {
     public Customer getCustomer(String id) {
         String inputString = retrieveQueryResponseAsString("SELECT * FROM customers WHERE id = ?", id);
         List<String> attributesList = new ArrayList<>(Arrays.asList(inputString.split(", ")));
-
+        //TODO may return null - fix it
+        Customer outputCustomer = null;
         try {
             //id retrieval unnecessary since id was declared at the start
             String firstName = attributesList.get(FIRST_NAME_POSITION);
@@ -50,12 +63,14 @@ public class CustomerDAOPSQL implements CustomerDAO {
             String city = attributesList.get(CITY_POSITION);
             String street = attributesList.get(STREET_POSITION);
             String hash = attributesList.get(HASH_POSITION);
-            return (new Customer(id, firstName, lastName, phone, email, city, street, hash));
+            outputCustomer =  new Customer(id, firstName, lastName, phone, email, city, street, hash);
         } catch (java.lang.IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("Id did not match any element from DB");
-//            System.out.println("Incorrect ID");
+//            throw new IllegalArgumentException("Id did not match any element from DB");
+            view.printError("Incorrect ID");
         }
+        return outputCustomer;
     }
+
 
     @Override
     public List<Customer> getAllCustomers() {
@@ -80,6 +95,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement(query)) {
+            //TODO magic numbers
             pst.setString(1, customerToUpdate.getFirstName());
             pst.setString(2, customerToUpdate.getLastName());
             pst.setString(3, customerToUpdate.getPhoneNumber());
@@ -138,6 +154,50 @@ public class CustomerDAOPSQL implements CustomerDAO {
             Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
+    }
+
+    @Override
+    public List<Customer> searchForCustomers(String inquiry) {
+        String queryForPreparedStatement = (generateQueryForSearch("Cracow"));
+        String inputString = retrieveQueryResponseAsString(queryForPreparedStatement, inquiry, inquiry,
+                inquiry, inquiry, inquiry, inquiry, inquiry);
+        System.out.println(inputString);
+//        List<String> attributesList = new ArrayList<>(Arrays.asList(inputString.split(", ")));
+//        //TODO may return null - fix it
+//        Customer outputCustomer = null;
+//        try {
+//            //id retrieval unnecessary since id was declared at the start
+//            String firstName = attributesList.get(FIRST_NAME_POSITION);
+//            String lastName = attributesList.get(LAST_NAME_POSITION);
+//            String phone = attributesList.get(PHONE_NO_POSITION);
+//            String email = attributesList.get(EMAIL_POSITION);
+//            String city = attributesList.get(CITY_POSITION);
+//            String street = attributesList.get(STREET_POSITION);
+//            String hash = attributesList.get(HASH_POSITION);
+//            outputCustomer =  new Customer(id, firstName, lastName, phone, email, city, street, hash);
+//        } catch (java.lang.IndexOutOfBoundsException e) {
+////            throw new IllegalArgumentException("Id did not match any element from DB");
+//            view.printError("Incorrect ID");
+//        }
+        return null;
+    }
+
+    private String generateQueryForSearch(String inquiry) {
+        StringBuilder strBuilder = new StringBuilder("SELECT * FROM customers WHERE ");
+
+        int index = 0;
+        for (ColumnPublic columnName : ColumnPublic.values()) {
+
+            strBuilder.append(columnName);
+            strBuilder.append(" LIKE '");
+            strBuilder.append("?");
+            strBuilder.append("'");
+            index++;
+            if (index < ColumnPublic.values().length) {
+                strBuilder.append(" OR ");
+            }
+        }
+        return strBuilder.toString();
     }
 
     private String retrieveQueryResponseAsString(String query, String... insertValues) {

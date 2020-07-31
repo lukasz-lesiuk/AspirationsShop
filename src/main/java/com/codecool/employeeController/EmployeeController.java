@@ -32,17 +32,21 @@ public class EmployeeController {
     public void run() {
         prepareMenu();
         String choice;
+        List<Customer> customers;
         do {
             view.displayMainMenu(options);
             choice = scan.nextLine();
             switch (choice){
                 case ("1"):
-                    List<Customer> customers = dao.getAllCustomers();
+                    customers = dao.getAllCustomers();
                     view.printALlCustomers(customers);
                     stopper();
                     break;
                 case ("2"):
                     //TODO search for customer
+                    customers = dao.searchForCustomers("Cracow");
+                    view.printALlCustomers(customers);
+                    stopper();
                     break;
                 case ("3"):
                     resetPassword();
