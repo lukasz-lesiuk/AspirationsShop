@@ -65,7 +65,7 @@ public class BasicView {
                 printMessage(ANSI_BLUE + "(" + (index+changeIndex) + ") " + optionsList.get(index) + ANSI_BLUE);
             }
         }catch (IndexOutOfBoundsException e) {
-//            TODO
+            printError("Nothing to print");
         }
     }
 

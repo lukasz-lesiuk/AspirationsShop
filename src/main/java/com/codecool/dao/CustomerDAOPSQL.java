@@ -37,13 +37,6 @@ public class CustomerDAOPSQL implements CustomerDAO {
     }
 
     @Override
-    public Customer getCustomerByMail(String email) {
-        // TODO implement function as per name
-
-        return getCustomer("?p7<ks+n"); // dumb placeholder implementation
-    }
-
-    @Override
     public List<Customer> getAllCustomers() {
         int customersQty = getRecordsQty("customers");
         List<Customer> customersList = new ArrayList<Customer>();
@@ -142,6 +135,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
         return outputList;
     }
 
+    @Override
     public Customer searchByMailOnly(String inquiry) {
         String queryForPreparedStatement = ("SELECT * FROM customers WHERE email = ?");
         Customer outputCustomer = null;
@@ -158,7 +152,6 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
     private Customer makeCustomerFromString(String inputString) {
         List<String> attributesList = new ArrayList<>(Arrays.asList(inputString.split(", ")));
-        //TODO may return null - fix it
         Customer outputCustomer = null;
         try {
             String id = attributesList.get(column.ID.position);
