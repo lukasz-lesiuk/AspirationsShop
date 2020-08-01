@@ -20,7 +20,7 @@ public class PasswordGenerator {
             password = input("Enter password");
             while (!checker.isPasswordGood(password)) {
                 view.printMessage("This password didn't meet the policy requirements.");
-                input("Enter password");
+                password = input("Enter password");
             }
             passwordConfirm = input("Enter password again");
             if (!passwordConfirm.equals(password)){
