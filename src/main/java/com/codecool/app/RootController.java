@@ -2,6 +2,7 @@ package com.codecool.app;
 
 import com.codecool.access.RegistrationController;
 import com.codecool.customer.Customer;
+import com.codecool.shopping.ShoppingController;
 import com.codecool.dao.CustomerDAO;
 import com.codecool.dao.CustomerDAOPSQL;
 import com.codecool.employeeController.EmployeeController;
@@ -14,6 +15,8 @@ public class RootController {
     RootView view = new RootView();
     Scanner scan = new Scanner(System.in);
     List<String> options;
+    Customer customer = new Customer("asdfasef", "Krzysiek", "Chromiec", "12414141",
+            "asdfasdf@asdf.pl", "Krakow", "Mlynska", "asdfasdfasef");
 
     public void run() {
         prepareMenu();
@@ -34,6 +37,9 @@ public class RootController {
                     ec.run();
 
                     break;
+                case ("4"):
+                    shopping();
+                    break;
                 case ("okon"):
                     // place to hide a 'secret' functionality
                     break;
@@ -47,7 +53,8 @@ public class RootController {
         this.options = new ArrayList<>();
         options.add("Login");
         options.add("Register");
-        options.add("Test");
+        options.add("Option");
+        options.add("Shopping menu");
     }
 
     private void login() {
@@ -57,5 +64,10 @@ public class RootController {
     private void register() {
         RegistrationController regCon = new RegistrationController();
         regCon.run();
+    }
+
+    private void shopping() {
+        ShoppingController shopCon = new ShoppingController(customer);
+        shopCon.run();
     }
 }

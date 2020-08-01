@@ -35,13 +35,7 @@
       <artifactId>commons-csv</artifactId>
       <version>1.8</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.junit.jupiter</groupId>-->
-<!--      <artifactId>junit-jupiter</artifactId>-->
-<!--      <version>RELEASE</version>-->
-<!--      <scope>test</scope>-->
-<!--    </dependency>-->
-    <!--      <dependency>-->
+<!--      <dependency>-->
 <!--          <groupId>org.junit.jupiter</groupId>-->
 <!--          <artifactId>junit-jupiter</artifactId>-->
 <!--          <version>RELEASE</version>-->

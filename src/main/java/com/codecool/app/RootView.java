@@ -16,6 +16,7 @@ public class RootView extends BasicView {
         clear();
         printOptions(options, "Welcome in our shop!");
         printMessage("(0) Exit");
+
         for (String message : messages) {
             printMessage(message);
         }

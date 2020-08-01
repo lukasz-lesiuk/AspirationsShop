@@ -18,7 +18,6 @@ public class IDGenerator {
             int randomIndex = random.nextInt(allCharacters.length());
             randomID.append(allCharacters.charAt(randomIndex));
         }
-
         return randomID.toString();
     }
 }
