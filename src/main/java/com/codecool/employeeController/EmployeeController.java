@@ -6,9 +6,14 @@ import com.codecool.app.RootView;
 import com.codecool.customer.Customer;
 import com.codecool.dao.CustomerDAO;
 import com.codecool.dao.CustomerDAOPSQL;
+import com.codecool.transaction.SQLTransactionDAO;
+import com.codecool.transaction.Transaction;
+import com.codecool.transaction.TransactionDAO;
+import com.codecool.transaction.TransactionView;
 import com.codecool.view.BasicView;
 
 import javax.swing.*;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,7 @@ public class EmployeeController {
     CustomerDAO dao = new CustomerDAOPSQL("database.properties");
 //    TransactionDAO transactionDAO
     PasswordGenerator passwordGenerator = new PasswordGenerator();
+    TransactionView transView = new TransactionView();
 
 
     public void run() {
@@ -56,6 +62,11 @@ public class EmployeeController {
                     removeCustomer();
                     stopper();
                     break;
+                case ("6"):
+                    Date startDate = Date.valueOf("1900-12-01");
+                    Date endDate = Date.valueOf("2100-12-01");
+                    getTransactionByDate(startDate, endDate);
+                    view.pressEnter();
                 default:
                     view.printMessage("Option not on the list.");
             }
@@ -68,7 +79,8 @@ public class EmployeeController {
         options.add("Search for customer");
         options.add("Reset customer password");
         options.add("Update customer");
-        options.add("Remove customer");
+        options.add("Remove customer");;
+        options.add("Show all transactions");
     }
 
     private void stopper() {
@@ -185,14 +197,16 @@ public class EmployeeController {
         return inputValue;
     }
 
-//    private void getTransactionByDate(){
-//        //to used by customer controller
-//        TransactionDAO SQLTransDAO = new SQLTransactionDAO();
-//
+    private void getTransactionByDate(Date startDate, Date endDate){
+        TransactionDAO SQLTransDAO = new SQLTransactionDAO();
+
 //        java.sql.Date from = Date.valueOf("2020-12-01");
 //        java.sql.Date to = Date.valueOf("2020-12-01");
-//        List<Transaction> transactionList =
-//                SQLTransDAO.getAllTransactionsByDate(from, to);
-//        transView.printTransactions(transactionList);
-//    }
+
+        java.sql.Date from = startDate;
+        java.sql.Date to = endDate;
+        List<Transaction> transactionList =
+                SQLTransDAO.getAllTransactionsByDate(from, to);
+        transView.printTransactions(transactionList);
+    }
 }
