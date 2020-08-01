@@ -3,8 +3,8 @@ package com.codecool.access;
 import java.util.Scanner;
 
 public class PasswordGenerator {
-    RegistrationView view;
-    Scanner scan;
+    private final RegistrationView view;
+    private final Scanner scan;
 
     public PasswordGenerator () {
         this.view = new RegistrationView();

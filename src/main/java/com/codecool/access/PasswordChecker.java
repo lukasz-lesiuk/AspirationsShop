@@ -1,9 +1,12 @@
 package com.codecool.access;
 
 public class PasswordChecker {
+    private static final int MINIMAL_PASS_LENGTH= 8;
+    private static final int PASSWORD_CHARACTER_GROUPS = 3;
+
     public boolean isPasswordGood(String password) {
         boolean result = true;
-        if (password.length()<8 || !hasDifferentChars(password)){
+        if (password.length()<MINIMAL_PASS_LENGTH || !hasDifferentChars(password)){
             result = false;
         }
         return result;
@@ -29,6 +32,6 @@ public class PasswordChecker {
         }
 
         int sum = hasDigit + hasLower + hasUpper + hasSpecial;
-        return sum >= 3;
+        return sum >= PASSWORD_CHARACTER_GROUPS;
     }
 }
