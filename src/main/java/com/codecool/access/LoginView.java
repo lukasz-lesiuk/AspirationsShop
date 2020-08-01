@@ -13,7 +13,7 @@ public class LoginView extends BasicView {
         System.out.println();
         printMessage("Username: \n");
         printMessage("Password: \n");
-        System.out.print("\033[" + USERNAME_HEIGHT + ";" + USERNAME_COLUMN + "H");
+        System.out.println("\033[" + USERNAME_HEIGHT + ";" + USERNAME_COLUMN + "H");
     }
 
     @Override
@@ -23,6 +23,6 @@ public class LoginView extends BasicView {
     }
 
     public void moveToPswd() {
-        System.out.print("\033[" + PASSWORD_HEIGHT + ";" + PASSWORD_COLUMN + "H");
+        System.out.println("\033[" + PASSWORD_HEIGHT + ";" + PASSWORD_COLUMN + "H");
     }
 }

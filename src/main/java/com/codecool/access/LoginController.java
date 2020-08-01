@@ -3,6 +3,7 @@ package com.codecool.access;
 import com.codecool.dao.CustomerDAO;
 import com.codecool.dao.CustomerDAOPSQL;
 import com.codecool.customer.Customer;
+import com.codecool.view.BasicView;
 
 import java.util.Scanner;
 
@@ -18,10 +19,10 @@ public class LoginController {
     }
 
     public Customer run(){
-        Customer user;
+        Customer user = null;
         String password;
         String input = "default";
-        do {
+        try {
             view.displayLoginScreen();
             String email = scan.nextLine();
             view.moveToPswd();
@@ -31,11 +32,20 @@ public class LoginController {
                 view.printMessage("Wrong username or password. Press Enter and try again or enter q to cancel.");
                 input = scan.nextLine();
             }
-        } while (isLoginComplete(user, password, input));
+            } catch (NullPointerException e) {
+                view.printError("Failed to log in");
+                BasicView view = new BasicView();
+                view.pressEnter();
+            }
+
         return user;
     }
 
     private boolean isLoginComplete(Customer user, String password, String input){
-        return !user.getPasswordHash().equals(password) || input.equals("q") || input.equals("Q");
+        try{
+            return !user.getPasswordHash().equals(password) || input.equals("q") || input.equals("Q");
+        } catch (NullPointerException e) {
+            return true;
+        }
     }
 }

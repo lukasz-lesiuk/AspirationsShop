@@ -68,7 +68,7 @@ public class RootController {
         LoginController logCon = new LoginController();
         Customer user = logCon.run();
         if (user != null){
-            //start controller here
+            //TODO start controller here
         }
     }
 
