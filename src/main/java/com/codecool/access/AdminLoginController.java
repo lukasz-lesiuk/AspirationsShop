@@ -26,11 +26,19 @@ public class AdminLoginController {
                 view.printMessage("Wrong password. Press Enter and try again or enter q to cancel.");
                 input = scan.nextLine();
             }
-        } while (isLoginComplete(password, input));
+        } while (isLoginNotComplete(password, input));
         return !(input.equals("q") || input.equals("Q"));
     }
 
-    private boolean isLoginComplete(String password, String input){
-        return !password.equals(HASHED_MASTER_PASSWORD) || input.equals("q") || input.equals("Q");
+    private boolean isLoginNotComplete(String password, String input){
+        boolean output = true;
+
+        if (password.equals(HASHED_MASTER_PASSWORD)) {
+            output = false;
+        } else if (input.equals("q") || input.equals("Q")) {
+            output =false;
+        }
+
+        return output;
     }
 }
