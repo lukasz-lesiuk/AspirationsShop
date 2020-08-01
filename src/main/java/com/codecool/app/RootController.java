@@ -3,8 +3,6 @@ package com.codecool.app;
 import com.codecool.access.LoginController;
 import com.codecool.access.RegistrationController;
 import com.codecool.customer.Customer;
-import com.codecool.dao.CustomerDAO;
-import com.codecool.dao.CustomerDAOPSQL;
 import com.codecool.employeeController.EmployeeController;
 
 import java.util.ArrayList;
@@ -53,7 +51,10 @@ public class RootController {
 
     private void login() {
         LoginController logCon = new LoginController();
-        logCon.run();
+        Customer user = logCon.run();
+        if (user != null){
+            //start controller here
+        }
     }
 
     private void register() {

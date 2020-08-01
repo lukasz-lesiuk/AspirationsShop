@@ -40,14 +40,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
     public Customer getCustomerByMail(String email) {
         // TODO implement function as per name
 
-        return getCustomer("JgsMz0d1"); // dumb placeholder implementation
-    }
-
-    @Override
-    public Customer getCustomerByMail(String email) {
-        // TODO implement function as per name
-
-        return getCustomer("JgsMz0d1"); // dumb placeholder implementation
+        return getCustomer("?p7<ks+n"); // dumb placeholder implementation
     }
 
     @Override
