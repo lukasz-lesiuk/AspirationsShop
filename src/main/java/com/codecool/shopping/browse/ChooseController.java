@@ -23,7 +23,7 @@ public class ChooseController {
 
         do {
             try{
-            Integer choice = chooseControllerView.getNumericInput("Choose product ");
+            Integer choice = chooseControllerView.getNumericInput("Choose product");
             boolean positionIsONList = choice >= 0 &&  choice -1 <productList.size();
 
             if (positionIsONList){

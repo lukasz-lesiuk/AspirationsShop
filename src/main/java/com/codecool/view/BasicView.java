@@ -93,7 +93,7 @@ public class BasicView {
     public int getNumericInput(String message) {
         int option = 0;
 
-        System.out.print(message + ": ");
+        printMessage(message + ":");
         try {
             option = scan.nextInt();
         } catch (InputMismatchException e) {

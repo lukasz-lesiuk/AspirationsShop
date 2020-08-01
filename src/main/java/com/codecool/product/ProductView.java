@@ -3,19 +3,22 @@ package com.codecool.product;
 import com.codecool.view.BasicView;
 
 import java.util.List;
+import java.util.Map;
 
 public class ProductView extends BasicView {
-    public void printProductTableHeader(){
-        System.out.println(createHorizontal());
-        System.out.format("|%-30s|%-17s|%-8s|%-11s|\n", " Product Name", " Category", " Price",
+    public void printProductTableHeader(int [] width){
+        System.out.println(createHorizontal(width));
+        String format = "|%-"+10+"s|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|\n";
+        System.out.format(format,"Id", " Product Name", " Category", " Price",
                 " Quantity");
-        System.out.println(createHorizontal());
+        System.out.println(createHorizontal(width));
     }
 
-    public void printProductContent(Product product){
-        System.out.format("|%-30s|%-17s|%-8s|%-11s|\n", " " + product.getProductName()
+    public void printProductContent(Product product, int [] width, int id){
+        String format = "|%-"+10+"s|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|\n";
+        System.out.format(format," " + id, " " + product.getProductName()
             , " " + product.getCategory(), " " + product.getPrice(), " " + product.getQuantity());
-        System.out.println(createHorizontal());
+        System.out.println(createHorizontal(width));
 
     }
     public void printProduct(Product product){
@@ -34,17 +37,20 @@ public class ProductView extends BasicView {
         else{
             System.out.println(description);
         }
+
     }
 
     public void printProductList(List<Product> productList){
-        printProductTableHeader();
+        int [] width = checkColumnWidth(productList);
+        int id = 1;
+        printProductTableHeader(width);
         for(Product product : productList){
-            printProductContent(product);
+            printProductContent(product,width,id);
+            id++;
         }
     }
-    private String createHorizontal() {
+    private String createHorizontal(int [] width) {
         StringBuilder newHorizontal = new StringBuilder();
-        int[] width = {30, 17, 8, 11};
 
         newHorizontal.append("+");
 
@@ -58,4 +64,22 @@ public class ProductView extends BasicView {
         return newHorizontal.toString();
     }
 
-}
+    private int[] checkColumnWidth(List<Product> products) {
+        int nameWidth = 14;
+        int categoryWidth = 10;
+        int priceWidth = 7;
+        int quantityWidth = 11;
+        for(Product product : products) {
+
+            if(nameWidth < product.getProductName().length()) nameWidth = product.getProductName().length() + 3;
+            if(categoryWidth<product.getCategory().length()) categoryWidth = product.getCategory().length() + 1;
+            if(priceWidth < String.valueOf(product.getPrice()).length()) priceWidth = String.valueOf(product.getPrice()).length() + 1;
+            if(quantityWidth < String.valueOf(product.getQuantity()).length()) quantityWidth = String.valueOf(product.getQuantity()).length() + 1;
+        }
+            int [] width = {nameWidth,categoryWidth,priceWidth,quantityWidth};
+            return width;
+        }
+
+
+    }
+
