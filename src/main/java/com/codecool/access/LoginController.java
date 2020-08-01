@@ -18,7 +18,6 @@ public class LoginController {
         this.scan = new Scanner(System.in);
     }
 
-
     public Customer run(){
         Customer user;
         String password;
@@ -28,8 +27,6 @@ public class LoginController {
             view.moveToPswd();
             password = Integer.toString(scan.nextLine().hashCode());
             user = customerDAO.getCustomerByMail(email);
-
-            System.out.println("Input: " + password + "Expected: " + user.getPasswordHash());
             if (!user.getPasswordHash().equals(password)){
                 view.printMessage("Wrong username or password. Press Enter and try again.");
                 scan.nextLine();
