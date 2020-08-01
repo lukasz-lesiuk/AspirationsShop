@@ -32,8 +32,9 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
     @Override
     public Customer getCustomer(String id) {
-        String inputString = retrieveQueryResponseAsString("SELECT * FROM customers WHERE id = ?", id).get(0);
-        return makeCustomerFromString(inputString);
+        List<String> inputString = retrieveQueryResponseAsString("SELECT * FROM customers WHERE id = ?", id);
+        String str = inputString.get(0);
+        return makeCustomerFromString(str);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class LoginController {
             String email = scan.nextLine();
             view.moveToPswd();
             password = Integer.toString(scan.nextLine().hashCode());
-            user = customerDAO.getCustomerByMail(email);
+            user = customerDAO.searchByMailOnly(email);
             if (!user.getPasswordHash().equals(password)){
                 view.printMessage("Wrong username or password. Press Enter and try again or enter q to cancel.");
                 input = scan.nextLine();
