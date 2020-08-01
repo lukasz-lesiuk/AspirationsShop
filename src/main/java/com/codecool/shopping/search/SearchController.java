@@ -24,12 +24,12 @@ public class SearchController {
 
         while (!phraseToSearch.toLowerCase().equals("exit")) {
             phraseToSearch = getPhrase();
-            System.out.println("phrase to search" + phraseToSearch);
             searchedPruducts = productDAO.getProductByPhrase(phraseToSearch);
+            view.printProductList(searchedPruducts);
 
             if (!searchedPruducts.isEmpty()) {
                 Product selectedProduct = selectProductFromTheList(searchedPruducts);
-                if (!selectedProduct.equals(null)) {
+                if (selectedProduct != null) {
                     menageProduct(selectedProduct);
                 }
             } else if (searchedPruducts.isEmpty() && !phraseToSearch.toLowerCase().equals("exit")) {
@@ -40,30 +40,34 @@ public class SearchController {
 
     public String getPhrase() {
         view.clear();
-        view.printMessage("You can search for items in our store using the phrase you entered. \n");
-        String phraseToSearch = view.getTextInput("Enter a phrase to search ('exit' to exit): ");
+        String phraseToSearch = "";
+        while(phraseToSearch.equals("")) {
+            view.printMessage("You can search for items in our store using the phrase you entered. \n");
+            phraseToSearch = view.getTextInput("Enter a phrase to search ('exit' to exit): ");
+        }
 
         return phraseToSearch;
     }
 
     public Product selectProductFromTheList(List<Product> listOfProducts) {
-        boolean shouldRun = true;
+        String exit = "";
         Product selectedProduct = null;
 
-        while (shouldRun) {
-            view.clear();
-            productView.printProductList(searchedPruducts);
-            int choice = menageList(searchedPruducts);
+        do {
+            try {
+                int choice = view.getNumericInput("Select product from the list ('0' to exit)");
+                boolean posistionIsOnTheList = choice >= 0 && choice -1 < listOfProducts.size();
 
-            if (choice > 0 && choice <= searchedPruducts.size()) {
-                selectedProduct = searchedPruducts.get(choice - 1);
-                shouldRun = false;
-            } else if (choice == 0) {
-                shouldRun = false;
-            } else {
-                view.printMessage("Wrong choice, try again");
+                if (posistionIsOnTheList) {
+                    selectedProduct = listOfProducts.get(choice -1);
+                    exit = "exit";
+                }
+            } catch (IndexOutOfBoundsException e) {
+                exit = "exit";
+            } catch (NullPointerException e) {
+                exit = "exit";
             }
-        }
+        } while (!exit.equals("exit"));
 
         return selectedProduct;
     }

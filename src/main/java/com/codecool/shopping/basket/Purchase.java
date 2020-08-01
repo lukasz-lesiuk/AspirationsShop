@@ -58,5 +58,4 @@ public class Purchase {
             productDAOPSQL.updateProductQuantity(product, product.getQuantity());
         }
     }
-
 }

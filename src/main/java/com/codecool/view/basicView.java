@@ -87,7 +87,7 @@ public class basicView {
 
     public String getTextInput(String message){
         System.out.println(message);
-        String input = scan.nextLine();
+        String input = new Scanner(System.in).nextLine();
         clear();
         return input;
     }
