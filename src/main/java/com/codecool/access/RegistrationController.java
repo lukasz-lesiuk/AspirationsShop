@@ -8,11 +8,11 @@ import com.codecool.idGenerator.IDGenerator;
 import java.util.Scanner;
 
 public class RegistrationController {
-    RegistrationView view;
-    Scanner scan;
-    CustomerDAO customerDAO;
-    IDGenerator idGen;
-    PasswordGenerator passwordGenerator;
+    private final RegistrationView view;
+    private final Scanner scan;
+    private final CustomerDAO customerDAO;
+    private final IDGenerator idGen;
+    private final PasswordGenerator passwordGenerator;
 
     public RegistrationController() {
         this.customerDAO = new CustomerDAOPSQL("database.properties");

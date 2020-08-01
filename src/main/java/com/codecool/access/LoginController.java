@@ -7,9 +7,9 @@ import com.codecool.customer.Customer;
 import java.util.Scanner;
 
 public class LoginController {
-    LoginView view;
-    Scanner scan;
-    CustomerDAO customerDAO;
+    private final LoginView view;
+    private final Scanner scan;
+    private final CustomerDAO customerDAO;
 
     public LoginController() {
         this.customerDAO = new CustomerDAOPSQL("database.properties");

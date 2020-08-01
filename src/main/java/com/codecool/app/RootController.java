@@ -1,5 +1,6 @@
 package com.codecool.app;
 
+import com.codecool.access.AdminLoginController;
 import com.codecool.access.LoginController;
 import com.codecool.access.RegistrationController;
 import com.codecool.customer.Customer;
@@ -18,6 +19,7 @@ public class RootController {
     List<String> options;
     Customer customer = new Customer("asdfasef", "Krzysiek", "Chromiec", "12414141",
             "asdfasdf@asdf.pl", "Krakow", "Mlynska", "asdfasdfasef");
+    AdminLoginController adminLogger = new AdminLoginController();
 
     public void run() {
         prepareMenu();
@@ -34,9 +36,13 @@ public class RootController {
                     break;
                 case ("3"):
                     // You can add any function you wish to test here
-                    EmployeeController ec = new EmployeeController();
-                    ec.run();
-
+                    boolean shouldLogIn = adminLogger.checkAdminPassword();
+                    if (shouldLogIn) {
+                        EmployeeController ec = new EmployeeController();
+                        ec.run();
+                    } else {
+                        view.printMessage("Failed to log in");
+                    }
                     break;
                 case ("4"):
                     shopping();
@@ -54,7 +60,7 @@ public class RootController {
         this.options = new ArrayList<>();
         options.add("Login");
         options.add("Register");
-        options.add("Option");
+        options.add("Login as administrator");
         options.add("Shopping menu");
     }
 
