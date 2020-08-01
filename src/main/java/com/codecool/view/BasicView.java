@@ -5,19 +5,11 @@ import com.codecool.customer.Customer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
-<<<<<<< HEAD
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.io.IOException;
 import java.util.Scanner;
 
-=======
-import java.util.List;
-import java.util.Scanner;
->>>>>>> 5b96552e5152ad88e0f431c7feaddceb119880f1
 
 public class BasicView {
     public static final String ANSI_RESET = "\u001B[0m";
@@ -89,7 +81,6 @@ public class BasicView {
         System.out.print("\033[H\033[2J");
     }
 
-<<<<<<< HEAD
     public String getTextInput(String message){
         System.out.println(message);
         String input = scan.nextLine();
@@ -113,7 +104,8 @@ public class BasicView {
         Scanner scan = new Scanner(System.in);
         printMessage("Press ENTER...");
         String pressing = scan.nextLine();
-=======
+    }
+
     public void printAnsiFile(String filename){
         try {
             String filepath = "src/main/resources/" + filename;
@@ -128,6 +120,5 @@ public class BasicView {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
->>>>>>> 5b96552e5152ad88e0f431c7feaddceb119880f1
     }
 }
