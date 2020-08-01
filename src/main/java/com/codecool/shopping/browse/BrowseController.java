@@ -5,6 +5,7 @@ import com.codecool.product.ProductDAO;
 import com.codecool.product.ProductDAOPSQL;
 import com.codecool.product.ProductView;
 import com.codecool.shopping.basket.Basket;
+import com.codecool.shopping.basket.BasketView;
 
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class BrowseController {
     private List<Product> productList = new ArrayList<>();
     private ProductDAO productDAO = new ProductDAOPSQL();
     private Basket basket;
+    private BasketView basketView = new BasketView();
     private ChooseController chooseController;
 
     public BrowseController(Basket basket){
@@ -86,11 +88,13 @@ public class BrowseController {
         Product product = getChoosenProduct(productList);
         if (product != null) {
             productView.printProduct(product);
-            decision = browseView.getTextInput("Add to basket? y/n");
+            decision = browseView.getTextInput("\nAdd to basket? y/n");
             if(decision.toLowerCase().equals("y")){
                 Integer quantity = askForQuantity(product);
-                browseView.pressEnter();
                 basket.addProduct(product, quantity);
+                basketView.clear();
+                basketView.displayBasket(basket);
+                browseView.pressEnter();
             }
         }
     }
@@ -98,11 +102,11 @@ public class BrowseController {
     private Integer askForQuantity(Product product){
         boolean isEnoughtProduct = false;
         Integer quantity;
-        do{
+        do {
             quantity = browseView.getNumericInput("Choose quantity");
             isEnoughtProduct = checkWearhouse(product, quantity);
 
-        }while (!isEnoughtProduct);
+        } while (!isEnoughtProduct);
 
         return quantity;
     }
