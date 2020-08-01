@@ -15,7 +15,7 @@ import java.util.List;
 public class CustomerDAOPSQLTest extends TestCase {
 
     public void testGetExistingCustomer() {
-        CustomerDAO customerDAO= new CustomerDAOPSQL();
+        CustomerDAO customerDAO= new CustomerDAOPSQL("database_test.properties");
         Customer selectedCustomer = customerDAO.getCustomer("x%[>j!X#");
         Customer refCustomer = new Customer("x%[>j!X#", "Adam", "Nowak", "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21", "12745634");
         assertEquals(selectedCustomer.getCustomerId(), refCustomer.getCustomerId());
@@ -39,7 +39,7 @@ public class CustomerDAOPSQLTest extends TestCase {
 //    }
 
     public void testGetAllCustomerExistingDB() {
-        CustomerDAO customerDAO= new CustomerDAOPSQL();
+        CustomerDAO customerDAO= new CustomerDAOPSQL("database_test.properties");
         List<Customer> actualCustomers = customerDAO.getAllCustomers();
         List<Customer> expectedCustomers = new ArrayList<Customer>();
         expectedCustomers.add(new Customer("x%[>j!X#", "Adam", "Nowak", "+48695609770",
@@ -70,7 +70,7 @@ public class CustomerDAOPSQLTest extends TestCase {
     }
 
     public void testUpdateLastName() {
-        CustomerDAO customerDAO= new CustomerDAOPSQL();
+        CustomerDAO customerDAO= new CustomerDAOPSQL("database_test.properties");
         String updatedLastName = "NewLastName";
         customerDAO.updateCustomer(new Customer("x%[>j!X#", "Adam", updatedLastName,
                 "+48695609770", "alpaka@mlamamail.com", "Cracow", "Rakowicka 21", "12745634"));
