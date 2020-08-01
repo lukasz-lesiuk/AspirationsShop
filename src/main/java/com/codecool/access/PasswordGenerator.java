@@ -33,7 +33,7 @@ public class PasswordGenerator {
     }
 
     private String input(String message){
-        System.out.print(message + ": ");
+        System.out.println(message + ": ");
         String input = scan.nextLine();
 //        view.clear();
         return input;
