@@ -12,4 +12,5 @@ public interface CustomerDAO {
     public void addCustomer(Customer newCustomer);
     public void deleteCustomer(String id);
     public List<Customer> searchForCustomers(String inquiry);
+    public Customer searchByMailOnly(String inquiry);
 }

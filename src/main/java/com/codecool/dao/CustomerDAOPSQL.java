@@ -135,6 +135,20 @@ public class CustomerDAOPSQL implements CustomerDAO {
         return outputList;
     }
 
+    public Customer searchByMailOnly(String inquiry) {
+        String queryForPreparedStatement = ("SELECT * FROM customers WHERE email = ?");
+        Customer outputCustomer = null;
+        try {
+            String inputString = retrieveQueryResponseAsString(queryForPreparedStatement, inquiry).get(0);
+            outputCustomer = makeCustomerFromString(inputString);
+        } catch(IndexOutOfBoundsException e) {
+            view.printError("Incorrect email");
+        }
+
+        return outputCustomer;
+    }
+
+
     private Customer makeCustomerFromString(String inputString) {
         List<String> attributesList = new ArrayList<>(Arrays.asList(inputString.split(", ")));
         //TODO may return null - fix it
