@@ -1,14 +1,17 @@
 package com.codecool.access;
 
+import java.io.Console;
 import java.util.Scanner;
 
 public class PasswordGenerator {
     private final RegistrationView view;
     private final Scanner scan;
+    private final Console console;
 
     public PasswordGenerator () {
         this.view = new RegistrationView();
         this.scan = new Scanner(System.in);
+        this.console = System.console();
     }
 
 
@@ -17,12 +20,12 @@ public class PasswordGenerator {
         String passwordConfirm;
         PasswordChecker checker = new PasswordChecker();
         do {
-            password = input("Enter password");
+            password = new String(console.readPassword("Enter password"));
             while (!checker.isPasswordGood(password)) {
                 view.printMessage("This password didn't meet the policy requirements.");
-                password = input("Enter password");
+                password = new String(console.readPassword("Enter password"));
             }
-            passwordConfirm = input("Enter password again");
+            passwordConfirm = new String(console.readPassword("Enter password again"));
             if (!passwordConfirm.equals(password)){
                 view.printMessage("Passwords didn't match. Press Enter and try again.");
                 scan.nextLine();
@@ -35,7 +38,6 @@ public class PasswordGenerator {
     private String input(String message){
         System.out.println(message + ": ");
         String input = scan.nextLine();
-//        view.clear();
         return input;
     }
 }

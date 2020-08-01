@@ -3,7 +3,7 @@ package com.codecool.access;
 import com.codecool.view.BasicView;
 
 public class AdminLoginView extends BasicView {
-    private static final int PASSWORD_HEIGHT = 6;
+    private static final int PASSWORD_HEIGHT = 8;
     private static final int PASSWORD_COLUMN = 11;
 
     public void displayLoginScreen() {

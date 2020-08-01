@@ -13,7 +13,7 @@ public class LoginView extends BasicView {
         System.out.println();
         printMessage("Username: \n");
         printMessage("Password: \n");
-        System.out.println("\033[" + USERNAME_HEIGHT + ";" + USERNAME_COLUMN + "H");
+        System.out.print("\033[" + USERNAME_HEIGHT + ";" + USERNAME_COLUMN + "H");
     }
 
     @Override
