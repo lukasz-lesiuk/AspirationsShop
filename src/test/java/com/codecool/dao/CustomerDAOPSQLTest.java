@@ -2,11 +2,9 @@ package com.codecool.dao;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.codecool.customer.Customer;
 import junit.framework.TestCase;
-import org.junit.Assert;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

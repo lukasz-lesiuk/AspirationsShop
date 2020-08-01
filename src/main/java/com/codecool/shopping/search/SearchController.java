@@ -55,7 +55,8 @@ public class SearchController {
 
         do {
             try {
-                int choice = view.getNumericInput("Select product from the list ('0' to exit)");
+                view.printMessage("Select product from the list ('0' to exit)");
+                int choice = view.getNumericInput("");
                 boolean posistionIsOnTheList = choice >= 0 && choice -1 < listOfProducts.size();
 
                 if (posistionIsOnTheList) {

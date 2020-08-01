@@ -70,6 +70,7 @@ public class ShoppingController {
         String customerID = activeCustomer.getCustomerId();
         List<Transaction> customersTransactions =
                         SQLTransDAO.getAllTransactionsByCustomer(customerID);
+        view.clear();
         if (!customersTransactions.isEmpty()) {
             for (Transaction transaction : customersTransactions) {
                 transView.printTransaction(transaction);
@@ -77,7 +78,7 @@ public class ShoppingController {
         } else {
             view.printMessage("You have no shopping history! Use our browser and create one! :)");
         }
-        transView.printTransactions(customersTransactions);
+        view.pressEnter();
     }
 
     private String exit() {
