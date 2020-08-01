@@ -44,7 +44,9 @@ public class BasicView {
 
     public void printOptions(List<String> optionsList, String message) {
 
-        String logo =ANSI_YELLOW + "Application Process" + ANSI_YELLOW + "\n\n";
+        String logo =ANSI_YELLOW + "" + ANSI_YELLOW + "\n\n";
+        printAnsiFile(   "ANSI_Aspiration_Shop");
+
         System.out.print(logo.replaceAll("xx","\\\\"));
         printMessage(message);
         int changeIndex = 1;

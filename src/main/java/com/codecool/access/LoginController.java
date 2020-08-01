@@ -27,7 +27,7 @@ public class LoginController {
             view.moveToPswd();
             password = Integer.toString(scan.nextLine().hashCode());
             user = customerDAO.searchByMailOnly(email);
-            if (!user.getPasswordHash().equals(password)){
+            if (user == null || !user.getPasswordHash().equals(password)){
                 view.printMessage("Wrong username or password. Press Enter and try again or enter q to cancel.");
                 input = scan.nextLine();
             }
@@ -36,6 +36,6 @@ public class LoginController {
     }
 
     private boolean isLoginComplete(Customer user, String password, String input){
-        return !user.getPasswordHash().equals(password) || input.equals("q") || input.equals("Q");
+        return user == null || !user.getPasswordHash().equals(password) || input.equals("q") || input.equals("Q");
     }
 }
