@@ -35,7 +35,7 @@ public class Purchase {
         this.newTransaction = new Transaction(transactionID, activeCustomer.getCustomerId(), basket);
         TransactionDAO sqlTransactionDAO = new SQLTransactionDAO();
         sqlTransactionDAO.addTransaction(newTransaction);
-        transactionView.printTransaction(newTransaction);
+        transactionView.printTransaction(newTransaction, activeCustomer);
     }
 
     public List<Product> updateProductsToWarehouse() {
@@ -48,7 +48,7 @@ public class Purchase {
         return updatedProducts;
     }
 
-    public void updateProductsQuanity(){
+    public void updateProductsQuanity() {
         List<Product> productListToUpdate = updateProductsToWarehouse();
         ProductView productView = new ProductView();
 

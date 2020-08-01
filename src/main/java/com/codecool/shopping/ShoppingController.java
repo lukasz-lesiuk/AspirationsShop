@@ -72,9 +72,7 @@ public class ShoppingController {
                         SQLTransDAO.getAllTransactionsByCustomer(customerID);
         view.clear();
         if (!customersTransactions.isEmpty()) {
-            for (Transaction transaction : customersTransactions) {
-                transView.printTransaction(transaction);
-            }
+            transView.printTransactions(customersTransactions, activeCustomer);
         } else {
             view.printMessage("You have no shopping history! Use our browser and create one! :)");
         }
