@@ -90,7 +90,7 @@ public class BrowseController {
 
             productView.printProduct(product);
 
-            decision = browseView.getTextInput("Add to busket? y/n");
+            decision = browseView.getTextInput("Add to basket? y/n");
             if(decision.toLowerCase().equals("y")){
                 Integer quantity = askForQuantity(product);
                 browseView.pressEnter();
