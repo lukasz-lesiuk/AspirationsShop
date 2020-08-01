@@ -16,8 +16,6 @@ public class RootController {
     RootView view = new RootView();
     Scanner scan = new Scanner(System.in);
     List<String> options;
-    Customer customer = new Customer("asdfasef", "Krzysiek", "Chromiec", "12414141",
-            "asdfasdf@asdf.pl", "Krakow", "Mlynska", "asdfasdfasef");
 
     public void run() {
         prepareMenu();
@@ -36,10 +34,6 @@ public class RootController {
                     // You can add any function you wish to test here
                     EmployeeController ec = new EmployeeController();
                     ec.run();
-
-                    break;
-                case ("4"):
-                    shopping();
                     break;
                 case ("okon"):
                     // place to hide a 'secret' functionality
@@ -55,14 +49,13 @@ public class RootController {
         options.add("Login");
         options.add("Register");
         options.add("Option");
-        options.add("Shopping menu");
     }
 
     private void login() {
         LoginController logCon = new LoginController();
         Customer user = logCon.run();
         if (user != null){
-            //start controller here
+            shopping(user);
         }
     }
 
@@ -71,8 +64,8 @@ public class RootController {
         regCon.run();
     }
 
-    private void shopping() {
-        ShoppingController shopCon = new ShoppingController(customer);
+    private void shopping(Customer activeCustomer) {
+        ShoppingController shopCon = new ShoppingController(activeCustomer);
         shopCon.run();
     }
 }
