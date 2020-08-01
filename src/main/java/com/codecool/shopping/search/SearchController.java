@@ -5,11 +5,13 @@ import com.codecool.product.ProductDAO;
 import com.codecool.product.ProductDAOPSQL;
 import com.codecool.product.ProductView;
 import com.codecool.shopping.basket.Basket;
+import com.codecool.shopping.basket.BasketView;
 
 import java.util.List;
 
 public class SearchController {
     private Basket basket;
+    private BasketView basketView = new BasketView();
     private List<Product> searchedPruducts;
     private ProductView productView = new ProductView();
     private ProductView view = new ProductView();
@@ -55,8 +57,8 @@ public class SearchController {
 
         do {
             try {
-                view.printMessage("Select product from the list ('0' to exit)");
-                int choice = view.getNumericInput("");
+                //view.printMessage("Select product from the list ('0' to exit)");
+                int choice = view.getNumericInput("Select product from the list ('0' to exit)");
                 boolean posistionIsOnTheList = choice >= 0 && choice -1 < listOfProducts.size();
 
                 if (posistionIsOnTheList) {
@@ -77,9 +79,9 @@ public class SearchController {
         int choice;
         boolean shouldRun = true;
         while (shouldRun) {
-            view.clear();
+            // view.clear();
             view.printProduct(selectedProduct);
-            view.printMessage("(1) Add product to basket");
+            view.printMessage("\n(1) Add product to basket");
             view.printMessage("(0) Back");
             choice = view.getNumericInput("Select an option");
 
@@ -89,6 +91,9 @@ public class SearchController {
                 view.printMessage("Product quantity in stock: " + selectedProduct.getQuantity());
                 int quantity = view.getNumericInput("Enter quantity of product you want to add");
                 addToBasket(selectedProduct, quantity);
+                view.clear();
+                basketView.displayBasket(basket);
+                view.pressEnter();
                 shouldRun = false;
             } else {
                 view.printMessage("There is no such option.");
@@ -102,14 +107,5 @@ public class SearchController {
         } else {
             view.printMessage("There is not enough product in stock.");
         }
-    }
-
-    private int menageList(List<Product> listOfProducts) {
-        int choice;
-        do {
-            choice = view.getNumericInput("Select the number of product from the list ('0' to exit)");
-        } while (!(choice >= 0 && choice <= listOfProducts.size()));
-
-        return choice;
     }
 }

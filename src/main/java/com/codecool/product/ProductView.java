@@ -3,19 +3,18 @@ package com.codecool.product;
 import com.codecool.view.BasicView;
 
 import java.util.List;
-import java.util.Map;
 
 public class ProductView extends BasicView {
     public void printProductTableHeader(int [] width){
         System.out.println(createHorizontal(width));
-        String format = "|%-"+10+"s|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|\n";
-        System.out.format(format,"Id", " Product Name", " Category", " Price",
+        String format = "|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|%-"+width[4]+"s|\n";
+        System.out.format(format,"", " Product Name", " Category", " Price",
                 " Quantity");
         System.out.println(createHorizontal(width));
     }
 
     public void printProductContent(Product product, int [] width, int id){
-        String format = "|%-"+10+"s|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|\n";
+        String format = "|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|%-"+width[4]+"s|\n";
         System.out.format(format," " + id, " " + product.getProductName()
             , " " + product.getCategory(), " " + product.getPrice(), " " + product.getQuantity());
         System.out.println(createHorizontal(width));
@@ -65,6 +64,7 @@ public class ProductView extends BasicView {
     }
 
     private int[] checkColumnWidth(List<Product> products) {
+        int idWidth = 8;
         int nameWidth = 14;
         int categoryWidth = 10;
         int priceWidth = 7;
@@ -76,7 +76,7 @@ public class ProductView extends BasicView {
             if(priceWidth < String.valueOf(product.getPrice()).length()) priceWidth = String.valueOf(product.getPrice()).length() + 1;
             if(quantityWidth < String.valueOf(product.getQuantity()).length()) quantityWidth = String.valueOf(product.getQuantity()).length() + 1;
         }
-            int [] width = {nameWidth,categoryWidth,priceWidth,quantityWidth};
+            int [] width = {idWidth,nameWidth,categoryWidth,priceWidth,quantityWidth};
             return width;
         }
 
