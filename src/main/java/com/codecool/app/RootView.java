@@ -1,11 +1,7 @@
 package com.codecool.app;
 
-import com.codecool.product.Product;
-import com.codecool.product.ProductDAO;
-import com.codecool.product.ProductDAOPSQL;
-import com.codecool.product.ProductView;
-import com.codecool.view.basicView;
 
+import com.codecool.view.basicView;
 import java.util.ArrayList;
 import java.util.List;
 

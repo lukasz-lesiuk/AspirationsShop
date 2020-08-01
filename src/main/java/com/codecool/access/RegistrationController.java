@@ -3,21 +3,23 @@ package com.codecool.access;
 import com.codecool.dao.CustomerDAO;
 import com.codecool.dao.CustomerDAOPSQL;
 import com.codecool.customer.Customer;
-import com.codecool.IDGenerator;
+import com.codecool.idGenerator.IDGenerator;
 
 import java.util.Scanner;
 
 public class RegistrationController {
-    RegistrationView view;
-    Scanner scan;
-    CustomerDAO customerDAO;
-    IDGenerator idGen;
+    private final RegistrationView view;
+    private final Scanner scan;
+    private final CustomerDAO customerDAO;
+    private final IDGenerator idGen;
+    private final PasswordGenerator passwordGenerator;
 
     public RegistrationController() {
-        this.customerDAO = new CustomerDAOPSQL();
+        this.customerDAO = new CustomerDAOPSQL("database.properties");
         this.view = new RegistrationView();
         this.idGen = new IDGenerator();
         this.scan = new Scanner(System.in);
+        this.passwordGenerator = new PasswordGenerator();
     }
 
     public void run(){
@@ -41,29 +43,13 @@ public class RegistrationController {
     }
 
     private String input(String message){
-        System.out.print(message + ": ");
+        System.out.println(message + ": ");
         String input = scan.nextLine();
         view.clear();
         return input;
     }
 
     private String getPassword() {
-        String password;
-        String passwordConfirm;
-        PasswordChecker checker = new PasswordChecker();
-        do {
-            password = input("Enter password");
-            while (!checker.isPasswordGood(password)) {
-                view.printMessage("This password didn't meet the policy requirements.");
-                input("Enter password");
-            }
-            passwordConfirm = input("Enter password again");
-            if (!passwordConfirm.equals(password)){
-                view.printMessage("Passwords didn't match. Press Enter and try again.");
-                scan.nextLine();
-            }
-        } while (!passwordConfirm.equals(password));
-
-        return Integer.toString(password.hashCode());
+        return passwordGenerator.getPassword();
     }
 }

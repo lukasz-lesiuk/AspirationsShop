@@ -1,6 +1,6 @@
 package com.codecool.shopping.basket;
 
-import com.codecool.IDGenerator;
+import com.codecool.idGenerator.IDGenerator;
 import com.codecool.customer.Customer;
 import com.codecool.product.Product;
 import com.codecool.product.ProductDAO;
@@ -9,6 +9,7 @@ import com.codecool.product.ProductView;
 import com.codecool.transaction.SQLTransactionDAO;
 import com.codecool.transaction.Transaction;
 import com.codecool.transaction.TransactionDAO;
+import com.codecool.transaction.TransactionView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +21,21 @@ public class Purchase {
     Customer activeCustomer;
     String transactionID;
     Transaction newTransaction;
+    TransactionView transactionView = new TransactionView();
     List<Product> productsToUpdateInWarehouse;
 
     public Purchase(Basket basket, Customer activeCustomer) {
         this.basket = basket;
         this.activeCustomer = activeCustomer;
         this.transactionID = generator.generateID();
-        this.productsToUpdateInWarehouse = updateProductsToWarehouse();
+        //this.productsToUpdateInWarehouse = updateProductsToWarehouse();
     }
 
     public void finalizeTransaction() {
         this.newTransaction = new Transaction(transactionID, activeCustomer.getCustomerId(), basket);
         TransactionDAO sqlTransactionDAO = new SQLTransactionDAO();
         sqlTransactionDAO.addTransaction(newTransaction);
-        //return addedTransactions == 0 ? false : true;
+        transactionView.printTransaction(newTransaction, activeCustomer);
     }
 
     public List<Product> updateProductsToWarehouse() {
@@ -46,12 +48,9 @@ public class Purchase {
         return updatedProducts;
     }
 
-    public void updateWarehouse(){
+    public void updateProductsQuanity() {
         List<Product> productListToUpdate = updateProductsToWarehouse();
         ProductView productView = new ProductView();
-
-        productView.pressEnter();
-        productView.printProductList(productListToUpdate);
 
         productView.pressEnter();
         ProductDAO productDAOPSQL = new ProductDAOPSQL();
@@ -59,6 +58,4 @@ public class Purchase {
             productDAOPSQL.updateProductQuantity(product, product.getQuantity());
         }
     }
-
-    // jak przekażemy List<Product> do SQLProductDAO?
 }

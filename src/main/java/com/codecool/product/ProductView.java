@@ -3,7 +3,7 @@ package com.codecool.product;
 import com.codecool.view.basicView;
 
 import java.util.List;
-import java.util.Map;
+
 
 public class ProductView extends basicView {
     public void printProductTableHeader(int [] width){
@@ -15,7 +15,9 @@ public class ProductView extends basicView {
     }
 
     public void printProductContent(Product product, int [] width, int id){
+
         String format = "|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|%-"+width[4]+"s|\n";
+
         System.out.format(format," " + id, " " + product.getProductName()
             , " " + product.getCategory(), " " + product.getPrice(), " " + product.getQuantity());
         System.out.println(createHorizontal(width));
@@ -65,6 +67,7 @@ public class ProductView extends basicView {
     }
 
     private int[] checkColumnWidth(List<Product> products) {
+
         int idWidth = 8;
         int nameWidth = 14;
         int categoryWidth = 10;
@@ -77,7 +80,9 @@ public class ProductView extends basicView {
             if(priceWidth < String.valueOf(product.getPrice()).length()) priceWidth = String.valueOf(product.getPrice()).length() + 1;
             if(quantityWidth < String.valueOf(product.getQuantity()).length()) quantityWidth = String.valueOf(product.getQuantity()).length() + 1;
         }
+
             int [] width = {idWidth,nameWidth,categoryWidth,priceWidth,quantityWidth};
+
             return width;
         }
 

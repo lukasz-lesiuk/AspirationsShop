@@ -61,12 +61,8 @@ public class BasketController {
         if (completeOrderDecision.toLowerCase().equals("y")) {
             Purchase purchase = new Purchase(basket, activeCustomer);
             purchase.finalizeTransaction();
-            purchase.updateWarehouse();
-
+            purchase.updateProductsQuanity();
             basket.clearBasket();
-
-
-
             choice = "5";
         }
         return choice;

@@ -1,10 +1,13 @@
 package com.codecool.app;
 
+import com.codecool.access.AdminLoginController;
+import com.codecool.access.LoginController;
 import com.codecool.access.RegistrationController;
 import com.codecool.customer.Customer;
 import com.codecool.shopping.ShoppingController;
 import com.codecool.dao.CustomerDAO;
 import com.codecool.dao.CustomerDAOPSQL;
+import com.codecool.employeeController.EmployeeController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,7 @@ public class RootController {
     List<String> options;
     Customer customer = new Customer("asdfasef", "Krzysiek", "Chromiec", "12414141",
             "asdfasdf@asdf.pl", "Krakow", "Mlynska", "asdfasdfasef");
+    AdminLoginController adminLogger = new AdminLoginController();
 
     public void run() {
         prepareMenu();
@@ -31,20 +35,18 @@ public class RootController {
                     register();
                     break;
                 case ("3"):
-                    // You can add any function you wish to test here
-//                    Customer newCustomer = new Customer("1234", "Name", "Lastname",
-//                                        "+404043655", "emali@email.com", "city",
-//                                        "street", "passhash");
-//                    CustomerDAO daoInstance = new CustomerDAOPSQL();
-//                    daoInstance.addCustomer(newCustomer);
-//                    daoInstance.getCustomer("1234");
-//                    System.out.println("AddedCustomer");
-                    break;
-                case ("4"):
-                    shopping();
+                    boolean shouldLogIn = adminLogger.checkAdminPassword();
+                    if (shouldLogIn) {
+                        EmployeeController ec = new EmployeeController();
+                        ec.run();
+                    } else {
+                        view.printMessage("Failed to log in");
+                    }
                     break;
                 case ("okon"):
                     // place to hide a 'secret' functionality
+                    view.printMessage("admin password is lama&L@m@");
+                    view.pressEnter();
                     break;
                 default:
                     view.addMessage("Option not on the list.");
@@ -56,12 +58,15 @@ public class RootController {
         this.options = new ArrayList<>();
         options.add("Login");
         options.add("Register");
-        options.add("Option");
-        options.add("Shopping menu");
+        options.add("Login as administrator");
     }
 
     private void login() {
-        // TODO to be implemented
+        LoginController logCon = new LoginController();
+        Customer user = logCon.run();
+        if (user != null){
+            shopping(user);
+        }
     }
 
     private void register() {
@@ -69,8 +74,8 @@ public class RootController {
         regCon.run();
     }
 
-    private void shopping() {
-        ShoppingController shopCon = new ShoppingController(customer);
+    private void shopping(Customer activeCustomer) {
+        ShoppingController shopCon = new ShoppingController(activeCustomer);
         shopCon.run();
     }
 }

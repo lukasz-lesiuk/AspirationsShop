@@ -1,12 +1,9 @@
 package com.codecool.dao;
 
 import com.codecool.customer.Customer;
+import com.codecool.view.basicView;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,17 +16,14 @@ public class CustomerDAOPSQL implements CustomerDAO {
     private String url;
     private String user;
     private String password;
-    private final int ID_POSITION = 0;
-    private final int FIRST_NAME_POSITION = 1;
-    private final int LAST_NAME_POSITION = 2;
-    private final int PHONE_NO_POSITION = 3;
-    private final int EMAIL_POSITION = 4;
-    private final int CITY_POSITION = 5;
-    private final int STREET_POSITION = 6;
-    private final int HASH_POSITION = 7;
 
-    public CustomerDAOPSQL() {
-        String properties_file = "database.properties";
+    private Column column;
+    private ColumnPublic columnPublic;
+
+    basicView view;
+
+    public CustomerDAOPSQL(String properties_file) {
+        this.view = new basicView();
         Properties props = readPropertiesFile("./src/main/resources/" + properties_file);
         this.url = props.getProperty("db.url");
         this.user = props.getProperty("db.user");
@@ -38,22 +32,17 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
     @Override
     public Customer getCustomer(String id) {
-        String inputString = retrieveQueryResponseAsString("SELECT * FROM customers WHERE id = ?", id);
-        List<String> attributesList = new ArrayList<>(Arrays.asList(inputString.split(", ")));
+        Customer outputCustomer = null;
+        String queryForPreparedStatement = "SELECT * FROM customers WHERE id = ?";
 
         try {
-            //id retrieval unnecessary since id was declared at the start
-            String firstName = attributesList.get(FIRST_NAME_POSITION);
-            String lastName = attributesList.get(LAST_NAME_POSITION);
-            String phone = attributesList.get(PHONE_NO_POSITION);
-            String email = attributesList.get(EMAIL_POSITION);
-            String city = attributesList.get(CITY_POSITION);
-            String street = attributesList.get(STREET_POSITION);
-            String hash = attributesList.get(HASH_POSITION);
-            return (new Customer(id, firstName, lastName, phone, email, city, street, hash));
-        } catch (java.lang.IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("Id did not match any element from DB");
+            String inputString = retrieveQueryResponseAsString(queryForPreparedStatement, id).get(0);
+            outputCustomer = makeCustomerFromString(inputString);
+        } catch (IndexOutOfBoundsException e) {
+            view.printError("Incorrect ID");
         }
+
+        return outputCustomer;
     }
 
     @Override
@@ -63,10 +52,10 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
         for (int i = 1; i < customersQty + 1; i++) {
             String customerString = retrieveQueryResponseAsString("SELECT * FROM customers LIMIT ? OFFSET ?;",
-                                                                    i, (i - 1));
+                                                                    1, (i - 1)).get(0);
             List<String> attributesList = new ArrayList<>(Arrays.asList(customerString.split(", ")));
 
-            String customerId = attributesList.get(ID_POSITION);
+            String customerId = attributesList.get(column.ID.position);
             customersList.add(getCustomer(customerId));
         }
         return customersList;
@@ -79,6 +68,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement(query)) {
+
             pst.setString(1, customerToUpdate.getFirstName());
             pst.setString(2, customerToUpdate.getLastName());
             pst.setString(3, customerToUpdate.getPhoneNumber());
@@ -105,14 +95,14 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement(query)) {
-            pst.setString(ID_POSITION + 1, newCustomer.getCustomerId());
-            pst.setString(FIRST_NAME_POSITION + 1, newCustomer.getFirstName());
-            pst.setString(LAST_NAME_POSITION + 1, newCustomer.getLastName());
-            pst.setString(PHONE_NO_POSITION + 1, newCustomer.getPhoneNumber());
-            pst.setString(EMAIL_POSITION + 1, newCustomer.getEmailAddress());
-            pst.setString(CITY_POSITION + 1, newCustomer.getCity());
-            pst.setString(STREET_POSITION + 1, newCustomer.getStreet());
-            pst.setString(HASH_POSITION + 1, newCustomer.getPasswordHash());
+            pst.setString(column.ID.position + 1, newCustomer.getCustomerId());
+            pst.setString(column.FIRST_NAME.position + 1, newCustomer.getFirstName());
+            pst.setString(column.LAST_NAME.position + 1, newCustomer.getLastName());
+            pst.setString(column.PHONE_NO.position+ 1, newCustomer.getPhoneNumber());
+            pst.setString(column.EMAIL.position+ 1, newCustomer.getEmailAddress());
+            pst.setString(column.CITY.position + 1, newCustomer.getCity());
+            pst.setString(column.STREET.position+ 1, newCustomer.getStreet());
+            pst.setString(column.HASH.position+ 1, newCustomer.getPasswordHash());
 
             pst.executeUpdate();
 
@@ -139,9 +129,76 @@ public class CustomerDAOPSQL implements CustomerDAO {
         }
     }
 
-    private String retrieveQueryResponseAsString(String query, String... insertValues) {
+    @Override
+    public List<Customer> searchForCustomers(String inquiry) {
+        List<Customer> outputList = new ArrayList<Customer>();
+        String queryForPreparedStatement = (generateQueryForSearch());
+        List<String> inputList = retrieveQueryResponseAsString(queryForPreparedStatement, inquiry, inquiry,
+                inquiry, inquiry, inquiry, inquiry, inquiry);
 
-         String queryResponse = "";
+        for (String nextString : inputList) {
+            Customer nextCustomer = makeCustomerFromString(nextString);
+            outputList.add(nextCustomer);
+        }
+
+        return outputList;
+    }
+
+    @Override
+    public Customer searchByMailOnly(String inquiry) {
+        String queryForPreparedStatement = ("SELECT * FROM customers WHERE email = ?");
+        Customer outputCustomer = null;
+        try {
+            String inputString = retrieveQueryResponseAsString(queryForPreparedStatement, inquiry).get(0);
+            outputCustomer = makeCustomerFromString(inputString);
+        } catch(IndexOutOfBoundsException e) {
+            view.printError("Incorrect email");
+        }
+
+        return outputCustomer;
+    }
+
+
+    private Customer makeCustomerFromString(String inputString) {
+        List<String> attributesList = new ArrayList<>(Arrays.asList(inputString.split(", ")));
+        Customer outputCustomer = null;
+        try {
+            String id = attributesList.get(column.ID.position);
+            String firstName = attributesList.get(column.FIRST_NAME.position);
+            String lastName = attributesList.get(column.LAST_NAME.position);
+            String phone = attributesList.get(column.PHONE_NO.position);
+            String email = attributesList.get(column.EMAIL.position);
+            String city = attributesList.get(column.CITY.position);
+            String street = attributesList.get(column.STREET.position);
+            String hash = attributesList.get(column.HASH.position);
+            outputCustomer =  new Customer(id, firstName, lastName, phone, email, city, street, hash);
+        } catch (java.lang.IndexOutOfBoundsException e) {
+//            throw new IllegalArgumentException("Id did not match any element from DB");
+            view.printError("Incorrect ID");
+        }
+        return outputCustomer;
+    }
+
+    private String generateQueryForSearch() {
+        StringBuilder strBuilder = new StringBuilder("SELECT * FROM customers WHERE ");
+
+        int index = 0;
+        for (ColumnPublic columnName : columnPublic.values()) {
+
+            strBuilder.append(columnName);
+            strBuilder.append(" LIKE ");
+            strBuilder.append("?");
+            index++;
+            if (index < columnPublic.values().length) {
+                strBuilder.append(" OR ");
+            }
+        }
+        return strBuilder.toString();
+    }
+
+    private List<String> retrieveQueryResponseAsString(String query, String... insertValues) {
+
+         List<String> queryResponse = new ArrayList<String>();
 
         try (Connection con = DriverManager.getConnection(url, user, password);
             PreparedStatement pst = con.prepareStatement(query)) {
@@ -151,7 +208,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
                 index++;
             }
             try (ResultSet rs = pst.executeQuery()) {
-                queryResponse = convertResultSetToString(rs);
+                queryResponse = convertResultSetToList(rs);
              }
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
@@ -161,9 +218,9 @@ public class CustomerDAOPSQL implements CustomerDAO {
     }
 
     //Overload
-    private String retrieveQueryResponseAsString(String query, Integer... insertValues) {
+    private List<String> retrieveQueryResponseAsString(String query, Integer... insertValues) {
 
-        String queryResponse = "";
+        List<String> queryResponse = new ArrayList<String>();
 
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement(query)) {
@@ -173,7 +230,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
                 index++;
             }
             try (ResultSet rs = pst.executeQuery()) {
-                queryResponse = convertResultSetToString(rs);
+                queryResponse = convertResultSetToList(rs);
             }
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
@@ -184,10 +241,10 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
     private int getRecordsQty(String tableName) {
         int queryResponse = 0;
-        String query = "SELECT COUNT(*) FROM customers ";
+        String query = "SELECT COUNT(*) FROM " + tableName;
 
         try (Connection con = DriverManager.getConnection(url, user, password);
-            PreparedStatement pst = con.prepareStatement(query)) { ;
+            PreparedStatement pst = con.prepareStatement(query)) {
             try (ResultSet rs = pst.executeQuery()) {
                 rs.next();
                 queryResponse = rs.getInt("count");
@@ -199,38 +256,25 @@ public class CustomerDAOPSQL implements CustomerDAO {
         return  queryResponse;
     }
 
-    private String convertResultSetToString(ResultSet resultSet) throws SQLException {
-        String queryResponse = "";
+    private List<String> convertResultSetToList(ResultSet resultSet) throws SQLException {
+        List<String> queryResponse = new ArrayList<String>();
         ResultSetMetaData rsmd = resultSet.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
         while (resultSet.next()) {
+            String nextRow = "";
             for (int i = 1; i <= columnsNumber; i++) {
                 String columnValue = resultSet.getString(i);
                 if (i > 1) {
-                    queryResponse = queryResponse + ", " + columnValue;
+                    nextRow = nextRow + ", " + columnValue;
                 } else {
-                    queryResponse = columnValue;
+                    nextRow = columnValue;
                 }
             }
+            queryResponse.add(nextRow);
         }
         return queryResponse;
     }
 
-    private Properties readProperties() {
-
-        Properties props = new Properties();
-        Path myPath = Paths.get("database2.properties");
-
-        try {
-            BufferedReader bf = Files.newBufferedReader(myPath,
-                    StandardCharsets.UTF_8);
-            props.load(bf);
-        } catch (IOException ex) {
-            Logger.getLogger(CustomerDAOPSQL.class.getName()).log(
-                    Level.SEVERE, null, ex);
-        }
-        return props;
-    }
 
     private Properties readPropertiesFile(String fileName) {
         FileInputStream fis = null;
