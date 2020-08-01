@@ -37,6 +37,13 @@ public class CustomerDAOPSQL implements CustomerDAO {
     }
 
     @Override
+    public Customer getCustomerByMail(String email) {
+        // TODO implement function as per name
+
+        return getCustomer("?p7<ks+n"); // dumb placeholder implementation
+    }
+
+    @Override
     public List<Customer> getAllCustomers() {
         int customersQty = getRecordsQty("customers");
         List<Customer> customersList = new ArrayList<Customer>();

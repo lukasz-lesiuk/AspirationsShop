@@ -1,5 +1,6 @@
 package com.codecool.app;
 
+import com.codecool.access.LoginController;
 import com.codecool.access.RegistrationController;
 import com.codecool.customer.Customer;
 import com.codecool.shopping.ShoppingController;
@@ -58,7 +59,11 @@ public class RootController {
     }
 
     private void login() {
-        // TODO to be implemented
+        LoginController logCon = new LoginController();
+        Customer user = logCon.run();
+        if (user != null){
+            //start controller here
+        }
     }
 
     private void register() {
