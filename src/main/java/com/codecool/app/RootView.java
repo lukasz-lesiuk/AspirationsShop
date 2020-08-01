@@ -1,5 +1,9 @@
 package com.codecool.app;
 
+import com.codecool.product.Product;
+import com.codecool.product.ProductDAO;
+import com.codecool.product.ProductDAOPSQL;
+import com.codecool.product.ProductView;
 import com.codecool.view.basicView;
 
 import java.util.ArrayList;
@@ -16,7 +20,6 @@ public class RootView extends basicView {
         clear();
         printOptions(options, "Welcome in our shop!");
         printMessage("(0) Exit");
-
         for (String message : messages) {
             printMessage(message);
         }
