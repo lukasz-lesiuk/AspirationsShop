@@ -1,12 +1,12 @@
 package com.codecool.shopping.browse;
 
-import com.codecool.view.basicView;
+import com.codecool.view.BasicView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BrowseView extends basicView {
+public class BrowseView extends BasicView {
 
 
 

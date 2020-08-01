@@ -1,11 +1,11 @@
 package com.codecool.shopping.basket;
 
 import com.codecool.product.Product;
-import com.codecool.view.basicView;
+import com.codecool.view.BasicView;
 
 import java.util.*;
 
-public class BasketView extends basicView {
+public class BasketView extends BasicView {
 
     Scanner scan = new Scanner(System.in);
 

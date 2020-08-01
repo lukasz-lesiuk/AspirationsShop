@@ -2,15 +2,16 @@ package com.codecool.view;
 
 import com.codecool.customer.Customer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.io.IOException;
 import java.util.Scanner;
 
-public class basicView {
+
+public class BasicView {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -25,15 +26,6 @@ public class basicView {
     public void printCustomer(Customer customer) {
         StringBuilder customerString = new StringBuilder();
         Field[] fields = customer.getClass().getDeclaredFields();
-//        for(Field field : fields){
-//            customerString.append(field.getName());
-//            customerString.append(" = ");
-//
-//            customerString.append(field.get(customer));
-//            }
-//            customerString.append("\n");
-//            outputString = outputString + customerString.toString();
-//        }
         customerString.append(customer.getCustomerId());
         customerString.append(" | ");
         customerString.append(customer.getFirstName());
@@ -61,7 +53,7 @@ public class basicView {
                 printMessage(ANSI_BLUE + "(" + (index+changeIndex) + ") " + optionsList.get(index) + ANSI_BLUE);
             }
         }catch (IndexOutOfBoundsException e) {
-//            TODO
+            printError("Nothing to print");
         }
     }
 
@@ -79,6 +71,10 @@ public class basicView {
 
     public void printMessage(String message) {
         System.out.println(ANSI_BLUE + message + ANSI_BLUE);
+    }
+
+    public void printError(String message) {
+        System.out.println(ANSI_RED + message + ANSI_RED);
     }
 
     public void clear(){
@@ -108,5 +104,21 @@ public class basicView {
         Scanner scan = new Scanner(System.in);
         printMessage("Press ENTER...");
         String pressing = scan.nextLine();
+    }
+
+    public void printAnsiFile(String filename){
+        try {
+            String filepath = "src/main/resources/" + filename;
+            File myObj = new File(filepath);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(data);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }

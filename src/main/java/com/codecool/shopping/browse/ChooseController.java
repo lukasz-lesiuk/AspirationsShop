@@ -2,14 +2,14 @@ package com.codecool.shopping.browse;
 
 import com.codecool.product.Product;
 import com.codecool.shopping.basket.Basket;
-import com.codecool.view.basicView;
+import com.codecool.view.BasicView;
 
 import java.util.List;
 
 public class ChooseController {
     private List<Product> productList;
     private Basket basket = new Basket();
-    private basicView chooseControllerView = new BrowseView();
+    private BasicView chooseControllerView = new BrowseView();
     private Product product;
 
 

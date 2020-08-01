@@ -1,11 +1,11 @@
 package com.codecool.transaction;
 
-import com.codecool.view.basicView;
+import com.codecool.view.BasicView;
 
 import java.util.List;
 import java.util.Map;
 
-public class TransactionView extends basicView {
+public class TransactionView extends BasicView {
 
     public void printTransaction(Transaction transaction) {
         Integer productIndex = 1;

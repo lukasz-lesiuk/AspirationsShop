@@ -1,11 +1,11 @@
 package com.codecool.app;
 
-import com.codecool.view.basicView;
+import com.codecool.view.BasicView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RootView extends basicView {
+public class RootView extends BasicView {
     private List<String> messages;
 
     public RootView(){

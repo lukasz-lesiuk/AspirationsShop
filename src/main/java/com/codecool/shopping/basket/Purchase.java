@@ -1,6 +1,6 @@
 package com.codecool.shopping.basket;
 
-import com.codecool.IDGenerator;
+import com.codecool.idGenerator.IDGenerator;
 import com.codecool.customer.Customer;
 import com.codecool.product.Product;
 import com.codecool.product.ProductDAO;

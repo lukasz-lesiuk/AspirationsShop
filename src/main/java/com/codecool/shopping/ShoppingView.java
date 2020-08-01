@@ -1,11 +1,11 @@
 package com.codecool.shopping;
 
 import com.codecool.shopping.browse.EnumCategory;
-import com.codecool.view.basicView;
+import com.codecool.view.BasicView;
 
 import java.util.List;
 
-public class ShoppingView extends basicView {
+public class ShoppingView extends BasicView {
 
     void displayShoppingMenu(List<String> menuOptions) {
         clear();
