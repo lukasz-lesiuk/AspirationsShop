@@ -21,32 +21,16 @@ public class LoginController {
     public Customer run(){
         Customer user = null;
         String password;
-        String input = "default";
-        try {
-            view.displayLoginScreen();
-            String email = scan.nextLine();
-            view.moveToPswd();
-            password = Integer.toString(scan.nextLine().hashCode());
-            user = customerDAO.searchByMailOnly(email);
-//            if (!user.getPasswordHash().equals(password)){
-            if (user == null || !user.getPasswordHash().equals(password)){
-                view.printMessage("Wrong username or password. Press Enter and try again or enter q to cancel.");
-                input = scan.nextLine();
-            }
-            } catch (NullPointerException e) {
-                view.printError("Failed to log in");
-                BasicView view = new BasicView();
-                view.pressEnter();
-            }
+        view.displayLoginScreen();
+        String email = scan.nextLine();
+        view.moveToPswd();
+        password = Integer.toString(scan.nextLine().hashCode());
+        user = customerDAO.searchByMailOnly(email);
+        if (user == null || !user.getPasswordHash().equals(password)){
+            view.printMessage("Wrong username or password. Press Enter and try again or enter q to cancel.");
+            scan.nextLine();
+        }
 
         return user;
-    }
-
-    private boolean isLoginComplete(Customer user, String password, String input){
-        try{
-            return !user.getPasswordHash().equals(password) || input.equals("q") || input.equals("Q");
-        } catch (NullPointerException e) {
-            return true;
-        }
     }
 }

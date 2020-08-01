@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CustomerDAOPSQL implements CustomerDAO {
+
     private String url;
     private String user;
     private String password;
@@ -151,8 +152,10 @@ public class CustomerDAOPSQL implements CustomerDAO {
         try {
             String inputString = retrieveQueryResponseAsString(queryForPreparedStatement, inquiry).get(0);
             outputCustomer = makeCustomerFromString(inputString);
-        } catch(IndexOutOfBoundsException e) {
-            view.printError("Incorrect email");
+        } catch(IndexOutOfBoundsException ex) {
+            Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
+            lgr.setLevel(Level.SEVERE);
+            lgr.log(Level.INFO, ex.getMessage(), ex);
         }
 
         return outputCustomer;
