@@ -1,8 +1,8 @@
 package com.codecool.access;
 
-import com.codecool.view.basicView;
+import com.codecool.view.BasicView;
 
-public class LoginView extends basicView {
+public class LoginView extends BasicView {
     public void displayLoginScreen() {
         clear();
         System.out.println();
