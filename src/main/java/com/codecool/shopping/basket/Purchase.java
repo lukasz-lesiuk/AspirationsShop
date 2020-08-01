@@ -26,14 +26,13 @@ public class Purchase {
         this.basket = basket;
         this.activeCustomer = activeCustomer;
         this.transactionID = generator.generateID();
-        this.productsToUpdateInWarehouse = updateProductsToWarehouse();
+        //this.productsToUpdateInWarehouse = updateProductsToWarehouse();
     }
 
     public void finalizeTransaction() {
         this.newTransaction = new Transaction(transactionID, activeCustomer.getCustomerId(), basket);
         TransactionDAO sqlTransactionDAO = new SQLTransactionDAO();
         sqlTransactionDAO.addTransaction(newTransaction);
-        //return addedTransactions == 0 ? false : true;
     }
 
     public List<Product> updateProductsToWarehouse() {
@@ -46,7 +45,7 @@ public class Purchase {
         return updatedProducts;
     }
 
-    public void updateWarehouse(){
+    public void updateProductsQuanity(){
         List<Product> productListToUpdate = updateProductsToWarehouse();
         ProductView productView = new ProductView();
 
@@ -60,5 +59,4 @@ public class Purchase {
         }
     }
 
-    // jak przekażemy List<Product> do SQLProductDAO?
 }

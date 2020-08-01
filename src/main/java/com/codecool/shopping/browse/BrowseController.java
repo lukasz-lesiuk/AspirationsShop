@@ -34,7 +34,9 @@ public class BrowseController {
             switch (choice){
                 case ("1"):
                     productList = getCategory(EnumCategory.Basic.getName());
+
                     getProductByCat(productList);
+
 
                     break;
                 case ("2"):
@@ -85,11 +87,13 @@ public class BrowseController {
         productView.printProductList(productList);
 
         Product product = getChoosenProduct(productList);
-        productView.printProduct(product);
+        if (product != null) {
+            productView.printProduct(product);
 
-        Integer quantity = askForQuantity(product);
-        browseView.pressEnter();
-        basket.addProduct(product, quantity);
+            Integer quantity = askForQuantity(product);
+            browseView.pressEnter();
+            basket.addProduct(product, quantity);
+        }
     }
 
     private Integer askForQuantity(Product product){

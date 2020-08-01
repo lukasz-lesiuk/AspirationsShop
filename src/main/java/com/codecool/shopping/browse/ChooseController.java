@@ -22,11 +22,18 @@ public class ChooseController {
         product = null;
 
         do {
+            try{
             Integer choice = chooseControllerView.getNumericInput("Choose product ");
             boolean positionIsONList = choice >= 0 &&  choice -1 <productList.size();
 
             if (positionIsONList){
                 product = getProduct(choice -1);
+                exit = "EXIT"; }
+            }
+            catch (IndexOutOfBoundsException e){
+                exit = "EXIT";
+            }
+            catch (NullPointerException e){
                 exit = "EXIT";
             }
         }while (!exit.equals("EXIT"));
