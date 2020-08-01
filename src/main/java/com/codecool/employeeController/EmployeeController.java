@@ -15,18 +15,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeController {
-//    public enum OptionsEnum {firstName, lastName, phone, email, city, address};
     EmployeeView view = new EmployeeView();
     Scanner scan = new Scanner(System.in);
     List<String> options;
     CustomerDAO dao = new CustomerDAOPSQL("database.properties");
+//    TransactionDAO transactionDAO
     PasswordGenerator passwordGenerator = new PasswordGenerator();
-    int FIRST_NAME = 1;
-    int LAST_NAME = 2;
-    int PHONE = 3;
-    int EMAIL = 4;
-    int CITY = 5;
-    int ADDRESS = 6;
 
 
     public void run() {
@@ -173,4 +167,15 @@ public class EmployeeController {
         view.clear();
         return inputValue;
     }
+
+//    private void getTransactionByDate(){
+//        //to used by customer controller
+//        TransactionDAO SQLTransDAO = new SQLTransactionDAO();
+//
+//        java.sql.Date from = Date.valueOf("2020-12-01");
+//        java.sql.Date to = Date.valueOf("2020-12-01");
+//        List<Transaction> transactionList =
+//                SQLTransDAO.getAllTransactionsByDate(from, to);
+//        transView.printTransactions(transactionList);
+//    }
 }
