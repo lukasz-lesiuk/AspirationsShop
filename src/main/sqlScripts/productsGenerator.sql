@@ -1,4 +1,19 @@
 DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS categories;
+
+CREATE TABLE categories (
+  category character varying(255) PRIMARY KEY
+);
+
+INSERT INTO categories VALUES
+  ('Basic'),
+  ('Outdoor Retreat'),
+  ('Seasons'),
+  ('Miscellaneous'),
+  ('Island Living'),
+  ('Realm of Magic'),
+  ('Get Famous'),
+  ('Potions');
 
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
@@ -6,8 +21,14 @@ CREATE TABLE products (
     description character varying(255) NOT NULL,
     price int NOT NULL,
     quantity int NOT NULL,
-    category character varying(255) NOT NULL
+    category character varying(255) NOT NULL,
+    FOREIGN KEY (category) REFERENCES categories(category)
 );
+
+
+
+
+
 
 INSERT INTO products (productName,description,price,quantity,category)  VALUES
   ('Always Welcome', 'Always Welcome Sims will act more at home when at others residence, and the host wont mind at all!',500,10,'Basic'),
@@ -67,6 +88,6 @@ INSERT INTO products (productName,description,price,quantity,category)  VALUES
   ('Insta-Large', 'Drink this to become a bigger you!',750,157, 'Potions'),
   ('Insta-Lean', 'The most efficient diet beverage on the market.',750,337, 'Potions'),
   ('Potion of Youth', 'Drink this to turn back the clock on your Sims current age.',1500,200, 'Potions'),
-  ('Re-Traiting Potion', 'Drinking this will allow you to reset all your Traits!',5000,300, 'Potions')
+  ('Re-Traiting Potion', 'Drinking this will allow you to reset all your Traits!',5000,300, 'Potions');
 
 

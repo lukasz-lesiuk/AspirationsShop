@@ -13,5 +13,8 @@ public interface ProductDAO {
         public void updateProductQuantity(Product productToUpdate,int newQuantity);
         public void addProduct(Product newProduct);
         public void deleteProduct(String product_Id);
+        public void addCategory(String newCategory);
+        public List<String> getAllCategories();
+        public void deleteCategory(String category);
 
 }

@@ -55,7 +55,7 @@ public class ProductDAOPSQL implements ProductDAO {
                 product = new Product(productId,productName,description,price,quantity,category);
         }
         catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
             return  product;
@@ -87,7 +87,7 @@ public class ProductDAOPSQL implements ProductDAO {
             }
 
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         return productsList;
@@ -113,7 +113,7 @@ public class ProductDAOPSQL implements ProductDAO {
             }
 
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         return productsList;
@@ -140,7 +140,7 @@ public class ProductDAOPSQL implements ProductDAO {
             }
 
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         return productsList;
@@ -161,7 +161,7 @@ public class ProductDAOPSQL implements ProductDAO {
             pst.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
@@ -183,7 +183,7 @@ public class ProductDAOPSQL implements ProductDAO {
             pst.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
@@ -201,7 +201,65 @@ public class ProductDAOPSQL implements ProductDAO {
             pst.executeUpdate();
 
         } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+    }
+
+    @Override
+    public void addCategory(String newCategory) {
+        String query = "INSERT INTO categories VALUES (?)";
+
+
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pst = con.prepareStatement(query)) {
+
+            pst.setString(1, newCategory);
+
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(SQLTransactionDAO.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+    }
+
+    @Override
+    public List<String> getAllCategories() {
+        String query = "SELECT * FROM categories ";
+        List<String> categories = new ArrayList<>();
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pst = con.prepareStatement(query)) {
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()){
+                String category = rs.getString("category");
+                categories.add(category);
+            }
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
+        return categories;
+    }
+
+    @Override
+    public void deleteCategory(String category) {
+        String query = "DELETE FROM categories WHERE category = ?;";
+
+
+        try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pst = con.prepareStatement(query)) {
+
+            pst.setString(1, category);
+
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
@@ -242,7 +300,7 @@ public class ProductDAOPSQL implements ProductDAO {
                 queryResponse = convertResultSetToString(rs);
             }
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(CustomerDAOPSQL.class.getName());
+            Logger lgr = Logger.getLogger(ProductDAOPSQL.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         return  queryResponse;

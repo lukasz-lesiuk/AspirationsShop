@@ -9,14 +9,14 @@ public class ProductView extends basicView {
     public void printProductTableHeader(int [] width){
         System.out.println(createHorizontal(width));
         String format = "|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|%-"+width[4]+"s|\n";
-        System.out.format(format,"Id", " Product Name", " Category", " Price",
+        System.out.format(format,"", " Product Name", " Category", " Price",
                 " Quantity");
         System.out.println(createHorizontal(width));
     }
 
-    public void printProductContent(Product product, int [] width){
+    public void printProductContent(Product product, int [] width, int id){
         String format = "|%-"+width[0]+"s|%-"+width[1]+"s|%-"+width[2]+"s|%-"+width[3]+"s|%-"+width[4]+"s|\n";
-        System.out.format(format," " + product.getProductID(), " " + product.getProductName()
+        System.out.format(format," " + id, " " + product.getProductName()
             , " " + product.getCategory(), " " + product.getPrice(), " " + product.getQuantity());
         System.out.println(createHorizontal(width));
 
@@ -42,9 +42,11 @@ public class ProductView extends basicView {
 
     public void printProductList(List<Product> productList){
         int [] width = checkColumnWidth(productList);
+        int id = 1;
         printProductTableHeader(width);
         for(Product product : productList){
-            printProductContent(product,width);
+            printProductContent(product,width,id);
+            id++;
         }
     }
     private String createHorizontal(int [] width) {
@@ -63,13 +65,13 @@ public class ProductView extends basicView {
     }
 
     private int[] checkColumnWidth(List<Product> products) {
-        int idWidth = 4;
+        int idWidth = 8;
         int nameWidth = 14;
         int categoryWidth = 10;
         int priceWidth = 7;
         int quantityWidth = 11;
         for(Product product : products) {
-            if(idWidth < String.valueOf(product.getProductID()).length()) idWidth = String.valueOf(product.getProductID()).length() + 1;
+
             if(nameWidth < product.getProductName().length()) nameWidth = product.getProductName().length() + 3;
             if(categoryWidth<product.getCategory().length()) categoryWidth = product.getCategory().length() + 1;
             if(priceWidth < String.valueOf(product.getPrice()).length()) priceWidth = String.valueOf(product.getPrice()).length() + 1;
