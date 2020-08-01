@@ -32,8 +32,17 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
     @Override
     public Customer getCustomer(String id) {
-        String inputString = retrieveQueryResponseAsString("SELECT * FROM customers WHERE id = ?", id).get(0);
-        return makeCustomerFromString(inputString);
+        Customer outputCustomer = null;
+        String queryForPreparedStatement = "SELECT * FROM customers WHERE id = ?";
+
+        try {
+            String inputString = retrieveQueryResponseAsString(queryForPreparedStatement, id).get(0);
+            outputCustomer = makeCustomerFromString(inputString);
+        } catch (IndexOutOfBoundsException e) {
+            view.printError("Incorrect ID");
+        }
+
+        return outputCustomer;
     }
 
     @Override
@@ -59,7 +68,7 @@ public class CustomerDAOPSQL implements CustomerDAO {
 
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement(query)) {
-            //TODO magic numbers
+
             pst.setString(1, customerToUpdate.getFirstName());
             pst.setString(2, customerToUpdate.getLastName());
             pst.setString(3, customerToUpdate.getPhoneNumber());

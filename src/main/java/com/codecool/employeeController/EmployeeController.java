@@ -77,22 +77,29 @@ public class EmployeeController {
         catch(Exception e){}
     }
 
-    private String resetPassword() {
+    private void resetPassword() {
+        String newPassword = null;
         Customer targetCustomer = getValidCustomer();
-        String newPassword = passwordGenerator.getPassword();
-        targetCustomer.setPasswordHash(newPassword);
 
-        dao.updateCustomer(targetCustomer);
-        view.printMessage("Password updated");
-        return newPassword;
+        if (targetCustomer != null) {
+            newPassword = passwordGenerator.getPassword();
+            targetCustomer.setPasswordHash(newPassword);
+
+            dao.updateCustomer(targetCustomer);
+            view.printMessage("Password updated");
+        } else {
+
+            view.printMessage("Id do not match any record from database");
+        }
     }
 
     private Customer getValidCustomer () {
         Customer pickedCustomer = null;
+        String userInput = "";
 
-        while (pickedCustomer == null) {
-            view.printMessage("Provide valid id of customer: ");
-            String userInput = scan.nextLine();
+        while (pickedCustomer == null && (!userInput.equals("q"))) {
+            view.printMessage("Provide valid id of customer or press q to cancel: ");
+            userInput = scan.nextLine();
             pickedCustomer = dao.getCustomer(userInput);
         }
         return pickedCustomer;
@@ -100,65 +107,75 @@ public class EmployeeController {
 
     private void removeCustomer() {
         Customer targetCustomer = getValidCustomer();
-        dao.deleteCustomer(targetCustomer.getCustomerId());
-        view.printMessage("Removed customer");
+        try {
+            dao.deleteCustomer(targetCustomer.getCustomerId());
+            view.printMessage("Removed customer");
+        } catch (NullPointerException e) {
+            view.printMessage("Removal cancelled");
+        }
+
     }
 
     private void updateCustomer() {
         Customer targetCustomer = getValidCustomer();
 
-        List<String> optionList = new ArrayList<String>();
-        optionList.add("First name");
-        optionList.add("Last name");
-        optionList.add("Phone number");
-        optionList.add("Email address");
-        optionList.add("City");
-        optionList.add("Street and apartment no");
+        if (targetCustomer != null) {
+            List<String> optionList = new ArrayList<String>();
+            optionList.add("First name");
+            optionList.add("Last name");
+            optionList.add("Phone number");
+            optionList.add("Email address");
+            optionList.add("City");
+            optionList.add("Street and apartment no");
 
-        String choice;
-        boolean shouldRun = true;
+            String choice;
+            boolean shouldRun = true;
 
-        while (shouldRun) {
-            view.printOptions(optionList, "Select property you want to change");
-            view.printMessage("(0) Cancel");
+            while (shouldRun) {
+                view.printOptions(optionList, "Select property you want to change");
+                view.printMessage("(0) Cancel");
 //           view.displayMainMenu(options);
-            choice = scan.nextLine();
-            String newValue;
+                choice = scan.nextLine();
+                String newValue;
 
-            switch (choice) {
-                case ("1"):
-                    newValue = input("provide new First Name");
-                    System.out.println("NEW VALUE " + newValue);
-                    targetCustomer.setFirstName(newValue);
-                    break;
-                case ("2"):
-                    newValue = input("provide new Last Name");
-                    targetCustomer.setLastName(newValue);
-                    break;
-                case ("3"):
-                    newValue = input("provide new phone number");
-                    targetCustomer.setPhoneNumber(newValue);
-                    break;
-                case ("4"):
-                    newValue = input("provide new email adress");
-                    targetCustomer.setEmailAddress(newValue);
-                    break;
-                case ("5"):
-                    newValue = input("provide new city");
-                    targetCustomer.setCity(newValue);
-                    break;
-                case ("6"):
-                    newValue = input("provide address");
-                    targetCustomer.setStreet(newValue);
-                    break;
-                case ("0"):
-                    shouldRun = false;
-                    break;
-                default:
-                    view.printMessage("Option not on the list.");
+                switch (choice) {
+                    case ("1"):
+                        newValue = input("provide new First Name");
+                        System.out.println("NEW VALUE " + newValue);
+                        targetCustomer.setFirstName(newValue);
+                        break;
+                    case ("2"):
+                        newValue = input("provide new Last Name");
+                        targetCustomer.setLastName(newValue);
+                        break;
+                    case ("3"):
+                        newValue = input("provide new phone number");
+                        targetCustomer.setPhoneNumber(newValue);
+                        break;
+                    case ("4"):
+                        newValue = input("provide new email adress");
+                        targetCustomer.setEmailAddress(newValue);
+                        break;
+                    case ("5"):
+                        newValue = input("provide new city");
+                        targetCustomer.setCity(newValue);
+                        break;
+                    case ("6"):
+                        newValue = input("provide address");
+                        targetCustomer.setStreet(newValue);
+                        break;
+                    case ("0"):
+                        shouldRun = false;
+                        break;
+                    default:
+                        view.printMessage("Option not on the list.");
+                }
+                dao.updateCustomer(targetCustomer);
             }
-            dao.updateCustomer(targetCustomer);
+        } else {
+            view.printMessage("update cancelled");
         }
+
     }
 
     private String input(String message){
