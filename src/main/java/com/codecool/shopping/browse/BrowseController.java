@@ -34,46 +34,44 @@ public class BrowseController {
             switch (choice){
                 case ("1"):
                     productList = getCategory(EnumCategory.Basic.getName());
-
                     getProductByCat(productList);
-
-
                     break;
+
                 case ("2"):
                     productList = getCategory(EnumCategory.Outdoor_Retreat.getName());
                     getProductByCat(productList);
-
                     break;
+
                 case ("3"):
                     productList = getCategory(EnumCategory.Seasons.getName());
                     getProductByCat(productList);
-
                     break;
+
                 case ("4"):
                     productList = getCategory(EnumCategory.Miscellaneous.getName());
                     getProductByCat(productList);
-
                     break;
+
                 case ("5"):
                     productList = getCategory(EnumCategory.Island_Living.getName());
                     getProductByCat(productList);
-
                     break;
+
                 case ("6"):
                     productList = getCategory(EnumCategory.Realm_of_Magic.getName());
                     getProductByCat(productList);
-
                     break;
+
                 case ("7"):
                     productList = getCategory(EnumCategory.Get_Famous.getName());
                     getProductByCat(productList);
-
                     break;
+
                 case ("8"):
                     productList = getCategory(EnumCategory.Potions.getName());
                     getProductByCat(productList);
-
                     break;
+
                 default:
                     if(!choice.equals("9")) {
                         browseView.printMessage("There is no such option. Select again.");
@@ -83,16 +81,17 @@ public class BrowseController {
     }
 
     private void getProductByCat(List<Product> productList) {
-        browseView.printMessage("0. Back");
         productView.printProductList(productList);
-
+        String decision = "";
         Product product = getChoosenProduct(productList);
         if (product != null) {
             productView.printProduct(product);
-
-            Integer quantity = askForQuantity(product);
-            browseView.pressEnter();
-            basket.addProduct(product, quantity);
+            decision = browseView.getTextInput("Add to basket? y/n");
+            if(decision.toLowerCase().equals("y")){
+                Integer quantity = askForQuantity(product);
+                browseView.pressEnter();
+                basket.addProduct(product, quantity);
+            }
         }
     }
 

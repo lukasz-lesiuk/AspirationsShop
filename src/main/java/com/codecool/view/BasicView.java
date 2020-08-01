@@ -44,7 +44,9 @@ public class BasicView {
 
     public void printOptions(List<String> optionsList, String message) {
 
-        String logo =ANSI_YELLOW + "Application Process" + ANSI_YELLOW + "\n\n";
+        String logo =ANSI_YELLOW + "" + ANSI_YELLOW + "\n\n";
+        printAnsiFile(   "ANSI_Aspiration_Shop");
+
         System.out.print(logo.replaceAll("xx","\\\\"));
         printMessage(message);
         int changeIndex = 1;
@@ -83,7 +85,7 @@ public class BasicView {
 
     public String getTextInput(String message){
         System.out.println(message);
-        String input = scan.nextLine();
+        String input = new Scanner(System.in).nextLine();
         clear();
         return input;
     }
@@ -91,7 +93,7 @@ public class BasicView {
     public int getNumericInput(String message) {
         int option = 0;
 
-        System.out.print(message + ": ");
+        printMessage(message + ":");
         try {
             option = scan.nextInt();
         } catch (InputMismatchException e) {

@@ -35,7 +35,6 @@ public class RootController {
                     register();
                     break;
                 case ("3"):
-                    // You can add any function you wish to test here
                     boolean shouldLogIn = adminLogger.checkAdminPassword();
                     if (shouldLogIn) {
                         EmployeeController ec = new EmployeeController();
@@ -44,11 +43,10 @@ public class RootController {
                         view.printMessage("Failed to log in");
                     }
                     break;
-                case ("4"):
-                    shopping();
-                    break;
                 case ("okon"):
                     // place to hide a 'secret' functionality
+                    view.printMessage("admin password is lama&L@m@");
+                    view.pressEnter();
                     break;
                 default:
                     view.addMessage("Option not on the list.");
@@ -61,14 +59,13 @@ public class RootController {
         options.add("Login");
         options.add("Register");
         options.add("Login as administrator");
-        options.add("Shopping menu");
     }
 
     private void login() {
         LoginController logCon = new LoginController();
         Customer user = logCon.run();
         if (user != null){
-            //TODO start controller here
+            shopping(user);
         }
     }
 
@@ -77,8 +74,8 @@ public class RootController {
         regCon.run();
     }
 
-    private void shopping() {
-        ShoppingController shopCon = new ShoppingController(customer);
+    private void shopping(Customer activeCustomer) {
+        ShoppingController shopCon = new ShoppingController(activeCustomer);
         shopCon.run();
     }
 }

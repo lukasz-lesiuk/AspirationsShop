@@ -9,6 +9,7 @@ import com.codecool.product.ProductView;
 import com.codecool.transaction.SQLTransactionDAO;
 import com.codecool.transaction.Transaction;
 import com.codecool.transaction.TransactionDAO;
+import com.codecool.transaction.TransactionView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Purchase {
     Customer activeCustomer;
     String transactionID;
     Transaction newTransaction;
+    TransactionView transactionView = new TransactionView();
     List<Product> productsToUpdateInWarehouse;
 
     public Purchase(Basket basket, Customer activeCustomer) {
@@ -33,6 +35,7 @@ public class Purchase {
         this.newTransaction = new Transaction(transactionID, activeCustomer.getCustomerId(), basket);
         TransactionDAO sqlTransactionDAO = new SQLTransactionDAO();
         sqlTransactionDAO.addTransaction(newTransaction);
+        transactionView.printTransaction(newTransaction, activeCustomer);
     }
 
     public List<Product> updateProductsToWarehouse() {
@@ -45,12 +48,9 @@ public class Purchase {
         return updatedProducts;
     }
 
-    public void updateProductsQuanity(){
+    public void updateProductsQuanity() {
         List<Product> productListToUpdate = updateProductsToWarehouse();
         ProductView productView = new ProductView();
-
-        productView.pressEnter();
-        productView.printProductList(productListToUpdate);
 
         productView.pressEnter();
         ProductDAO productDAOPSQL = new ProductDAOPSQL();
@@ -58,5 +58,4 @@ public class Purchase {
             productDAOPSQL.updateProductQuantity(product, product.getQuantity());
         }
     }
-
 }
